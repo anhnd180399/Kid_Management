@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/ui/home.dart';
+import 'package:kid_management/src/ui/sign_up.dart';
 
 import 'login.dart';
 
@@ -12,7 +13,7 @@ class _WelcomeState extends State<KidApp> {
   Widget _signInButton() {
     return InkWell(
         onTap: (){
-         Navigator.push(this.context, MaterialPageRoute(builder: (context) => Home()));
+         Navigator.push(this.context, MaterialPageRoute(builder: (context) => LoginPage()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),
@@ -33,6 +34,9 @@ class _WelcomeState extends State<KidApp> {
   }
   Widget _signUpButton() {
     return InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+        },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),
           alignment: Alignment.center,
@@ -117,11 +121,6 @@ class _WelcomeState extends State<KidApp> {
                 _divider(),
                 _signUpButton(),
                 SizedBox(height: 20.0),
-                // TODO: Wrap Username with AccentColorOverride (103)
-                // TODO: Remove filled: true values (103)
-                // TODO: Wrap Password with AccentColorOverride (103)
-                // TODO: Add TextField widgets (101)
-                // TODO: Add button bar (101)
               ],
             ),
           ),

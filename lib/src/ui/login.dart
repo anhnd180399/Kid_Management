@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/ui/home.dart';
+import 'package:kid_management/src/ui/kid_app.dart';
+import 'package:kid_management/src/ui/sign_up.dart';
 /*import 'package:flutter_login_signup/src/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,106 +59,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _submitButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xfffbb448), Color(0xfff7892b)])),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('Log in with Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-        ],
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [HexColor("#3AB081"), HexColor("#349B72")])),
+        child: Text(
+          'LOGIN',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
       ),
     );
   }
@@ -163,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
-        //TODO SIGN UP PAGE
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -173,18 +100,26 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Don\'t have an account ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              'Don\'t have account?',
+              style: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 15,
+                color: const Color(0xff000000),
+              ),
+              textAlign: TextAlign.left,
             ),
             SizedBox(
               width: 10,
             ),
             Text(
-              'Register',
+              'Sign up',
               style: TextStyle(
-                  color: Color(0xfff79c4f),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
+                fontFamily: 'Segoe UI',
+                fontSize: 15,
+                color: const Color(0xff3dac43),
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.left,
             ),
           ],
         ),
@@ -193,35 +128,61 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'd',
-          /*style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Color(0xffe46b10),
-          ),*/
-          children: [
-            TextSpan(
-              text: 'ev',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'rnz',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
-            ),
-          ]),
+    return Column(
+      children: <Widget>[
+        Image.asset(
+          'assets/images/login_screen/user_avatar.png',
+          width: 126.0,
+          height: 126.0,
+        ),
+        SizedBox(height: 20),
+        Text(
+          'WELCOME!',
+          style: TextStyle(
+            fontFamily: 'Segoe UI',
+            fontSize: 20,
+            color: const Color(0xff000000),
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Sign in to continue',
+          style: TextStyle(
+            fontFamily: 'Segoe UI',
+            fontSize: 20,
+            color: const Color(0xff888686),
+          ),
+          textAlign: TextAlign.left,
+        ),
+      ],
     );
   }
 
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email id"),
+        _entryField("Email"),
         _entryField("Password", isPassword: true),
       ],
+    );
+  }
+
+  Widget _forgotAccountLabel(){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      alignment: Alignment.centerRight,
+      child: Text(
+        'Forgot Password?',
+        style: TextStyle(
+          fontFamily: 'Segoe UI',
+          fontSize: 16,
+          color: const Color(0xff3dac43),
+          fontWeight: FontWeight.w700,
+        ),
+        textAlign: TextAlign.left,
+      ),
     );
   }
 
@@ -229,33 +190,24 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          body: Container(
+          body: new Container(
             child: Stack(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 100),
+                        SizedBox(height: 70),
                         _title(),
-                        SizedBox(height: 50),
-                        _emailPasswordWidget(),
                         SizedBox(height: 20),
+                        _emailPasswordWidget(),
+                        _forgotAccountLabel(),
                         _submitButton(),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password ?',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
-                        _divider(),
-                        _facebookButton(),
-                        SizedBox(height: 30),
                         _createAccountLabel(),
+                        SizedBox(height: 30),
                       ],
                     ),
                   ),

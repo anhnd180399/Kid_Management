@@ -1,42 +1,57 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+import 'kid_app.dart';
+
+class HomePage extends StatefulWidget {
   @override
-  _Home createState() => _Home();
+  _HomeState createState() => _HomeState();
 }
 
-class _Home extends State<Home> {
-  @override
+class _HomeState extends State<HomePage> {
   Widget build(BuildContext context) {
-    return Scaffold(
-      // TODO: Add  app bar (102)
-      // TODO: Add a grid view (102)
-      body: Center(
-        child: Text('You did it!'),
-      ),
+    return MaterialApp(
+      home: Scaffold(
+        body: new Container(
+          child:Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+              ),
+              _gridView()
+            ],
 
-      // TODO: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset: false,
+          ),
+        ),
+      ),
     );
   }
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+
+  Widget _gridView() {
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10.0,
+      mainAxisSpacing: 10.0,
+      shrinkWrap: true,
+      children: List.generate(
+        10,
+        (index) {
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [HexColor("#3AB081"), HexColor("#349B72")])
+              ),
+              child: Text(
+                'LOGIN',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
             ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
+          );
+        },
       ),
     );
   }
