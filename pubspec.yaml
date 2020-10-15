@@ -45,6 +45,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/images/main_dashboard/
     - assets/images/welcome_screen/
     - assets/images/login_screen/
     - assets/images/

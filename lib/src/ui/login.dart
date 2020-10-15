@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/ui/home.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
-/*import 'package:flutter_login_signup/src/signup.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'Widget/bezierContainer.dart';*/
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -131,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: <Widget>[
         Image.asset(
-          'assets/images/login_screen/user_avatar.png',
+          CONSTANT.URL_IMG_USER_AVATAR,
           width: 126.0,
           height: 126.0,
         ),

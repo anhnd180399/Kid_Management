@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kid_management/src/ui/home.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
-
 import 'login.dart';
-
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 class KidApp extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
@@ -97,7 +95,7 @@ class _WelcomeState extends State<KidApp> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image:
-                    AssetImage("assets/images/welcome_screen/backGround.png"),
+                    AssetImage(CONSTANT.URL_IMG_BACK_GROUND),
                 fit: BoxFit.cover,
               ),
             ),
@@ -108,7 +106,7 @@ class _WelcomeState extends State<KidApp> {
                 Column(
                   children: <Widget>[
                     Image.asset(
-                        'assets/images/welcome_screen/kidSpace_logo.png'),
+                        CONSTANT.URL_IMG_KID_SPACE_LOGO),
                     Text(
                       'Let your kids in control',
                       style: new TextStyle(color: Colors.white, fontSize: 20.0),
