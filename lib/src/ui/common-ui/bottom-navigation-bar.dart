@@ -1,5 +1,5 @@
-import 'package:KidSpace_Demo_1/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/resources/colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   @override
