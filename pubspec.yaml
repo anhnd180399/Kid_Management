@@ -21,9 +21,14 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  adobe_xd:
+  
   flutter:
     sdk: flutter
+
+  # library to render SVG image
+  flutter_svg: ^0.19.0
+  # library to get all installed applications on device
+  device_apps: ^1.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
