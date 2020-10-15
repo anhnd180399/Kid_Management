@@ -29,6 +29,10 @@ dependencies:
   flutter_svg: ^0.19.0
   # library to get all installed applications on device
   device_apps: ^1.2.0
+  # library to show date time picker dialog
+  flutter_datetime_picker: ^1.4.0
+  # library to convert DateTime obj to formated String
+  intl: ^0.16.1
 
 
   # The following adds the Cupertino Icons font to your application.
