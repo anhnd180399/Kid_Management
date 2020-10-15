@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app-checkbox-list.dart';
@@ -12,6 +11,10 @@ class CreateAppScheduleStep02 extends StatefulWidget {
 }
 
 class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
+  final String BUTTON_TEXT = 'NEXT';
+  final String APPBAR_TITLE = 'CREATE SCHEDULE';
+  final String HEAD_TITLE = 'CHOOSE APPS YOU WANT TO SETUP';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          'CREATE SCHEDULE',
+          APPBAR_TITLE,
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 24.0, color: Colors.black),
         ),
@@ -46,8 +49,7 @@ class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
                 SizedBox(
                   height: 25.0,
                 ),
-                Text("CHOOSE APPS YOU WANT TO SETUP",
-                    style: TextStyle(fontSize: 18.0)),
+                Text(HEAD_TITLE, style: TextStyle(fontSize: 18.0)),
                 SizedBox(
                   height: 40.0,
                 )
@@ -76,7 +78,7 @@ class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
                 },
                 color: AppColor.mainColor,
                 child: Text(
-                  'NEXT',
+                  BUTTON_TEXT,
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),

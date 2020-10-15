@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +15,12 @@ class CreateAppScheduleStep01 extends StatefulWidget {
 class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
   bool isButtonDisabled = true;
 
+  final String BUTTON_TEXT = 'NEXT';
+  final String APPBAR_TITLE = 'CREATE SCHEDULE';
+  final String HEAD_TITLE = 'NAME YOUR SCHEDULE';
+  final String SUB_TITLE = "This will help you easily remember";
+  final String HINT_TEXT = "SCHEDULE'S NAME";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +28,7 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          'CREATE SCHEDULE',
+          APPBAR_TITLE,
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 24.0, color: Colors.black),
         ),
@@ -60,12 +65,12 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
             SizedBox(
               height: 20.0,
             ),
-            Text("Name your schedule",
+            Text(HEAD_TITLE,
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600)),
             SizedBox(
               height: 10.0,
             ),
-            Text("This will help you easily remember",
+            Text(SUB_TITLE,
                 style: TextStyle(fontSize: 16.0, color: AppColor.grayDark)),
             SizedBox(
               height: 20.0,
@@ -99,7 +104,7 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
               textAlignVertical: TextAlignVertical.center,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
-                  hintText: "SCHEDULE'S NAME",
+                  hintText: HINT_TEXT,
                   hintStyle: TextStyle(fontSize: 18.0),
                   enabledBorder: UnderlineInputBorder(
                       borderSide:
@@ -130,7 +135,7 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
                       },
                 color: AppColor.mainColor,
                 child: Text(
-                  'NEXT',
+                  BUTTON_TEXT,
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
