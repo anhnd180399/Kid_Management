@@ -53,6 +53,7 @@ flutter:
     - assets/images/main_dashboard/
     - assets/images/welcome_screen/
     - assets/images/login_screen/
+    - assets/images/app-schedule/
     - assets/images/
   # To add assets to your application, add an assets section, like this:
   # assets:
