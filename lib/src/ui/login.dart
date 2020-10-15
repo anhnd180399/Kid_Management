@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/ui/home.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
@@ -10,46 +12,53 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _backButton() {
+  //   return InkWell(
+  //     onTap: () {
+  //       Navigator.pop(context);
+  //     },
+  //     child: Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Row(
+  //         children: <Widget>[
+  //           Container(
+  //             padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+  //             child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+  //           ),
+  //           Text('Back',
+  //               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
+          // Text(
+          //   title,
+          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          // ),
           SizedBox(
             height: 10,
           ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+          Container(
+            height: 55.0,
+            child: TextField(
+                textAlign: TextAlign.start,
+                obscureText: isPassword,
+                decoration: InputDecoration(
+                    hintText: title,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                        borderSide:
+                            BorderSide(width: 0, style: BorderStyle.none)),
+                    fillColor: Color(0xfff3f3f4),
+                    filled: true)),
+          )
         ],
       ),
     );
@@ -57,14 +66,15 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(25)),
+            borderRadius: BorderRadius.all(Radius.circular(35.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.grey.shade200,
@@ -87,10 +97,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignUp()));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
+        margin: EdgeInsets.symmetric(vertical: 10),
         padding: EdgeInsets.all(15),
         alignment: Alignment.bottomCenter,
         child: Row(
@@ -109,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 10,
             ),
             Text(
-              'Sign up',
+              'Sign Up',
               style: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 15,
@@ -166,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _forgotAccountLabel(){
+  Widget _forgotAccountLabel() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10),
       alignment: Alignment.centerRight,
@@ -185,34 +196,34 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: new Container(
-            child: Stack(
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: GoBackButton(
+            color: AppColor.mainColor,
+            size: 35.0,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(height: 70),
-                        _title(),
-                        SizedBox(height: 20),
-                        _emailPasswordWidget(),
-                        _forgotAccountLabel(),
-                        _submitButton(),
-                        _createAccountLabel(),
-                        SizedBox(height: 30),
-                      ],
-                    ),
-                  ),
+                _title(),
+                SizedBox(height: 50),
+                _emailPasswordWidget(),
+                _forgotAccountLabel(),
+                SizedBox(
+                  height: 20.0,
                 ),
-                Positioned(top: 40, left: 0, child: _backButton()),
+                _submitButton(),
+                _createAccountLabel(),
               ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 }

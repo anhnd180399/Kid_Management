@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
 import 'login.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+
 class KidApp extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
@@ -10,8 +11,9 @@ class KidApp extends StatefulWidget {
 class _WelcomeState extends State<KidApp> {
   Widget _signInButton() {
     return InkWell(
-        onTap: (){
-         Navigator.push(this.context, MaterialPageRoute(builder: (context) => LoginPage()));
+        onTap: () {
+          Navigator.push(this.context,
+              MaterialPageRoute(builder: (context) => LoginPage()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),
@@ -26,30 +28,29 @@ class _WelcomeState extends State<KidApp> {
             'SIGN IN',
             style: new TextStyle(color: Colors.white, fontSize: 20.0),
           ),
-
-    )
-    );
+        ));
   }
+
   Widget _signUpButton() {
     return InkWell(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SignUp()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              color: Colors.white,
+            borderRadius: BorderRadius.circular(30.0),
+            color: Colors.white,
           ),
           child: Text(
             'SIGN UP',
             style: new TextStyle(color: HexColor("#D59D47"), fontSize: 20.0),
           ),
-
-        )
-    );
+        ));
   }
+
   Widget _divider() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -66,7 +67,8 @@ class _WelcomeState extends State<KidApp> {
               ),
             ),
           ),
-          Text('OR',
+          Text(
+            'OR',
             style: new TextStyle(color: Colors.white, fontSize: 15.0),
             textAlign: TextAlign.center,
           ),
@@ -88,41 +90,36 @@ class _WelcomeState extends State<KidApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Kid management',
-        home: Scaffold(
-          body: new Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image:
-                    AssetImage(CONSTANT.URL_IMG_BACK_GROUND),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
+    return Scaffold(
+      body: new Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(CONSTANT.URL_IMG_BACK_GROUND),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          children: <Widget>[
+            SizedBox(height: 30.0),
+            Column(
               children: <Widget>[
-                SizedBox(height: 30.0),
-                Column(
-                  children: <Widget>[
-                    Image.asset(
-                        CONSTANT.URL_IMG_KID_SPACE_LOGO),
-                    Text(
-                      'Let your kids in control',
-                      style: new TextStyle(color: Colors.white, fontSize: 20.0),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 50.0),
-                  ],
+                Image.asset(CONSTANT.URL_IMG_KID_SPACE_LOGO),
+                Text(
+                  'Let your kids in control',
+                  style: new TextStyle(color: Colors.white, fontSize: 20.0),
+                  textAlign: TextAlign.center,
                 ),
-                _signInButton(),
-                _divider(),
-                _signUpButton(),
-                SizedBox(height: 20.0),
+                SizedBox(height: 50.0),
               ],
             ),
-          ),
-        )
+            _signInButton(),
+            _divider(),
+            _signUpButton(),
+            SizedBox(height: 20.0),
+          ],
+        ),
+      ),
     );
   }
 }
