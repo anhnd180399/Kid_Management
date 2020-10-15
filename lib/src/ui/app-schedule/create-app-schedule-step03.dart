@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step02.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class CreateAppScheduleStep03 extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
                   child: Opacity(
                     opacity: 0.3,
                     child: SvgPicture.asset(
-                      'assets/app-schedule/bg-create-schedule-3.svg',
+                      CONSTANT.URL_IMG_BG_APP_SCHEDULE_STEP03,
                       width: 150.0,
                     ),
                   ),

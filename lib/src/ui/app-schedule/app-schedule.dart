@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step01.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class AppSchedule extends StatelessWidget {
   @override
@@ -45,7 +46,7 @@ class AppSchedule extends StatelessWidget {
               ),
               Center(
                 child: SvgPicture.asset(
-                  'assets/app-schedule/schedule-empty.svg',
+                  CONSTANT.URL_IMG_BG_APP_SCHEDULE_EMPTY,
                   width: 200.0,
                   height: 200.0,
                 ),
