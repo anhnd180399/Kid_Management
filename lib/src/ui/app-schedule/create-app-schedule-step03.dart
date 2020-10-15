@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step02.dart';
+import 'package:kid_management/src/ui/app-schedule/time-picker-button.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
@@ -77,7 +78,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
               SizedBox(
                 height: 20.0,
               ),
-
+              TimePeriodPicker(),
               Spacer(),
               // the 'NEXT' button
               Container(
@@ -91,11 +92,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
                       borderRadius: BorderRadius.circular(25.0)),
                   elevation: 2.0,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CreateAppScheduleStep02(),
-                        ));
+                    
                   },
                   color: AppColor.mainColor,
                   child: Text(
@@ -108,6 +105,35 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class TimePeriodPicker extends StatefulWidget {
+  DateTime fromTime;
+  DateTime toTime;
+
+  DateTime get getFromTime => fromTime;
+  DateTime get getToTime => toTime;
+
+  @override
+  _TimePeriodPickerState createState() => _TimePeriodPickerState();
+}
+
+class _TimePeriodPickerState extends State<TimePeriodPicker> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TimePickerButton(
+          buttonText: 'FROM',
+        ),
+        Icon(Icons.keyboard_arrow_right),
+        TimePickerButton(
+          buttonText: 'TO',
+        )
+      ],
     );
   }
 }
