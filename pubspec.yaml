@@ -58,6 +58,7 @@ flutter:
     - assets/images/welcome_screen/
     - assets/images/login_screen/
     - assets/images/app-schedule/
+    - assets/images/app-management/
     - assets/images/
 
   fonts:
