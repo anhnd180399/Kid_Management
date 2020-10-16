@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/app-schedule/app-schedule.dart';
@@ -14,18 +15,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Container(
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: _title(),
+          ),
+          Container(
+            padding: EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _title(),
                 Container(
-                  height: 350,
+                  margin: EdgeInsets.only(top: deviceHeight * 0.21),
+                  height: deviceHeight * 0.58,
                   child: GridView.count(
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 10.0,
@@ -48,21 +56,26 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 
   Widget _title() {
-    return Column(
-      children: <Widget>[
-        Image.asset(
-          CONSTANT.URL_IMG_KID_SPACE_LOGO,
-          width: 150,
-          height: 200,
-        ),
-      ],
+    return Container(
+      height: 250.0,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/main_dashboard/svg_bg.png'))),
+      child: Column(
+        children: [
+          Image.asset(
+            CONSTANT.URL_IMG_KID_SPACE_LOGO,
+          ),
+        ],
+      ),
     );
   }
 
