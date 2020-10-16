@@ -13,7 +13,13 @@ class GoBackButton extends StatelessWidget {
         icon:
             Icon(Icons.keyboard_backspace, color: this.color, size: this.size),
         onPressed: () {
-          Navigator.of(context).pop();
+          // check if keyboard is currently active then close it before pop screen
+          if (MediaQuery.of(context).viewInsets.bottom != 0) {
+            FocusScope.of(context).unfocus();
+          }
+          else{
+            Navigator.of(context).pop();
+          }
         },
       ),
     );

@@ -46,9 +46,10 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           Container(
-            height: 55.0,
+            height: 56.0,
             child: TextField(
                 textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
                 obscureText: isPassword,
                 decoration: InputDecoration(
                     hintText: title,
