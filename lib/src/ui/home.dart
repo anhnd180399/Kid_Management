@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
-import 'package:kid_management/src/ui/app-schedule/app-schedule.dart';
+import 'package:kid_management/src/ui/app_management.dart';
 import 'package:kid_management/src/ui/common-ui/bottom-navigation-bar.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,7 +39,7 @@ class HomePage extends StatelessWidget {
                       crossAxisCount: 2,
                       children: [
                         _appList(APP_CONTROL, CONSTANT.URL_IMG_APP_CONTROL,
-                            AppSchedule(), context),
+                            AppManagement(), context),
                         _appList(WEB_FILTER, CONSTANT.URL_IMG_WEB_FILTER, null,
                             context),
                         _appList(SCREEN_BLOCKING,
