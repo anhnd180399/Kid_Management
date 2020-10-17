@@ -35,7 +35,7 @@ class _WelcomeState extends State<KidApp> {
     return InkWell(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SignUp()));
+              this.context, MaterialPageRoute(builder: (context) => SignUp()));
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),

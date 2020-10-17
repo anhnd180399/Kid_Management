@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/login.dart';
-
+import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'kid_app.dart';
 
 class SignUp extends StatefulWidget {
@@ -10,27 +10,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
@@ -93,7 +72,8 @@ class _SignUpState extends State<SignUp> {
       )
     ]);
   }
-  Widget _signUpButton(){
+
+  Widget _signUpButton() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
@@ -120,7 +100,8 @@ class _SignUpState extends State<SignUp> {
   Widget _signInLabel() {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -158,9 +139,16 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: new Container(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: GoBackButton(
+          color: AppColor.mainColor,
+          size: 35.0,
+        ),
+      ),
+      body: new Container(
         child: Stack(
           children: <Widget>[
             Container(
@@ -170,7 +158,6 @@ class _SignUpState extends State<SignUp> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 70),
                     _title(),
                     SizedBox(height: 20),
                     _emailPasswordWidget(),
@@ -182,10 +169,9 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
-            Positioned(top: 40, left: 0, child: _backButton()),
           ],
         ),
-      )),
+      ),
     );
   }
 }
