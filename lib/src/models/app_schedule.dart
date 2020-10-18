@@ -7,7 +7,7 @@ class AppScheduleModel {
   Color color;
   bool active;
   List<AppTimePeriod> appTimePeriods;
-  List<int> dayOfWeeks;
+  Set<int> dayOfWeeks;
 
   AppScheduleModel(
       {this.id,
@@ -17,17 +17,17 @@ class AppScheduleModel {
       this.appTimePeriods,
       this.dayOfWeeks});
 
-  int get getId => id;
-  String get getName => name;
-  Color get getColor => color;
-  bool get isActive => active;
-  List<AppTimePeriod> get getAppTimePeriods => appTimePeriods;
+  // int get getId => id;
+  // String get getName => name;
+  // Color get getColor => color;
+  // bool get isActive => active;
+  // List<AppTimePeriod> get getAppTimePeriods => appTimePeriods;
 
   String toDayOfWeeksString() {
     String result = '';
 
     for (int i = 0; i < this.dayOfWeeks.length; i++) {
-      int d = this.dayOfWeeks[i];
+      int d = this.dayOfWeeks.elementAt(i);
       String dayString = '';
       if (d == 2) dayString = 'Monday';
       if (d == 3) dayString = 'Tuesday';

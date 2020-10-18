@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/app-schedule/app-schedule-details.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step01.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
@@ -55,7 +56,16 @@ class _AppScheduleState extends State<AppSchedule> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         elevation: 0,
-        onPressed: () {},
+        // route to schedule details screen
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AppScheduleDetails(
+                  schedule: appSchedule,
+                ),
+              ));
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Row(
@@ -104,21 +114,21 @@ class _AppScheduleState extends State<AppSchedule> {
         color: Color(0xffa29bfe),
         id: 1,
         name: 'HOME WORK',
-        dayOfWeeks: [7, 8]));
+        dayOfWeeks: {2, 3}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: null,
         color: Color(0xffff7675),
         id: 2,
         name: 'LEARNING',
-        dayOfWeeks: [2, 8]));
+        dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: null,
         color: Color(0xff00cec9),
         id: 2,
         name: 'WORKING',
-        dayOfWeeks: [3, 5]));
+        dayOfWeeks: {3, 5}));
 
     return schedules;
   }
