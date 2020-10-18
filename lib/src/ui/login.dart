@@ -27,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential _userCredential = await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
-        _userCredential.user.email;
         Navigator.push(
             this.context, MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     return "PLease type an email!";
                   }
                   if (input.length < 6 && _password_field == title) {
-                    return "Your password needs to be atleast 6 characters!";
+                    return "Your password needs to be at least 6 characters!";
                   }
                   return null;
                 },
@@ -170,12 +169,6 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
     );
-//    return CupertinoAlertDialog(
-//      title: Text(msg),
-//      actions: [
-//        CupertinoDialogAction(child: Text("Ok")),
-//      ],
-//    );
   }
 
   Widget _title() {

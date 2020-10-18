@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/login.dart';
@@ -11,17 +12,67 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Name"),
-        _entryField("Email"),
-        _entryField("Password", isPassword: true),
-      ],
-    );
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final String _name_field = "Name";
+  final String _email_field = "Email";
+  final String _password_field = "Password";
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String _email, _password;
+
+  Future<void> signUp() async {
+    final _formState = _formKey.currentState;
+    if (_formState.validate()) {
+      _formState.save();
+      try {
+        UserCredential _userCredential = await auth
+            .createUserWithEmailAndPassword(email: _email, password: _password);
+        Navigator.push(
+            this.context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } catch (e) {
+        print(e);
+        _showErrorDialog(e.message);
+      }
+    }
   }
 
-    Widget _entryField(String title, {bool isPassword = false}) {
+  Future<void> _showErrorDialog(String msg) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login failed!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(msg),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget _emailPasswordWidget() {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            _entryField(_name_field),
+            _entryField(_email_field),
+            _entryField(_password_field, isPassword: true),
+          ],
+        ));
+  }
+
+  Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +82,20 @@ class _SignUpState extends State<SignUp> {
           ),
           Container(
             height: 56.0,
-            child: TextField(
+            child: TextFormField(
+                validator: (input) {
+                  if (input.isEmpty &&
+                      (_email_field == title || _name_field == title)) {
+                    return "This field can't be blank!";
+                  }
+                  if (input.length < 6 && _password_field == title) {
+                    return "Your password needs to be at least 6 characters!";
+                  }
+                  return null;
+                },
+                onSaved: (input) {
+                  _email_field == title ? _email = input : _password = input;
+                },
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
                 obscureText: isPassword,
@@ -40,7 +104,7 @@ class _SignUpState extends State<SignUp> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
                         borderSide:
-                        BorderSide(width: 0, style: BorderStyle.none)),
+                            BorderSide(width: 0, style: BorderStyle.none)),
                     fillColor: Color(0xfff3f3f4),
                     filled: true)),
           )
@@ -57,50 +121,35 @@ class _SignUpState extends State<SignUp> {
         height: 126.0,
       ),
       SizedBox(height: 20),
-//      Text(
-//        'Create Account',
-//        style: TextStyle(
-//          fontFamily: 'Segoe UI',
-//          fontSize: 36,
-//          color: const Color(0xff333232),
-//          fontWeight: FontWeight.w700,
-//        ),
-//        textAlign: TextAlign.left,
-//      ),
-//      Text(
-//        'Create a new account',
-//        style: TextStyle(
-//          fontFamily: 'Segoe UI',
-//          fontSize: 20,
-//          color: const Color(0xff888686),
-//        ),
-//        textAlign: TextAlign.left,
-//      )
     ]);
   }
 
   Widget _signUpButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(25)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [HexColor("#3AB081"), HexColor("#349B72")])),
-      child: Text(
-        'CREATE ACCOUNT',
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
-    );
+    return InkWell(
+        onTap: () {
+          signUp();
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.shade200,
+                    offset: Offset(2, 4),
+                    blurRadius: 5,
+                    spreadRadius: 2)
+              ],
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [HexColor("#3AB081"), HexColor("#349B72")])),
+          child: Text(
+            'CREATE ACCOUNT',
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ));
   }
 
   Widget _signInLabel() {
