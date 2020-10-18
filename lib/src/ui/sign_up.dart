@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/login.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'kid_app.dart';
 
 class SignUp extends StatefulWidget {
@@ -20,29 +21,29 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+    Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Segoe UI',
-              fontSize: 15,
-              color: const Color(0xff333232),
-            ),
-          ),
           SizedBox(
             height: 10,
           ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+          Container(
+            height: 56.0,
+            child: TextField(
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                obscureText: isPassword,
+                decoration: InputDecoration(
+                    hintText: title,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                        borderSide:
+                        BorderSide(width: 0, style: BorderStyle.none)),
+                    fillColor: Color(0xfff3f3f4),
+                    filled: true)),
+          )
         ],
       ),
     );
@@ -50,26 +51,31 @@ class _SignUpState extends State<SignUp> {
 
   Widget _title() {
     return Column(children: <Widget>[
-      SizedBox(height: 10),
-      Text(
-        'Create Account',
-        style: TextStyle(
-          fontFamily: 'Segoe UI',
-          fontSize: 36,
-          color: const Color(0xff333232),
-          fontWeight: FontWeight.w700,
-        ),
-        textAlign: TextAlign.left,
+      Image.asset(
+        CONSTANT.URL_IMG_USER_AVATAR,
+        width: 126.0,
+        height: 126.0,
       ),
-      Text(
-        'Create a new account',
-        style: TextStyle(
-          fontFamily: 'Segoe UI',
-          fontSize: 20,
-          color: const Color(0xff888686),
-        ),
-        textAlign: TextAlign.left,
-      )
+      SizedBox(height: 20),
+//      Text(
+//        'Create Account',
+//        style: TextStyle(
+//          fontFamily: 'Segoe UI',
+//          fontSize: 36,
+//          color: const Color(0xff333232),
+//          fontWeight: FontWeight.w700,
+//        ),
+//        textAlign: TextAlign.left,
+//      ),
+//      Text(
+//        'Create a new account',
+//        style: TextStyle(
+//          fontFamily: 'Segoe UI',
+//          fontSize: 20,
+//          color: const Color(0xff888686),
+//        ),
+//        textAlign: TextAlign.left,
+//      )
     ]);
   }
 
@@ -140,6 +146,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
