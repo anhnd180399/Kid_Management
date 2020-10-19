@@ -5,12 +5,12 @@ import 'package:kid_management/src/ui/app_management.dart';
 import 'package:kid_management/src/ui/common-ui/bottom-navigation-bar.dart';
 
 class HomePage extends StatelessWidget {
-  final String APP_CONTROL = "Apps Control";
-  final String WEB_FILTER = "Web Filter";
-  final String SCREEN_BLOCKING = "Screen Blocking";
-  final String LOCATION_TRACKING = "Location Tracking";
-  final String SCHEDULE = "Schedule";
-  final String ACTIVITY_REPORT = "Activity Report";
+  final String _appControl = "Apps Control";
+  final String _webFilter = "Web Filter";
+  final String _screenBlocking = "Screen Blocking";
+  final String _locationTracking = "Location Tracking";
+  final String _schedule = "Schedule";
+  final String _activityReport = "Activity Report";
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +38,17 @@ class HomePage extends StatelessWidget {
                       mainAxisSpacing: 10.0,
                       crossAxisCount: 2,
                       children: [
-                        _appList(APP_CONTROL, CONSTANT.URL_IMG_APP_CONTROL,
+                        _appList(_appControl, CONSTANT.URL_IMG_APP_CONTROL,
                             AppManagement(), context),
-                        _appList(WEB_FILTER, CONSTANT.URL_IMG_WEB_FILTER, null,
+                        _appList(_webFilter, CONSTANT.URL_IMG_WEB_FILTER, null,
                             context),
-                        _appList(SCREEN_BLOCKING,
+                        _appList(_screenBlocking,
                             CONSTANT.URL_IMG_SCREEN_BLOCKING, null, context),
-                        _appList(LOCATION_TRACKING,
+                        _appList(_locationTracking,
                             CONSTANT.URL_IMG_LOCATION_TRACKING, null, context),
                         _appList(
-                            SCHEDULE, CONSTANT.URL_IMG_SCHEDULE, null, context),
-                        _appList(ACTIVITY_REPORT,
+                            _schedule, CONSTANT.URL_IMG_SCHEDULE, null, context),
+                        _appList(_activityReport,
                             CONSTANT.URL_IMG_ACTIVITY_REPORT, null, context)
                       ]),
                 ),

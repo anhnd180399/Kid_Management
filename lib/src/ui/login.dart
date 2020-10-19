@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/ui/home.dart';
@@ -12,6 +14,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final String _email_field = "Email";
+  final String _password_field = "Password";
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String _email, _password;
+
+  Future<void> signIn() async {
+    final _formState = _formKey.currentState;
+    if (_formState.validate()) {
+      _formState.save();
+      try {
+        UserCredential _userCredential = await auth.signInWithEmailAndPassword(
+            email: _email, password: _password);
+        Navigator.push(
+            this.context, MaterialPageRoute(builder: (context) => HomePage()));
+      } catch (e) {
+        _showErrorDialog(e.message);
+      }
+    }
+  }
+
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
       child: Column(
@@ -22,7 +45,19 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Container(
             height: 56.0,
-            child: TextField(
+            child: TextFormField(
+                validator: (input) {
+                  if (input.isEmpty && _email_field == title) {
+                    return "PLease type an email!";
+                  }
+                  if (input.length < 6 && _password_field == title) {
+                    return "Your password needs to be at least 6 characters!";
+                  }
+                  return null;
+                },
+                onSaved: (input) {
+                  _email_field == title ? _email = input : _password = input;
+                },
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
                 obscureText: isPassword,
@@ -43,8 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        signIn();
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
@@ -111,6 +145,32 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _showErrorDialog(String msg) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login failed!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(msg),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
   Widget _title() {
     return Column(
       children: <Widget>[
@@ -145,11 +205,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Email"),
-        _entryField("Password", isPassword: true),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          _entryField(_email_field),
+          _entryField(_password_field, isPassword: true),
+        ],
+      ),
     );
   }
 
