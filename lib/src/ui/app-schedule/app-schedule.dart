@@ -1,8 +1,8 @@
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/app-schedule/app-schedule-details.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step01.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
@@ -48,18 +48,59 @@ class _AppScheduleState extends State<AppSchedule> {
   }
 
   Widget _appSchedule(AppScheduleModel appSchedule) {
+    String daysOfWeek = appSchedule.toDayOfWeeksString();
+
     return Container(
-      height: 60.0,
       margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
       child: RaisedButton(
-        onPressed: () {},
-        child: Text(
-          appSchedule.name,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        elevation: 0,
+        // route to schedule details screen
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AppScheduleDetails(
+                  schedule: appSchedule,
+                ),
+              ));
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    appSchedule.name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20.0),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    daysOfWeek,
+                    style: TextStyle(color: AppColor.grayDark, fontSize: 14.0),
+                  )
+                ],
+              ),
+              Visibility(
+                  visible: appSchedule.active,
+                  child: SvgPicture.asset(
+                    'assets/images/app-schedule/checked.svg',
+                    width: 22.0,
+                  ))
+            ],
+          ),
         ),
-        color: appSchedule.active
-            ? appSchedule.color
-            : appSchedule.color.withOpacity(0.5),
+        color: AppColor.grayLight,
       ),
     );
   }
@@ -72,19 +113,22 @@ class _AppScheduleState extends State<AppSchedule> {
         appTimePeriods: null,
         color: Color(0xffa29bfe),
         id: 1,
-        name: 'HOME WORK'));
+        name: 'HOME WORK',
+        dayOfWeeks: {2, 3}));
     schedules.add(AppScheduleModel(
-        active: true,
+        active: false,
         appTimePeriods: null,
         color: Color(0xffff7675),
         id: 2,
-        name: 'LEARNING'));
+        name: 'LEARNING',
+        dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
-        active: true,
+        active: false,
         appTimePeriods: null,
         color: Color(0xff00cec9),
         id: 2,
-        name: 'WORKING'));
+        name: 'WORKING',
+        dayOfWeeks: {3, 5}));
 
     return schedules;
   }
