@@ -26,32 +26,34 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: deviceHeight * 0.21),
-                  height: deviceHeight * 0.58,
-                  child: GridView.count(
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                      crossAxisCount: 2,
-                      children: [
-                        _appList(_appControl, CONSTANT.URL_IMG_APP_CONTROL,
-                            AppManagement(), context),
-                        _appList(_webFilter, CONSTANT.URL_IMG_WEB_FILTER, null,
-                            context),
-                        _appList(_screenBlocking,
-                            CONSTANT.URL_IMG_SCREEN_BLOCKING, null, context),
-                        _appList(_locationTracking,
-                            CONSTANT.URL_IMG_LOCATION_TRACKING, null, context),
-                        _appList(
-                            _schedule, CONSTANT.URL_IMG_SCHEDULE, null, context),
-                        _appList(_activityReport,
-                            CONSTANT.URL_IMG_ACTIVITY_REPORT, null, context)
-                      ]),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: deviceHeight * 0.21),
+                    height: double.infinity,
+                    child: GridView.count(
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                        crossAxisCount: 2,
+                        children: [
+                          _appList(_appControl, CONSTANT.URL_IMG_APP_CONTROL,
+                              AppManagement(), context),
+                          _appList(_webFilter, CONSTANT.URL_IMG_WEB_FILTER, null,
+                              context),
+                          _appList(_screenBlocking,
+                              CONSTANT.URL_IMG_SCREEN_BLOCKING, null, context),
+                          _appList(_locationTracking,
+                              CONSTANT.URL_IMG_LOCATION_TRACKING, null, context),
+                          _appList(
+                              _schedule, CONSTANT.URL_IMG_SCHEDULE, null, context),
+                          _appList(_activityReport,
+                              CONSTANT.URL_IMG_ACTIVITY_REPORT, null, context)
+                        ]),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
