@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/app_management.dart';
-import 'package:kid_management/src/ui/common-ui/bottom-navigation-bar.dart';
 
 class HomePage extends StatelessWidget {
   final String _appControl = "Apps Control";
