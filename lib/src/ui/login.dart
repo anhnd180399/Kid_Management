@@ -5,6 +5,7 @@ import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/ui/home.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
+import 'package:kid_management/src/ui/master_page.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential _userCredential = await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
         Navigator.push(
-            this.context, MaterialPageRoute(builder: (context) => HomePage()));
+            this.context, MaterialPageRoute(builder: (context) => MasterPage()));
       } catch (e) {
         _showErrorDialog(e.message);
       }
@@ -167,8 +168,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           );
-        }
-    );
+        });
   }
 
   Widget _title() {
