@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/ui/home.dart';
+import 'package:kid_management/src/ui/home_v2.dart';
 import 'package:kid_management/src/ui/notification/notification.dart';
 import 'package:kid_management/src/ui/user-profile/user_profile.dart';
 
@@ -12,7 +12,7 @@ class MasterPage extends StatefulWidget {
 // Master screen to navigate another screens using bottom nav bar
 class _MasterPageState extends State<MasterPage> {
   // List of all main screens to navigate
-  List<Widget> _pages = [UserProfileScreen(), HomePage(), NotificationScreen()];
+  List<Widget> _pages = [UserProfileScreen(), Home2(), NotificationScreen()];
 
   // default selected index: 1, that mean default screen is HomePage()
   int _selectedIndex = 1;

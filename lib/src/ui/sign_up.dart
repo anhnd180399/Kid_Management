@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/ui/login.dart';
-import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/login.dart';
+
 import 'kid_app.dart';
 
 class SignUp extends StatefulWidget {

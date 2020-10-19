@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step02.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
-import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class CreateAppScheduleStep01 extends StatefulWidget {
   @override

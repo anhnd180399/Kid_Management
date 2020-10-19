@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kid_management/src/ui/sign_up.dart';
-import 'login.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/sign_up.dart';
+
+import 'login.dart';
 
 class KidApp extends StatefulWidget {
   @override

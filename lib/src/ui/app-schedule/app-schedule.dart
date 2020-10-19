@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/app-schedule/app-schedule-details.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step01.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
-import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class AppSchedule extends StatefulWidget {
   List<AppScheduleModel> appSchedules = [];
