@@ -17,7 +17,7 @@ class _SignUpState extends State<SignUp> {
   final String _email_field = "Email";
   final String _password_field = "Password";
   FirebaseAuth auth = FirebaseAuth.instance;
-  String _email, _password;
+  String _name, _email, _password;
 
   Future<void> signUp() async {
     final _formState = _formKey.currentState;
@@ -26,6 +26,10 @@ class _SignUpState extends State<SignUp> {
       try {
         UserCredential _userCredential = await auth
             .createUserWithEmailAndPassword(email: _email, password: _password);
+        var user = auth.currentUser;
+        user.updateProfile(
+            displayName: _name_field
+        );
         Navigator.push(
             this.context, MaterialPageRoute(builder: (context) => LoginPage()));
       } catch (e) {
@@ -94,7 +98,13 @@ class _SignUpState extends State<SignUp> {
                   return null;
                 },
                 onSaved: (input) {
-                  _email_field == title ? _email = input : _password = input;
+                  if (_name_field == title) {
+                    _name = input;
+                  } else if (_email_field == title) {
+                    _email = input;
+                  } else {
+                    _password = input;
+                  }
                 },
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
