@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/home.dart';
+import 'package:kid_management/src/ui/notification/notification.dart';
 import 'package:kid_management/src/ui/user-profile/user_profile.dart';
 
 class MasterPage extends StatefulWidget {
@@ -10,17 +11,21 @@ class MasterPage extends StatefulWidget {
 
 // Master screen to navigate another screens using bottom nav bar
 class _MasterPageState extends State<MasterPage> {
-  List<Widget> _pages = [UserProfileScreen(), HomePage()];
+  // List of all main screens to navigate
+  List<Widget> _pages = [UserProfileScreen(), HomePage(), NotificationScreen()];
 
+  // default selected index: 1, that mean default screen is HomePage()
   int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        // hide label text of bottom nav bar
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
@@ -58,6 +63,7 @@ class _MasterPageState extends State<MasterPage> {
               ),
               title: Text(''))
         ],
+        // switch selected index
         onTap: (value) {
           setState(() {
             _selectedIndex = value;
