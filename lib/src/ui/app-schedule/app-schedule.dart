@@ -111,21 +111,18 @@ class _AppScheduleState extends State<AppSchedule> {
     schedules.add(AppScheduleModel(
         active: true,
         appTimePeriods: null,
-        color: Color(0xffa29bfe),
         id: 1,
         name: 'HOME WORK',
         dayOfWeeks: {2, 3}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: null,
-        color: Color(0xffff7675),
         id: 2,
         name: 'LEARNING',
         dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: null,
-        color: Color(0xff00cec9),
         id: 2,
         name: 'WORKING',
         dayOfWeeks: {3, 5}));

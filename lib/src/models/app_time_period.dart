@@ -4,12 +4,8 @@ class AppTimePeriod {
   int id;
   DateTime startTime;
   DateTime endTime;
-  List<Application> apps;
+  List<String> appPaths;
 
-  AppTimePeriod({this.id, this.startTime, this.endTime, this.apps});
+  AppTimePeriod({this.id, this.startTime, this.endTime, this.appPaths});
 
-  List<ApplicationWithIcon> get getApps => apps;
-  DateTime get getStartTime => startTime;
-  DateTime get getEndTime => endTime;
-  int get getId => id;
 }

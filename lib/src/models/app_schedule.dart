@@ -1,21 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
 
 class AppScheduleModel {
   int id;
   String name;
-  Color color;
   bool active;
   List<AppTimePeriod> appTimePeriods;
   Set<int> dayOfWeeks;
 
   AppScheduleModel(
-      {this.id,
-      this.name,
-      this.color,
-      this.active,
-      this.appTimePeriods,
-      this.dayOfWeeks});
+      {this.id, this.name, this.active, this.appTimePeriods, this.dayOfWeeks});
 
   // int get getId => id;
   // String get getName => name;
