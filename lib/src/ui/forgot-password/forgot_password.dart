@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/forgot-password/forgot_password_pin_code.dart';
 
 class ForgotPassword extends StatefulWidget {
   @override
@@ -67,10 +68,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               height: 50.0,
               child: RaisedButton(
                 color: AppColor.mainColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                onPressed: () {},
-                child: Text('get pin code'.toUpperCase(),
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordPinCode(),
+                      ));
+                },
+                child: Text(
+                  'get pin code'.toUpperCase(),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             )
