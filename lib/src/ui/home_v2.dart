@@ -15,21 +15,26 @@ class _Home2State extends State<Home2> {
     Feature(label: 'Device Control', icon: 'screen.svg', route: null),
     Feature(label: 'Location', icon: 'location.svg', route: null),
     Feature(label: 'Report', icon: 'report.svg', route: null),
-
   ];
 
   Widget _featureCard(Feature feature, BuildContext context) {
     String baseUrl = 'assets/images/main_dashboard/';
     return InkWell(
-      onTap: (){
-        if(feature.route != null){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => feature.route));
-        }
-        else{
-          showDialog(context: context, builder: (context) => AlertDialog(
-            content: Text('This feature will be coming soon'),
-            title: Text("Woops! We're sorry for this inconvenient", style: TextStyle(fontWeight: FontWeight.bold),),
-          ),);
+      onTap: () {
+        if (feature.route != null) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => feature.route));
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text('This feature will be coming soon'),
+              title: Text(
+                "Woops! We're sorry for this inconvenient",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          );
         }
       },
       child: Card(
@@ -41,7 +46,9 @@ class _Home2State extends State<Home2> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(baseUrl + feature.icon, width: 50.0),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Text(
                 feature.label.toUpperCase(),
                 style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
@@ -65,9 +72,17 @@ class _Home2State extends State<Home2> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Welcome, Duy!'.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),),
+                  Text(
+                    'Welcome, Duy!'.toUpperCase(),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  ),
                   // Image.asset(constant.URL_IMG_KID_SPACE_LOGO, width: 80.0,),
-                  Icon(Icons.dashboard, color: AppColor.mainColor, size: 50.0,)
+                  Icon(
+                    Icons.dashboard,
+                    color: AppColor.mainColor,
+                    size: 50.0,
+                  )
                 ],
               ),
             ),

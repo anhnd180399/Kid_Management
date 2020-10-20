@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
 
 class AppScheduleModel {
