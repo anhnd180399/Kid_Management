@@ -125,11 +125,10 @@ class _SignUpState extends State<SignUp> {
   Widget _title() {
     return Column(children: <Widget>[
       Image.asset(
-        CONSTANT.URL_IMG_USER_AVATAR,
-        width: 126.0,
-        height: 126.0,
+        CONSTANT.URL_IMG_KID_SPACE_LOGO,
+        width: 140.0,
       ),
-      SizedBox(height: 20),
+      Text("Let's get started with KidSpace", style: TextStyle(fontSize: 16.0, color: AppColor.grayDark))
     ]);
   }
 
@@ -142,7 +141,7 @@ class _SignUpState extends State<SignUp> {
           padding: EdgeInsets.symmetric(vertical: 15),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     color: Colors.grey.shade200,
