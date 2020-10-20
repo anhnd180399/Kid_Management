@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/forgot-password/forgot_password.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:kid_management/src/ui/master_page.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
@@ -27,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential _userCredential = await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
-        Navigator.push(
-            this.context, MaterialPageRoute(builder: (context) => MasterPage()));
+        Navigator.push(this.context,
+            MaterialPageRoute(builder: (context) => MasterPage()));
       } catch (e) {
         _showErrorDialog(e.message);
       }
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
                         borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
+                        BorderSide(width: 0, style: BorderStyle.none)),
                     fillColor: Color(0xfff3f3f4),
                     filled: true)),
           )
@@ -253,7 +254,10 @@ class _LoginPageState extends State<LoginPage> {
                 _title(),
                 SizedBox(height: 50),
                 _emailPasswordWidget(),
-                _forgotAccountLabel(),
+                InkWell(onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ForgotPassword()));
+                }, child: _forgotAccountLabel()),
                 SizedBox(
                   height: 20.0,
                 ),
