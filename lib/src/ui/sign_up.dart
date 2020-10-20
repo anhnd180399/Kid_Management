@@ -84,7 +84,6 @@ class _SignUpState extends State<SignUp> {
             height: 10,
           ),
           Container(
-            height: 56.0,
             child: TextFormField(
                 validator: (input) {
                   if (input.isEmpty &&

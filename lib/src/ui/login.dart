@@ -45,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           Container(
-            height: 56.0,
             child: TextFormField(
                 validator: (input) {
                   if (input.isEmpty && _email_field == title) {
