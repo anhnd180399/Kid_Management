@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
                         borderSide:
-                        BorderSide(width: 0, style: BorderStyle.none)),
+                            BorderSide(width: 0, style: BorderStyle.none)),
                     fillColor: Color(0xfff3f3f4),
                     filled: true)),
           )
@@ -254,10 +254,14 @@ class _LoginPageState extends State<LoginPage> {
                 _title(),
                 SizedBox(height: 50),
                 _emailPasswordWidget(),
-                InkWell(onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ForgotPassword()));
-                }, child: _forgotAccountLabel()),
+                InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPassword()));
+                    },
+                    child: _forgotAccountLabel()),
                 SizedBox(
                   height: 20.0,
                 ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/resources/constant.dart' as constant;
+import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/forgot-password/reset_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgotPasswordPinCode extends StatefulWidget {
@@ -50,25 +51,38 @@ class _ForgotPasswordPinCodeState extends State<ForgotPasswordPinCode> {
             ),
             // PIN code Text field
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
               child: PinCodeTextField(
                 appContext: context,
                 autoFocus: true,
                 controller: TextEditingController(text: _currentPinCode),
                 length: 6,
+                onSubmitted: (value) {
+                  if (_isValidPinCode) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResetPassword(),
+                        ));
+                  }
+                },
                 onChanged: (value) {
                   // set current pin code value every time user input a number
                   _currentPinCode = value;
                 },
                 onCompleted: (value) {
                   // automatically navigate to next screen if user types a valid pin code
-                  if(_isValidPinCode){
+                  if (_isValidPinCode) {
                     setState(() {
                       _textFieldActiveColor = AppColor.mainColor;
                     });
-
-                  }
-                  else{
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResetPassword(),
+                        ));
+                  } else {
                     setState(() {
                       _textFieldActiveColor = Colors.redAccent;
                     });

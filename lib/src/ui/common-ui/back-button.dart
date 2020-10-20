@@ -16,8 +16,7 @@ class GoBackButton extends StatelessWidget {
           // check if keyboard is currently active then close it before pop screen
           if (MediaQuery.of(context).viewInsets.bottom != 0) {
             FocusScope.of(context).unfocus();
-          }
-          else{
+          } else {
             Navigator.of(context).pop();
           }
         },

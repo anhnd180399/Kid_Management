@@ -9,7 +9,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text('Notification Screen'),),
+      child: Center(
+        child: Text('Notification Screen'),
+      ),
     );
   }
 }

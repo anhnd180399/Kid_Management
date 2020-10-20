@@ -8,8 +8,6 @@ class AppBlocking extends StatefulWidget {
 class _AppBlockingState extends State<AppBlocking> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Container();
   }
 }

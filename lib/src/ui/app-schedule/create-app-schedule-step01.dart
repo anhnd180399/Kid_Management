@@ -66,8 +66,7 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
               height: 20.0,
             ),
             Text(HEAD_TITLE,
-                style:
-                    TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600)),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600)),
             SizedBox(
               height: 10.0,
             ),

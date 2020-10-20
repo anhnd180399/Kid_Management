@@ -28,9 +28,7 @@ class _SignUpState extends State<SignUp> {
         UserCredential _userCredential = await auth
             .createUserWithEmailAndPassword(email: _email, password: _password);
         var user = auth.currentUser;
-        user.updateProfile(
-            displayName: _name_field
-        );
+        user.updateProfile(displayName: _name_field);
         Navigator.push(
             this.context, MaterialPageRoute(builder: (context) => LoginPage()));
       } catch (e) {
