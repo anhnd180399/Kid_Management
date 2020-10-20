@@ -37,6 +37,9 @@ dependencies:
   intl: ^0.16.1
   # library to display toast message on the screen
   fluttertoast: ^7.1.1
+  # sqlite database library
+  sqflite: ^1.3.1+1
+  path: ^1.7.0
 
 
   # The following adds the Cupertino Icons font to your application.
