@@ -67,6 +67,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     borderRadius: BorderRadius.circular(30.0)),
                 child: Center(
                   child: TextField(
+                    autofocus: true,
+                    autocorrect: false,
+                    keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
                       if (value.length > 0 && value.isEmail()) {
                         setState(() {
