@@ -19,57 +19,60 @@ class _MasterPageState extends State<MasterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: _pages[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        // hide label text of bottom nav bar
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-              activeIcon:
-                  Icon(Icons.person, size: 35.0, color: AppColor.mainColor),
-              icon: Icon(
-                Icons.person_outline,
-                size: 35.0,
-                color: AppColor.mainColor,
-              ),
-              title: Text('')),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_outlined,
-                size: 35.0,
-                color: AppColor.mainColor,
-              ),
-              activeIcon: Icon(
-                Icons.home,
-                size: 35.0,
-                color: AppColor.mainColor,
-              ),
-              title: Text('')),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.notifications_none,
-                size: 35.0,
-                color: AppColor.mainColor,
-              ),
-              activeIcon: Icon(
-                Icons.notifications,
-                size: 35.0,
-                color: AppColor.mainColor,
-              ),
-              title: Text(''))
-        ],
-        // switch selected index
-        onTap: (value) {
-          setState(() {
-            _selectedIndex = value;
-          });
-        },
-        currentIndex: _selectedIndex,
+    return WillPopScope(
+      onWillPop: (){},
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Container(
+          child: _pages[_selectedIndex],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          // hide label text of bottom nav bar
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+                activeIcon:
+                    Icon(Icons.person, size: 35.0, color: AppColor.mainColor),
+                icon: Icon(
+                  Icons.person_outline,
+                  size: 35.0,
+                  color: AppColor.mainColor,
+                ),
+                title: Text('')),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 35.0,
+                  color: AppColor.mainColor,
+                ),
+                activeIcon: Icon(
+                  Icons.home,
+                  size: 35.0,
+                  color: AppColor.mainColor,
+                ),
+                title: Text('')),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.notifications_none,
+                  size: 35.0,
+                  color: AppColor.mainColor,
+                ),
+                activeIcon: Icon(
+                  Icons.notifications,
+                  size: 35.0,
+                  color: AppColor.mainColor,
+                ),
+                title: Text(''))
+          ],
+          // switch selected index
+          onTap: (value) {
+            setState(() {
+              _selectedIndex = value;
+            });
+          },
+          currentIndex: _selectedIndex,
+        ),
       ),
     );
   }
