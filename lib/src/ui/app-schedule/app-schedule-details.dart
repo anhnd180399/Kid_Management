@@ -5,6 +5,7 @@ import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app_control_list.dart';
+import 'package:kid_management/src/ui/app-schedule/delete_schedule_page.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class AppScheduleDetails extends StatefulWidget {
@@ -17,7 +18,6 @@ class AppScheduleDetails extends StatefulWidget {
 }
 
 class _AppScheduleDetailsState extends State<AppScheduleDetails> {
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,13 +31,20 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
           size: 35.0,
         ),
         actions: [
+          // delete schedule button
           IconButton(
               icon: Icon(
                 Icons.delete_forever,
                 color: AppColor.mainColor,
                 size: 35.0,
               ),
-              onPressed: () {})
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DeleteSchedulePage(),
+                    ));
+              })
         ],
       ),
       body: Container(

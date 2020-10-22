@@ -65,7 +65,11 @@ class _AppScheduleState extends State<AppSchedule> {
                 builder: (context) => AppScheduleDetails(
                   schedule: appSchedule,
                 ),
-              ));
+              )).then((value) {
+                setState(() {
+
+                });
+          });
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
