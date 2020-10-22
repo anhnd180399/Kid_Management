@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
@@ -105,35 +106,10 @@ class _AppScheduleState extends State<AppSchedule> {
     );
   }
 
-// create fake data
-  List<AppScheduleModel> _appSchedules() {
-    List<AppScheduleModel> schedules = [];
-    schedules.add(AppScheduleModel(
-        active: true,
-        appTimePeriods: null,
-        id: 1,
-        name: 'HOME WORK',
-        dayOfWeeks: {2, 3}));
-    schedules.add(AppScheduleModel(
-        active: false,
-        appTimePeriods: null,
-        id: 2,
-        name: 'LEARNING',
-        dayOfWeeks: {2, 8}));
-    schedules.add(AppScheduleModel(
-        active: false,
-        appTimePeriods: null,
-        id: 2,
-        name: 'WORKING',
-        dayOfWeeks: {3, 5}));
-
-    return schedules;
-  }
-
   @override
   Widget build(BuildContext context) {
     // generate fake data
-    widget.appSchedules = _appSchedules();
+    widget.appSchedules = FakeData.appSchedules();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -144,43 +120,41 @@ class _AppScheduleState extends State<AppSchedule> {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
-        body: Container(
-          child: Column(children: [
-            SizedBox(
-              height: 10.0,
+        body: Column(children: [
+          SizedBox(
+            height: 10.0,
+          ),
+          Center(
+            child: Text(
+              'YOUR APP SCHEDULE',
+              style: TextStyle(fontSize: 25.0),
             ),
-            Center(
-              child: Text(
-                'YOUR APP SCHEDULE',
-                style: TextStyle(fontSize: 25.0),
-              ),
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Center(
+            child: Text(
+              'Build your schedule to use apps',
+              style: TextStyle(
+                  fontSize: 16.0, color: Colors.black.withOpacity(0.5)),
             ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Center(
-              child: Text(
-                'Build your schedule to use apps',
-                style: TextStyle(
-                    fontSize: 16.0, color: Colors.black.withOpacity(0.5)),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            Container(
-              child: widget.appSchedules.length > 0
-                  ? Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          var schedule = widget.appSchedules[index];
-                          return _appSchedule(schedule);
-                        },
-                        itemCount: widget.appSchedules.length,
-                      ),
-                    )
-                  : _emptySchedule(),
-            )
-          ]),
-        ),
+          ),
+          SizedBox(height: 20.0),
+          Container(
+            child: widget.appSchedules.length > 0
+                ? Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        var schedule = widget.appSchedules[index];
+                        return _appSchedule(schedule);
+                      },
+                      itemCount: widget.appSchedules.length,
+                    ),
+                  )
+                : _emptySchedule(),
+          )
+        ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(

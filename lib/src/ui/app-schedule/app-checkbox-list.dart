@@ -9,7 +9,7 @@ class AppCheckboxList extends StatefulWidget {
 }
 
 class _AppCheckboxListState extends State<AppCheckboxList> {
-  bool showSystemApps = false;
+  bool showSystemApps = true;
   bool isSelected = false;
 
   Future<List<Application>> _getApps() async {

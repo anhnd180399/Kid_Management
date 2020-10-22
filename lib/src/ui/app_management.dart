@@ -149,7 +149,7 @@ class _AppManagementState extends State<AppManagement> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'CONTROL APPS',
+          'APPS CONTROL',
           style: TextStyle(
               color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),
         ),

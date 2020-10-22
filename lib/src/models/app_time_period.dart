@@ -1,8 +1,11 @@
+
+import 'package:kid_management/src/models/my_app.dart';
+
 class AppTimePeriod {
   int id;
-  DateTime startTime;
-  DateTime endTime;
-  List<String> appPaths;
+  String startTime;
+  String endTime;
+  List<MyApp> apps;
 
-  AppTimePeriod({this.id, this.startTime, this.endTime, this.appPaths});
+  AppTimePeriod({this.id, this.startTime, this.endTime, this.apps});
 }

@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
+import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/app-schedule/app_control_list.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class AppScheduleDetails extends StatefulWidget {
@@ -15,8 +17,10 @@ class AppScheduleDetails extends StatefulWidget {
 }
 
 class _AppScheduleDetailsState extends State<AppScheduleDetails> {
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -36,55 +40,46 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
               onPressed: () {})
         ],
       ),
-      body: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                    child: Transform.scale(
-                  scale: 1.5,
-                  child: Switch(
-                    value: widget.schedule.active,
-                    activeColor: AppColor.mainColor,
-                    onChanged: (value) {
-                      setState(() {
-                        widget.schedule.active = value;
-                      });
-                    },
-                  ),
-                )),
-                // schedule name here
-                TextField(
-                  textAlign: TextAlign.center,
-                  controller: TextEditingController(
-                      text: widget.schedule.name.toUpperCase()),
-                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2.0,
-                              color: AppColor.mainColor,
-                              style: BorderStyle.solid))),
-                ),
-                // the list of controlling apps
-                Container(
-                  child: widget.schedule.appTimePeriods == null
-                      ? _emptyApp()
-                      : _appList(),
-                )
-              ],
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        child: Column(
+          children: [
+            Transform.scale(
+              scale: 1.5,
+              child: Switch(
+                value: widget.schedule.active,
+                activeColor: AppColor.mainColor,
+                onChanged: (value) {
+                  setState(() {
+                    widget.schedule.active = value;
+                  });
+                },
+              ),
             ),
-          ),
-          Positioned(
-              left: 0,
-              right: 0,
-              bottom: 10.0,
-              child: DayOfWeeks(dayOfWeeks: widget.schedule.dayOfWeeks))
-        ],
+            // schedule name here
+            TextField(
+              textAlign: TextAlign.center,
+              controller: TextEditingController(
+                  text: widget.schedule.name.toUpperCase()),
+              style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2.0,
+                          color: AppColor.mainColor,
+                          style: BorderStyle.solid))),
+            ),
+            // the list of controlling apps
+            widget.schedule.appTimePeriods == null
+                ? _emptyApp()
+                : AppControlList(appScheduleModel: widget.schedule),
+            // Container(
+            //   height: 100.0,
+            // )
+            DayOfWeeks(dayOfWeeks: widget.schedule.dayOfWeeks)
+          ],
+        ),
       ),
     );
   }
@@ -103,8 +98,6 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
       ],
     );
   }
-
-  Widget _appList() {}
 }
 
 class DayOfWeeks extends StatefulWidget {
@@ -152,15 +145,18 @@ class _DayOfWeeksState extends State<DayOfWeeks> {
         padding: EdgeInsets.symmetric(vertical: 5.0),
         child: Text('DAYS OF WEEK'),
       ),
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        _dayOfWeekChip('mon', 2, this.widget.dayOfWeeks.contains(2)),
-        _dayOfWeekChip('tue', 3, this.widget.dayOfWeeks.contains(3)),
-        _dayOfWeekChip('wed', 4, this.widget.dayOfWeeks.contains(4)),
-        _dayOfWeekChip('thu', 5, this.widget.dayOfWeeks.contains(5)),
-        _dayOfWeekChip('fri', 6, this.widget.dayOfWeeks.contains(6)),
-        _dayOfWeekChip('sat', 7, this.widget.dayOfWeeks.contains(7)),
-        _dayOfWeekChip('sun', 8, this.widget.dayOfWeeks.contains(8))
-      ])
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          _dayOfWeekChip('mon', 2, this.widget.dayOfWeeks.contains(2)),
+          _dayOfWeekChip('tue', 3, this.widget.dayOfWeeks.contains(3)),
+          _dayOfWeekChip('wed', 4, this.widget.dayOfWeeks.contains(4)),
+          _dayOfWeekChip('thu', 5, this.widget.dayOfWeeks.contains(5)),
+          _dayOfWeekChip('fri', 6, this.widget.dayOfWeeks.contains(6)),
+          _dayOfWeekChip('sat', 7, this.widget.dayOfWeeks.contains(7)),
+          _dayOfWeekChip('sun', 8, this.widget.dayOfWeeks.contains(8))
+        ]),
+      )
     ]);
   }
 }
