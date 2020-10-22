@@ -40,7 +40,7 @@ class _LocationHistoryItemState extends State<LocationHistoryItem> {
                 itemBuilder: (context, index) {
                   var addressHistory =
                   widget.locationHistory.addressHistories[index];
-                  return AddressHistoryItem(
+                  return AddressHistoryCard(
                     addressHistory: addressHistory,
                   );
                 },

@@ -20,7 +20,7 @@ class _MasterPageState extends State<MasterPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: (){},
+      onWillPop: () {},
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -53,15 +53,55 @@ class _MasterPageState extends State<MasterPage> {
                 ),
                 title: Text('')),
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: 35.0,
-                  color: AppColor.mainColor,
+                activeIcon: Stack(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      size: 35.0,
+                      color: AppColor.mainColor,
+                    ),
+                    Positioned(
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Text(
+                            '10',
+                            textAlign: TextAlign.center,
+                            style:
+                            TextStyle(color: Colors.white, fontSize: 10.0),
+                          ),
+                          constraints: BoxConstraints(
+                              minWidth: 20.0, maxHeight: 20.0, maxWidth: 25.0),
+                        ))
+                  ],
                 ),
-                activeIcon: Icon(
-                  Icons.notifications,
-                  size: 35.0,
-                  color: AppColor.mainColor,
+                icon: Stack(
+                  children: [
+                    Icon(
+                      Icons.notifications_none,
+                      size: 35.0,
+                      color: AppColor.mainColor,
+                    ),
+                    Positioned(
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Text(
+                            '10',
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 10.0),
+                          ),
+                          constraints: BoxConstraints(
+                              minWidth: 20.0, maxHeight: 20.0, maxWidth: 25.0),
+                        ))
+                  ],
                 ),
                 title: Text(''))
           ],

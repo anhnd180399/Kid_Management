@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/resources/colors.dart';
 
-class AddressHistoryItem extends StatefulWidget {
+class AddressHistoryCard extends StatefulWidget {
   AddressHistory addressHistory;
 
-  AddressHistoryItem({this.addressHistory});
+  AddressHistoryCard({this.addressHistory});
 
   @override
   _LocationHistoryItemState createState() => _LocationHistoryItemState();
 }
 
-class _LocationHistoryItemState extends State<AddressHistoryItem> {
+class _LocationHistoryItemState extends State<AddressHistoryCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
