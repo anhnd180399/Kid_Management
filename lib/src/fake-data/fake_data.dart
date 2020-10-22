@@ -1,5 +1,7 @@
+import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
+import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/models/my_app.dart';
 
 // class to generate fake data for whole app
@@ -71,5 +73,26 @@ class FakeData {
 
   static List<MyApp> allApps(){
     return appListOne() + appListTwo() + appListThree();
+  }
+
+  static List<LocationHistory> recentLocationHistories(){
+    return [
+      LocationHistory(
+        id: 1,
+        date: '21/10/2020',
+        addressHistories: [
+          AddressHistory(address: '107 Lê Văn Việt, Q9, TP.HCM', time: '8:20 AM'),
+          AddressHistory(address: 'Phú Hữu, Q9, TP.HCM', time: '9:20 AM')
+        ]
+      ),
+      LocationHistory(
+          id: 2,
+          date: '20/10/2020',
+          addressHistories: [
+            AddressHistory(address: 'Vũng Tàu, Vietnam', time: '10:00 AM'),
+            AddressHistory(address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
+          ]
+      )
+    ];
   }
 }
