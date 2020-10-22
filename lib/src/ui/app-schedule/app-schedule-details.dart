@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
@@ -51,14 +52,17 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           children: [
+            // switch button to toggle on or off sate of the schedule
             Transform.scale(
               scale: 1.5,
               child: Switch(
                 value: widget.schedule.active,
                 activeColor: AppColor.mainColor,
                 onChanged: (value) {
+                  String status = value == true ? 'ON' : 'OFF';
                   setState(() {
                     widget.schedule.active = value;
+                    Fluttertoast.showToast(msg: 'Schedule is $status', gravity: ToastGravity.CENTER, backgroundColor: AppColor.grayDark, textColor: Colors.white);
                   });
                 },
               ),

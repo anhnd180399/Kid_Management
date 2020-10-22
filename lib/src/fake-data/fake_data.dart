@@ -31,29 +31,45 @@ class FakeData {
 
   static List<AppTimePeriod> appTimePeriods() {
     List<AppTimePeriod> periods = [
-      AppTimePeriod(id: 1, startTime: '7:00 AM', endTime: '9:00 AM', apps: [
-        MyApp(
-            name: 'Dog Care', icon: 'assets/images/app-icons/cocker-spaniel.svg'),
-        MyApp(
-            name: 'Game Center', icon: 'assets/images/app-icons/game-controller.svg'),
-        MyApp(name: 'Grapes', icon: 'assets/images/app-icons/grapes.svg')
-      ]),
-      AppTimePeriod(id: 2, startTime: '6:00 PM', endTime: '9:00 PM', apps: [
-        MyApp(
-            name: 'Global Health', icon: 'assets/images/app-icons/healthcare.svg'),
-        MyApp(
-            name: 'Corona Mask', icon: 'assets/images/app-icons/mask.svg'),
-        MyApp(name: 'Water Fill', icon: 'assets/images/app-icons/mollusc.svg')
-      ]),
-      AppTimePeriod(id: 3, startTime: '1:00 PM', endTime: '4:00 PM', apps: [
-        MyApp(
-            name: 'Moneymate', icon: 'assets/images/app-icons/money-bag.svg'),
-        MyApp(
-            name: 'Tree Chrismas', icon: 'assets/images/app-icons/tree.svg'),
-        MyApp(name: 'Turtle Ocean', icon: 'assets/images/app-icons/turtle.svg')
-      ])
+      AppTimePeriod(id: 1, startTime: '7:00 AM', endTime: '9:00 AM', apps: appListOne()),
+      AppTimePeriod(id: 2, startTime: '6:00 PM', endTime: '9:00 PM', apps: appListTwo()),
+      AppTimePeriod(id: 3, startTime: '1:00 PM', endTime: '4:00 PM', apps: appListThree())
     ];
 
     return periods;
+  }
+
+  static List<MyApp> appListOne(){
+    return [
+      MyApp(
+          name: 'Dog Care', icon: 'assets/images/app-icons/cocker-spaniel.svg'),
+      MyApp(
+          name: 'Game Center', icon: 'assets/images/app-icons/game-controller.svg'),
+      MyApp(name: 'Grapes', icon: 'assets/images/app-icons/grapes.svg')
+    ];
+  }
+
+  static List<MyApp> appListTwo(){
+    return [
+      MyApp(
+          name: 'Global Health', icon: 'assets/images/app-icons/healthcare.svg'),
+      MyApp(
+          name: 'Corona Mask', icon: 'assets/images/app-icons/mask.svg'),
+      MyApp(name: 'Water Fill', icon: 'assets/images/app-icons/mollusc.svg')
+    ];
+  }
+
+  static List<MyApp> appListThree(){
+    return [
+      MyApp(
+          name: 'Moneymate', icon: 'assets/images/app-icons/money-bag.svg'),
+      MyApp(
+          name: 'Tree Chrismas', icon: 'assets/images/app-icons/tree.svg'),
+      MyApp(name: 'Turtle Ocean', icon: 'assets/images/app-icons/turtle.svg')
+    ];
+  }
+
+  static List<MyApp> allApps(){
+    return appListOne() + appListTwo() + appListThree();
   }
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/app-schedule/EditTimePeriod.dart';
 
 class AppControlList extends StatefulWidget {
   AppScheduleModel appScheduleModel;
-
 
   AppControlList({this.appScheduleModel});
 
@@ -19,9 +20,8 @@ class _AppControlListState extends State<AppControlList> {
   List<bool> _timePeriodsCollapse = [];
 
   @override
-  initState(){
+  initState() {
     super.initState();
-
   }
 
   Widget _appListItem(MyApp app) {
@@ -50,7 +50,7 @@ class _AppControlListState extends State<AppControlList> {
   @override
   Widget build(BuildContext context) {
     var periods = widget.appScheduleModel.appTimePeriods;
-    for(int i = 0; i < periods.length; i++){
+    for (int i = 0; i < periods.length; i++) {
       _timePeriodsCollapse.add(false);
     }
     print(_timePeriodsCollapse.length);
@@ -68,15 +68,14 @@ class _AppControlListState extends State<AppControlList> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _timePeriodsCollapse[index] = !_timePeriodsCollapse[index];
+                          _timePeriodsCollapse[index] =
+                              !_timePeriodsCollapse[index];
                         });
                       },
                       child: Row(
                         children: [
-                          Text(
-                              '${period.startTime} - ${period.endTime}',
-                              style: TextStyle(
-                                  color: AppColor.grayDark)),
+                          Text('${period.startTime} - ${period.endTime}',
+                              style: TextStyle(color: AppColor.grayDark)),
                           Icon(Icons.keyboard_arrow_down)
                         ],
                       ),
@@ -87,8 +86,7 @@ class _AppControlListState extends State<AppControlList> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: AppColor.mainColor,
-                            borderRadius:
-                            BorderRadius.circular(100.0)),
+                            borderRadius: BorderRadius.circular(100.0)),
                         child: Icon(
                           Icons.edit,
                           color: Colors.white,
@@ -96,7 +94,18 @@ class _AppControlListState extends State<AppControlList> {
                         ),
                         padding: EdgeInsets.all(5.0),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditTimePriod(
+                                startTime: period.startTime,
+                                endTime: period.endTime,
+                                apps: FakeData.allApps(),
+                                selectedApps: period.apps,
+                              ),
+                            ));
+                      },
                     )
                   ],
                 ),
@@ -106,10 +115,12 @@ class _AppControlListState extends State<AppControlList> {
                 child: period.apps.length == 0
                     ? null
                     : Column(
-                  children: period.apps
-                      .map((app) => _appListItem(app))
-                      .toList(),
-                ), visible: !_timePeriodsCollapse[index],)
+                        children: period.apps
+                            .map((app) => _appListItem(app))
+                            .toList(),
+                      ),
+                visible: !_timePeriodsCollapse[index],
+              )
             ],
           );
         },
