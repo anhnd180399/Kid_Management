@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,7 +17,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
   bool isButtonDisabled = false;
   final String BUTTON_TEXT = 'DONE';
   final String APPBAR_TITLE = 'CREATE SCHEDULE';
-  final String HEAD_TITLE = 'I WANT MY KID TO USE APPS';
+  final String HEAD_TITLE = 'SET UP SPECIFIC TIME TO USE APPS';
   final String SUB_TITLE = "Now, let's limit a period of time for usage";
 
   @override
@@ -81,7 +81,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
               ),
               TimePeriodPicker(),
               Spacer(),
-              // the 'NEXT' button
+              // the 'DONE' button
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 margin: EdgeInsets.only(bottom: 20.0),
