@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     // Prevent the user from rotating device
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: KidApp(),
       theme: ThemeData(fontFamily: 'Open_Sans'),
     );
