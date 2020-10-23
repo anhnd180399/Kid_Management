@@ -3,6 +3,7 @@ import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
 import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/models/my_app.dart';
+import 'package:kid_management/src/models/notification_model.dart';
 
 // class to generate fake data for whole app
 
@@ -93,6 +94,27 @@ class FakeData {
             AddressHistory(address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
           ]
       )
+    ];
+  }
+
+  static List<NotificationModel> notifications(){
+    return [
+      NotificationModel(
+          msg: 'Your kid has used Garena app!',
+          time: '3mins ago',
+          isRead: false),
+      NotificationModel(
+          msg: 'Your kid has used Duolingo app!',
+          time: '10mins ago',
+          isRead: true),
+      NotificationModel(
+          msg: 'Your kid try to access google.com!',
+          time: '15mins ago',
+          isRead: true),
+      NotificationModel(
+          msg: 'Your kid browsed garena.vn!',
+          time: '20mins ago',
+          isRead: false)
     ];
   }
 }
