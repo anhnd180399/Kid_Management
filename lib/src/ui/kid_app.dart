@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/sign_up.dart';
 
@@ -10,6 +11,13 @@ class KidApp extends StatefulWidget {
 }
 
 class _WelcomeState extends State<KidApp> {
+
+  @override
+  void initState(){
+    super.initState();
+    FakeData.init();
+  }
+
   Widget _signInButton() {
     return InkWell(
         onTap: () {

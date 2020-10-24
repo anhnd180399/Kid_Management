@@ -59,7 +59,9 @@ class _DeleteSchedulePageState extends State<DeleteSchedulePage> {
                     child: SizedBox(
                       height: 50.0,
                       child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           color: Color(0xffB03A69),
                           child:
                               Text('NO', style: TextStyle(color: Colors.white)),
