@@ -4,8 +4,9 @@ import 'package:kid_management/src/resources/colors.dart';
 
 class NotificationCard extends StatefulWidget {
   NotificationModel notificationModel;
+  Function onDelete;
 
-  NotificationCard({this.notificationModel});
+  NotificationCard({this.notificationModel, this.onDelete});
 
   @override
   _NotificationCardState createState() => _NotificationCardState();
@@ -56,16 +57,16 @@ class _NotificationCardState extends State<NotificationCard> {
                 width: 10.0,
                 height: 10.0,
                 // button to remove current notification
-                child: IconButton(
-                  icon: Icon(
+                child: GestureDetector(
+                  child: Icon(
                     Icons.clear_outlined,
                     size: 16.0,
                   ),
-                  onPressed: () {},
+                  onTap: widget.onDelete,
                 ),
               ),
               right: 18.0,
-              top: 0)
+              top: 5.0)
         ],
       ),
     );
