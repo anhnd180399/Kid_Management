@@ -62,7 +62,11 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                   String status = value == true ? 'ON' : 'OFF';
                   setState(() {
                     widget.schedule.active = value;
-                    Fluttertoast.showToast(msg: 'Schedule is $status', gravity: ToastGravity.CENTER, backgroundColor: AppColor.grayDark, textColor: Colors.white);
+                    Fluttertoast.showToast(
+                        msg: 'Schedule is $status',
+                        gravity: ToastGravity.CENTER,
+                        backgroundColor: AppColor.grayDark,
+                        textColor: Colors.white);
                   });
                 },
               ),
@@ -83,7 +87,7 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
             ),
             // the list of controlling apps
             widget.schedule.appTimePeriods == null
-                ? _emptyApp()
+                ? Expanded(child: _emptyApp())
                 : AppControlList(appScheduleModel: widget.schedule),
             // Container(
             //   height: 100.0,

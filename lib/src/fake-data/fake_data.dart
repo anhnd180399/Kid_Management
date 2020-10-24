@@ -35,7 +35,7 @@ class FakeData {
         dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
         active: false,
-        appTimePeriods: appTimePeriods(),
+        appTimePeriods: null,
         id: 2,
         name: 'WORKING',
         dayOfWeeks: {3, 5}));
@@ -117,11 +117,11 @@ class FakeData {
       NotificationModel(
           msg: 'Your kid has used Duolingo app!',
           time: '10mins ago',
-          isRead: true),
+          isRead: false),
       NotificationModel(
           msg: 'Your kid try to access google.com!',
           time: '15mins ago',
-          isRead: true),
+          isRead: false),
       NotificationModel(
           msg: 'Your kid browsed garena.vn!',
           time: '20mins ago',
