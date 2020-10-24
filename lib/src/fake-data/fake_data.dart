@@ -1,13 +1,24 @@
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
+import 'package:kid_management/src/models/blacklist_item_model.dart';
 import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/models/notification_model.dart';
+import 'package:kid_management/src/models/suggested_item_model.dart';
 
 // class to generate fake data for whole app
 
 class FakeData {
+
+  static List<NotificationModel> notifications;
+
+  static void init(){
+    print('intializing data...');
+    notifications = getNotifications();
+  }
+
+
   static List<AppScheduleModel> appSchedules() {
     List<AppScheduleModel> schedules = [];
     schedules.add(AppScheduleModel(
@@ -97,7 +108,7 @@ class FakeData {
     ];
   }
 
-  static List<NotificationModel> notifications(){
+  static List<NotificationModel> getNotifications(){
     return [
       NotificationModel(
           msg: 'Your kid has used Garena app!',
@@ -115,6 +126,27 @@ class FakeData {
           msg: 'Your kid browsed garena.vn!',
           time: '20mins ago',
           isRead: false)
+    ];
+  }
+
+  static List<BlacklistItemModel> blacklistItems(){
+    return [
+      BlacklistItemModel(url: 'google.com'),
+      BlacklistItemModel(url: 'facebook.com'),
+      BlacklistItemModel(url: 'youtube.com'),
+      BlacklistItemModel(url: 'garena.vn'),
+      BlacklistItemModel(url: 'y8.vn')
+
+    ];
+  }
+
+  static List<SuggestedItemModel> suggestedItems(){
+    return [
+      SuggestedItemModel(url: 'duolingo.com'),
+      SuggestedItemModel(url: 'wiki.com'),
+      SuggestedItemModel(url: 'genk.vn'),
+      SuggestedItemModel(url: 'vnexpress.vn'),
+      SuggestedItemModel(url: 'coursera.com')
     ];
   }
 }
