@@ -27,15 +27,12 @@ class _LocationHistoryListState extends State<LocationHistoryList> {
               ),
             ],
           ),
-          Container(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  var recentHistory = widget.locationHistories[index];
-                  return LocationHistoryItem(locationHistory: recentHistory);
-                },
-                itemCount: widget.locationHistories.length,
-              )),
+          Column(
+              children: widget.locationHistories
+                  .map((locationHistory) => LocationHistoryItem(
+                        locationHistory: locationHistory,
+                      ))
+                  .toList())
         ],
       ),
     );

@@ -94,7 +94,7 @@ class _MasterPageState extends State<MasterPage> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(8.0)),
                           child: Text(
-                            '10',
+                            FakeData.notifications().length.toString(),
                             textAlign: TextAlign.center,
                             style:
                                 TextStyle(color: Colors.white, fontSize: 10.0),
