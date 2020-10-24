@@ -6,6 +6,7 @@ import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app_control_list.dart';
+import 'package:kid_management/src/ui/app-schedule/create-time-period.dart';
 import 'package:kid_management/src/ui/app-schedule/delete_schedule_page.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
@@ -95,6 +96,30 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
             DayOfWeeks(dayOfWeeks: widget.schedule.dayOfWeeks)
           ],
         ),
+      ),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 10.0,
+            bottom: 100.0,
+            child: Container(
+              child: FloatingActionButton(
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.blue[800],
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateTimePeriodScreen(appScheduleName: widget.schedule.name,),
+                      ));
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
