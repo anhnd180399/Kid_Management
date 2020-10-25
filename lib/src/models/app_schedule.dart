@@ -22,14 +22,15 @@ class AppScheduleModel {
     for (int i = 0; i < this.dayOfWeeks.length; i++) {
       int d = this.dayOfWeeks.elementAt(i);
       String dayString = '';
-      if (d == 2) dayString = 'Monday';
-      if (d == 3) dayString = 'Tuesday';
-      if (d == 4) dayString = 'Wednesday';
-      if (d == 5) dayString = 'Thursday';
-      if (d == 6) dayString = 'Friday';
-      if (d == 7) dayString = 'Saturday';
-      if (d == 8) dayString = 'Sunday';
-
+      switch(d) {
+        case 2 : dayString = 'Monday'; break;
+        case 3 : dayString = 'Tuesday'; break;
+        case 4 : dayString = 'Wednesday'; break;
+        case 5 : dayString = 'Thursday'; break;
+        case 6 : dayString = 'Friday'; break;
+        case 7 : dayString = 'Saturday'; break;
+        case 8 : dayString = 'Sunday';
+      }
       result += dayString + ', ';
     }
 

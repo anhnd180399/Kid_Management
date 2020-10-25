@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/login.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -9,11 +11,15 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   Widget _signOutButton() {
     return Container(
       margin: EdgeInsets.only(top: 30.0, bottom: 5.0),
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          auth.signOut();
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        },
         color: AppColor.grayLight,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
