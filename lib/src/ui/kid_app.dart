@@ -10,27 +10,6 @@ class KidApp extends StatefulWidget {
 }
 
 class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
-  AnimationController _controller;
-  Animation _animation;
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
-    _animation = Tween(begin: 50.0, end: 200.0).animate(_controller)
-      ..addStatusListener((state) {
-        if (state == AnimationStatus.completed) {
-          print("completed");
-        } else if (state == AnimationStatus.dismissed) {
-          print("dismissed");
-        }
-      })
-      ..addListener(() {
-        print("value:${_animation.value}");
-        setState(() {});
-      });
-    _controller.forward();
-  }
   Widget _signInButton() {
     return InkWell(
         onTap: () {
@@ -143,12 +122,6 @@ class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
 

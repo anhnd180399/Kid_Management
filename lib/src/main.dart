@@ -16,8 +16,60 @@ class MyApp extends StatelessWidget {
     // Prevent the user from rotating device
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
-      home: KidApp(),
+      home: SplashScreen(),
       theme: ThemeData(fontFamily: 'Open_Sans'),
+      routes: <String, WidgetBuilder>{
+        '/HomeScreen': (BuildContext context) => new KidApp()
+      },
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  _SplashState createState() => _SplashState();
+}
+class _SplashState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  Animation<double> animation;
+  AnimationController animationController;
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 5000));
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
+    animation.addListener((){
+      setState((){
+        print (animation.value.toString());
+      });
+    });
+    animation.addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        print("Completed!");
+        animationController.reverse();
+      } else if(status == AnimationStatus.dismissed) {
+        this.dispose();
+        Navigator.of(context).pushReplacementNamed('/HomeScreen');
+      }
+    });
+    animationController.forward();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: AnimatedLogo(
+          animation: animation,
+        )
+    );
+  }
+}
+class AnimatedLogo extends AnimatedWidget {
+  final Tween<double> _sizeAnimation = Tween<double> (begin: 0.0, end: 500.0);
+  AnimatedLogo({Key key, Animation animation}):super(key: key, listenable: animation);
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Transform.scale(
+      scale: _sizeAnimation.evaluate(animation),
+      child: FlutterLogo(),
     );
   }
 }
