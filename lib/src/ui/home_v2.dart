@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app_management.dart';
 import 'package:kid_management/src/ui/location-tracking/location_tracking_screen.dart';
+import 'package:kid_management/src/ui/web-filter/web_filter_screen.dart';
 
 class Home2 extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class Home2 extends StatefulWidget {
 class _Home2State extends State<Home2> {
   List<Feature> features = [
     Feature(label: 'Apps Control', icon: 'app.svg', route: AppManagement()),
-    Feature(label: 'Web Filter', icon: 'web.svg', route: null),
+    Feature(label: 'Web Filter', icon: 'web.svg', route: WebFilterScreen()),
     Feature(label: 'Device Control', icon: 'screen.svg', route: null),
     Feature(label: 'Location', icon: 'location.svg', route: LocationTrackingScreen()),
     Feature(label: 'Report', icon: 'report.svg', route: null),

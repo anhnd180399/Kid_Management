@@ -5,7 +5,6 @@ import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/location-tracking/address_history_card.dart';
 
 class LocationHistoryItem extends StatefulWidget {
-
   LocationHistory locationHistory;
 
   LocationHistoryItem({this.locationHistory});
@@ -30,23 +29,17 @@ class _LocationHistoryItemState extends State<LocationHistoryItem> {
               Text(
                 widget.locationHistory.date,
                 style: TextStyle(
-                    color: AppColor.mainColor,
-                    fontWeight: FontWeight.bold),
+                    color: AppColor.mainColor, fontWeight: FontWeight.bold),
               ),
             ],
           ),
-          Container(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  var addressHistory =
-                  widget.locationHistory.addressHistories[index];
-                  return AddressHistoryCard(
-                    addressHistory: addressHistory,
-                  );
-                },
-                itemCount: widget.locationHistory.addressHistories.length,
-                shrinkWrap: true,
-              ))
+          Column(
+            children: widget.locationHistory.addressHistories
+                .map((addressHistory) => AddressHistoryCard(
+                      addressHistory: addressHistory,
+                    ))
+                .toList(),
+          )
         ],
       ),
     );

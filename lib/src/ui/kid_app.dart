@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/sign_up.dart';
 
@@ -10,6 +12,29 @@ class KidApp extends StatefulWidget {
 }
 
 class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
+  AnimationController _controller;
+  Animation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _animation = Tween(begin: 50.0, end: 200.0).animate(_controller)
+      ..addStatusListener((state) {
+        if (state == AnimationStatus.completed) {
+          print("completed");
+        } else if (state == AnimationStatus.dismissed) {
+          print("dismissed");
+        }
+      })
+      ..addListener(() {
+        print("value:${_animation.value}");
+        setState(() {});
+      });
+    _controller.forward();
+    FakeData.init();
+  }
   Widget _signInButton() {
     return InkWell(
         onTap: () {
@@ -105,7 +130,11 @@ class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
             SizedBox(height: 30.0),
             Column(
               children: <Widget>[
-                Image.asset(CONSTANT.URL_IMG_KID_SPACE_LOGO),
+                Container(
+                  child: SvgPicture.asset(
+                      'assets/images/welcome_screen/kidspace_logo_white.svg'),
+                  margin: EdgeInsets.symmetric(vertical: 20.0),
+                ),
                 Text(
                   'Let your kids in control',
                   style: new TextStyle(color: Colors.white, fontSize: 20.0),
@@ -122,6 +151,12 @@ class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
 

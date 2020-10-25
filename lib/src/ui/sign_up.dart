@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
@@ -123,11 +124,14 @@ class _SignUpState extends State<SignUp> {
 
   Widget _title() {
     return Column(children: <Widget>[
-      Image.asset(
-        CONSTANT.URL_IMG_KID_SPACE_LOGO,
-        width: 140.0,
-      ),
-      Text("Let's get started with KidSpace", style: TextStyle(fontSize: 16.0, color: AppColor.grayDark))
+      Container(
+          margin: EdgeInsets.only(bottom: 20.0),
+          child: SvgPicture.asset(
+            'assets/images/welcome_screen/kidspace_logo_filled.svg',
+            width: 150.0,
+          )),
+      Text("Let's get started with KidSpace",
+          style: TextStyle(fontSize: 16.0, color: AppColor.grayDark))
     ]);
   }
 

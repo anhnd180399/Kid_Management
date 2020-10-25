@@ -73,6 +73,8 @@ flutter:
     - assets/images/forgot-password/
     - assets/images/app-icons/
     - assets/images/location-tracking/
+    - assets/images/web-filter/
+    - assets/images/notification/
     - assets/images/
 
   fonts:

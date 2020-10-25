@@ -131,7 +131,11 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => CreateAppScheduleStep02(),
-                            ));
+                            )).then((value) {
+                          if (value == 'success') {
+                            Navigator.pop(context);
+                          }
+                        });
                       },
                 color: AppColor.mainColor,
                 child: Text(

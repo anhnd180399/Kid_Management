@@ -92,7 +92,9 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0)),
                   elevation: 2.0,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context, 'success');
+                  },
                   color: AppColor.mainColor,
                   child: Text(
                     'DONE',

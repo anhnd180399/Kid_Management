@@ -1,12 +1,24 @@
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
+import 'package:kid_management/src/models/blacklist_item_model.dart';
 import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/models/my_app.dart';
+import 'package:kid_management/src/models/notification_model.dart';
+import 'package:kid_management/src/models/suggested_item_model.dart';
 
 // class to generate fake data for whole app
 
 class FakeData {
+
+  static List<NotificationModel> notifications;
+
+  static void init(){
+    print('intializing data...');
+    notifications = getNotifications();
+  }
+
+
   static List<AppScheduleModel> appSchedules() {
     List<AppScheduleModel> schedules = [];
     schedules.add(AppScheduleModel(
@@ -23,7 +35,7 @@ class FakeData {
         dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
         active: false,
-        appTimePeriods: appTimePeriods(),
+        appTimePeriods: null,
         id: 2,
         name: 'WORKING',
         dayOfWeeks: {3, 5}));
@@ -93,6 +105,48 @@ class FakeData {
             AddressHistory(address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
           ]
       )
+    ];
+  }
+
+  static List<NotificationModel> getNotifications(){
+    return [
+      NotificationModel(
+          msg: 'Your kid has used Garena app!',
+          time: '3mins ago',
+          isRead: false),
+      NotificationModel(
+          msg: 'Your kid has used Duolingo app!',
+          time: '10mins ago',
+          isRead: false),
+      NotificationModel(
+          msg: 'Your kid try to access google.com!',
+          time: '15mins ago',
+          isRead: false),
+      NotificationModel(
+          msg: 'Your kid browsed garena.vn!',
+          time: '20mins ago',
+          isRead: false)
+    ];
+  }
+
+  static List<BlacklistItemModel> blacklistItems(){
+    return [
+      BlacklistItemModel(url: 'google.com'),
+      BlacklistItemModel(url: 'facebook.com'),
+      BlacklistItemModel(url: 'youtube.com'),
+      BlacklistItemModel(url: 'garena.vn'),
+      BlacklistItemModel(url: 'y8.vn')
+
+    ];
+  }
+
+  static List<SuggestedItemModel> suggestedItems(){
+    return [
+      SuggestedItemModel(url: 'duolingo.com'),
+      SuggestedItemModel(url: 'wiki.com'),
+      SuggestedItemModel(url: 'genk.vn'),
+      SuggestedItemModel(url: 'vnexpress.vn'),
+      SuggestedItemModel(url: 'coursera.com')
     ];
   }
 }

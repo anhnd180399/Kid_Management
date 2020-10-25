@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/home_v2.dart';
 import 'package:kid_management/src/ui/notification/notification.dart';
@@ -68,7 +69,7 @@ class _MasterPageState extends State<MasterPage> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(8.0)),
                           child: Text(
-                            '10',
+                            FakeData.notifications.length.toString(),
                             textAlign: TextAlign.center,
                             style:
                             TextStyle(color: Colors.white, fontSize: 10.0),
@@ -93,7 +94,7 @@ class _MasterPageState extends State<MasterPage> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(8.0)),
                           child: Text(
-                            '10',
+                            FakeData.notifications.length.toString(),
                             textAlign: TextAlign.center,
                             style:
                                 TextStyle(color: Colors.white, fontSize: 10.0),

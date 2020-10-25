@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as constant;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
@@ -30,11 +31,14 @@ class _ForgotPasswordPinCodeState extends State<ForgotPasswordPinCode> {
       body: Container(
         child: Column(
           children: [
-            Center(
-                child: Image.asset(
-              constant.URL_IMG_KID_SPACE_LOGO,
-              width: 120.0,
-            )),
+            Container(
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: Center(
+                  child: SvgPicture.asset(
+                'assets/images/welcome_screen/kidspace_logo_filled.svg',
+                    width: 100.0,
+              )),
+            ),
             Text(
               'Please check your email to get PIN Code',
               style: TextStyle(
