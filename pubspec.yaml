@@ -44,6 +44,8 @@ dependencies:
   pin_code_fields: ^6.0.0
   # library to validate text data
   regexpattern: ^1.0.0
+  # present percent circle
+  percent_indicator: ^2.1.8
 
 
   # The following adds the Cupertino Icons font to your application.
