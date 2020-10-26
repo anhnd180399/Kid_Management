@@ -75,6 +75,7 @@ flutter:
     - assets/images/location-tracking/
     - assets/images/web-filter/
     - assets/images/notification/
+    - assets/images/device-control/
     - assets/images/
 
   fonts:
