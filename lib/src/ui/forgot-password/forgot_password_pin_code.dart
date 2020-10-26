@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/resources/constant.dart' as constant;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 import 'package:kid_management/src/ui/forgot-password/reset_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

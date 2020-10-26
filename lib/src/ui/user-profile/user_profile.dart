@@ -2,17 +2,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/models/user_information.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/login.dart';
+import 'package:kid_management/src/ui/master_page.dart';
 
 class UserProfileScreen extends StatefulWidget {
+  UserInformation user;
+
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
+  UserProfileScreen({this.user});
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+
   FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController _textEditingController;
+  @override
+  void initState(){
+    super.initState();
+    _textEditingController = new TextEditingController(
+        text: widget.user.fullName);
+  }
 
   Widget _signOutButton() {
     return Container(
@@ -76,6 +88,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(bottom: 30.0),
       child: TextField(
+        controller: _textEditingController,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         decoration: InputDecoration(

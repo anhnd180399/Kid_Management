@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/models/user_information.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app_management.dart';
 import 'package:kid_management/src/ui/location-tracking/location_tracking_screen.dart';
 import 'package:kid_management/src/ui/web-filter/web_filter_screen.dart';
 
 class Home2 extends StatefulWidget {
+  UserInformation user;
   @override
   _Home2State createState() => _Home2State();
+  Home2({this.user});
 }
 
 class _Home2State extends State<Home2> {
@@ -75,7 +78,7 @@ class _Home2State extends State<Home2> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    'Welcome, Duy!'.toUpperCase(),
+                    'Welcome, ${widget.user.fullName}'.toUpperCase(),
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
