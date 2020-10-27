@@ -78,6 +78,7 @@ flutter:
     - assets/images/web-filter/
     - assets/images/notification/
     - assets/images/device-control/
+    - assets/images/app-blocking/
     - assets/images/
 
   fonts:
