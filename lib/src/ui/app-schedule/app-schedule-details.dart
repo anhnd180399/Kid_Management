@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
-import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app_control_list.dart';
 import 'package:kid_management/src/ui/app-schedule/create-time-period.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
-import 'package:kid_management/src/models/notification_model.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/notification/notification_card.dart';
 

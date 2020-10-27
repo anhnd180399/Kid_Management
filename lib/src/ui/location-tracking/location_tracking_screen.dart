@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
-import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
-import 'package:kid_management/src/ui/location-tracking/address_history_card.dart';
-import 'package:kid_management/src/ui/location-tracking/location_history_item.dart';
 import 'package:kid_management/src/ui/location-tracking/location_history_list.dart';
 
 class LocationTrackingScreen extends StatefulWidget {
