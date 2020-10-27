@@ -59,6 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         setState(() {
                                           FakeData.notifications = [];
                                         });
+                                        Navigator.of(context).pop(false);
                                       },
                                       child: Text(
                                         'YES',
