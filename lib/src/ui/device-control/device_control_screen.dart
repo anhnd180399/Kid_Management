@@ -12,11 +12,19 @@ class DeviceControlScreen extends StatefulWidget {
 
 class _DeviceControlScreenState extends State<DeviceControlScreen> {
   int _selectedIndex = 0;
+  PageController _pageController;
   List<Widget> _pages = [
     BrightnessControlScreen(),
     BandwidthControlScreen(),
     ScreenLockingScreen()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +45,26 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
         ),
       ),
       body: Container(
-        child: _pages[_selectedIndex],
+        child: PageView.builder(
+          itemBuilder: (context, index) {
+            return _pages[index];
+          },
+          itemCount: _pages.length,
+          controller: _pageController,
+          onPageChanged: (value) {
+            setState(() {
+              _selectedIndex = value;
+            });
+          },
+        ),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: AppColor.mainColor.withOpacity(0.2),
-                  blurRadius: 10.0,
-                  offset: Offset(0, -3.0))
-            ]),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: AppColor.mainColor.withOpacity(0.2),
+              blurRadius: 10.0,
+              offset: Offset(0, -3.0))
+        ]),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
@@ -60,6 +78,8 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
               onTap: (value) {
                 setState(() {
                   _selectedIndex = value;
+                  _pageController.animateToPage(_selectedIndex,
+                      duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
                 });
               },
               currentIndex: _selectedIndex,
