@@ -5,6 +5,7 @@ import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app_management.dart';
 import 'package:kid_management/src/ui/device-control/device_control_screen.dart';
 import 'package:kid_management/src/ui/location-tracking/location_tracking_screen.dart';
+import 'package:kid_management/src/ui/report/report.dart';
 import 'package:kid_management/src/ui/web-filter/web_filter_screen.dart';
 
 class Home2 extends StatefulWidget {
@@ -20,7 +21,7 @@ class _Home2State extends State<Home2> {
     Feature(label: 'Web Filter', icon: 'web.svg', route: WebFilterScreen()),
     Feature(label: 'Device Control', icon: 'screen.svg', route: DeviceControlScreen()),
     Feature(label: 'Location', icon: 'location.svg', route: LocationTrackingScreen()),
-    Feature(label: 'Report', icon: 'report.svg', route: null),
+    Feature(label: 'Report', icon: 'report.svg', route: ReportScreen()),
   ];
 
   Widget _featureCard(Feature feature, BuildContext context) {
