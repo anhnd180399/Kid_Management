@@ -68,7 +68,7 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by day',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
@@ -157,7 +157,7 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by week',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
@@ -225,7 +225,7 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by month',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
