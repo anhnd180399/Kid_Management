@@ -18,14 +18,35 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
   bool _searchBarIsShow = false;
   bool _locationTrackingIsOn = true;
   bool _allowKidTurnOffGPS = false;
+  String _currentDistanceLimit = '3';
+  FocusNode _searchBarFocusNode;
 
-  List<DropdownMenuItem> _buildDistanceDropdownItems(){
+  List<DropdownMenuItem> _buildDistanceDropdownItems() {
     return [
-      DropdownMenuItem(child: Text('< 3 km'), value: '3',),
-      DropdownMenuItem(child: Text('< 6 km'), value: '6',),
-      DropdownMenuItem(child: Text('< 10 km'), value: '10',),
-      DropdownMenuItem(child: Text('< 15 km'), value: '15',),
+      DropdownMenuItem(
+        child: Text('< 3 km'),
+        value: '3',
+      ),
+      DropdownMenuItem(
+        child: Text('< 6 km'),
+        value: '6',
+      ),
+      DropdownMenuItem(
+        child: Text('< 10 km'),
+        value: '10',
+      ),
+      DropdownMenuItem(
+        child: Text('< 15 km'),
+        value: '15',
+      ),
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _searchBarFocusNode = FocusNode();
   }
 
   @override
@@ -74,7 +95,9 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
                     Icons.gps_fixed,
                     color: AppColor.mainColor,
                   ),
-                  SizedBox(width: 10.0,),
+                  SizedBox(
+                    width: 10.0,
+                  ),
                   Text('Allow kid to turn off GPS'.toUpperCase()),
                   Spacer(),
                   CustomSwitch(
@@ -89,16 +112,31 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
               ),
               Row(
                 children: [
-                  Icon(Icons.run_circle, color: AppColor.mainColor,),
-                  SizedBox(width: 10.0,),
-                  Text('Record location history\nwhen the kid moved'.toUpperCase(),),
+                  Icon(
+                    Icons.run_circle,
+                    color: AppColor.mainColor,
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Text(
+                    'Record location history\nwhen the kid moved'.toUpperCase(),
+                  ),
                   Spacer(),
-                  DropdownButton(items: _buildDistanceDropdownItems(), onChanged: (value) {
-
-                  }, value: '3',)
+                  DropdownButton(
+                    items: _buildDistanceDropdownItems(),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentDistanceLimit = value;
+                      });
+                    },
+                    value: _currentDistanceLimit,
+                  )
                 ],
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Row(
                 children: [
                   !_searchBarIsShow
@@ -113,6 +151,7 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
                                 color: AppColor.grayLight,
                                 borderRadius: BorderRadius.circular(30.0)),
                             child: TextField(
+                              focusNode: _searchBarFocusNode,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
                                 hintText: 'Search location history',
@@ -133,6 +172,7 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
                       onPressed: () {
                         setState(() {
                           _searchBarIsShow = !_searchBarIsShow;
+                          _searchBarFocusNode.requestFocus();
                         });
                       }),
                   // filter button
@@ -178,7 +218,9 @@ class FilterPopupButton extends StatefulWidget {
 }
 
 class _FilterPopupButtonState extends State<FilterPopupButton> {
-  bool _filterDaysActive = true;
+  String _currentHistoryFilter = 'days';
+  final String dayFilter = 'days';
+  final String weekFilter = 'weeks';
 
   @override
   Widget build(BuildContext context) {
@@ -190,21 +232,33 @@ class _FilterPopupButtonState extends State<FilterPopupButton> {
         Icons.filter_alt_rounded,
         color: AppColor.mainColor,
       ),
-      onSelected: (value) {},
+      onSelected: (value) {
+        setState(() {
+          var filterValue = value == 1 ? dayFilter : weekFilter;
+          _currentHistoryFilter = filterValue;
+        });
+      },
       initialValue: 1,
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-              child: RadioListTile(
-            title: Text('Days'),
-            activeColor: AppColor.mainColor,
+            child: RadioListTile(
+              title: Text('Days'),
+              activeColor: AppColor.mainColor,
+              value: dayFilter,
+              groupValue: _currentHistoryFilter,
+            ),
             value: 1,
-          )),
+          ),
           PopupMenuItem(
-              child: RadioListTile(
-            title: Text('Weeks'),
+            child: RadioListTile(
+              title: Text('Weeks'),
+              value: weekFilter,
+              groupValue: _currentHistoryFilter,
+              activeColor: AppColor.mainColor,
+            ),
             value: 2,
-          )),
+          ),
         ];
       },
     );
