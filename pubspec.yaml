@@ -46,6 +46,8 @@ dependencies:
   regexpattern: ^1.0.0
   # present percent circle
   percent_indicator: ^2.1.8
+  # draw and present pie chart
+  pie_chart: ^4.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -79,6 +81,7 @@ flutter:
     - assets/images/notification/
     - assets/images/device-control/
     - assets/images/app-blocking/
+    - assets/images/report/
     - assets/images/
 
   fonts:
