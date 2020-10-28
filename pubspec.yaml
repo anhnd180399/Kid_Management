@@ -48,6 +48,8 @@ dependencies:
   percent_indicator: ^2.1.8
   # draw and present pie chart
   pie_chart: ^4.0.1
+  # open a link in browser of device
+  url_launcher: ^5.7.8
 
 
   # The following adds the Cupertino Icons font to your application.

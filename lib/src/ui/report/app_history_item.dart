@@ -18,35 +18,43 @@ class AppHistoryItem extends StatefulWidget {
 class _AppHistoryItemState extends State<AppHistoryItem> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      margin: EdgeInsets.only(top: 5.0),
+      decoration: BoxDecoration(
+        color: AppColor.grayLight,
+        borderRadius: BorderRadius.circular(10.0)
+      ),
+      child: Column(
         children: [
-          SvgPicture.asset(
-            widget.app.icon,
-            width: 30.0,
+          Row(
+            children: [
+              SvgPicture.asset(
+                widget.app.icon,
+                width: 30.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Text(widget.app.name),
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+              SizedBox(width: 20.0,),
+            ],
           ),
-          SizedBox(
-            width: 10.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(widget.time, style: TextStyle(color: AppColor.grayDark, fontSize: 12.0),),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(widget.date, style: TextStyle(color: AppColor.grayDark, fontSize: 12.0)),
+            ],
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Text(widget.app.name),
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-          SizedBox(width: 20.0,),
-          Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(widget.time, style: TextStyle(color: AppColor.grayDark),),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(widget.date, style: TextStyle(color: AppColor.grayDark)),
-                ],
-              ))
         ],
       ),
     );
