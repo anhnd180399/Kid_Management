@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 
-import 'ui/kid_app.dart';
+import 'src/ui/kid_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
