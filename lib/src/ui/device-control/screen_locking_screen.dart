@@ -11,7 +11,7 @@ class ScreenLockingScreen extends StatefulWidget {
 }
 
 class _ScreenLockingScreenState extends State<ScreenLockingScreen> {
-  bool _lockDeviceTimer = false;
+  bool _lockDeviceTimer = true;
   bool _unlockDeviceTimer = true;
   String _lockTimeMode = 'pm';
   String _lockTime = '12';
