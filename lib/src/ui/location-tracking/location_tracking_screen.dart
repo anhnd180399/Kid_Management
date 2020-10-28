@@ -4,6 +4,7 @@ import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/common-ui/custom_switch.dart';
 import 'package:kid_management/src/ui/location-tracking/location_history_list.dart';
 
 class LocationTrackingScreen extends StatefulWidget {
@@ -15,6 +16,17 @@ class LocationTrackingScreen extends StatefulWidget {
 
 class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
   bool _searchBarIsShow = false;
+  bool _locationTrackingIsOn = true;
+  bool _allowKidTurnOffGPS = false;
+
+  List<DropdownMenuItem> _buildDistanceDropdownItems(){
+    return [
+      DropdownMenuItem(child: Text('< 3 km'), value: '3',),
+      DropdownMenuItem(child: Text('< 6 km'), value: '6',),
+      DropdownMenuItem(child: Text('< 10 km'), value: '10',),
+      DropdownMenuItem(child: Text('< 15 km'), value: '15',),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +47,16 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
         ),
         elevation: 0,
         backgroundColor: Colors.white,
+        actions: [
+          CustomSwitch(
+            value: _locationTrackingIsOn,
+            onChanged: (value) {
+              setState(() {
+                _locationTrackingIsOn = value;
+              });
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -46,6 +68,37 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
               SizedBox(
                 height: 20.0,
               ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.gps_fixed,
+                    color: AppColor.mainColor,
+                  ),
+                  SizedBox(width: 10.0,),
+                  Text('Allow kid to turn off GPS'.toUpperCase()),
+                  Spacer(),
+                  CustomSwitch(
+                    value: _allowKidTurnOffGPS,
+                    onChanged: (value) {
+                      setState(() {
+                        _allowKidTurnOffGPS = value;
+                      });
+                    },
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.run_circle, color: AppColor.mainColor,),
+                  SizedBox(width: 10.0,),
+                  Text('Record location history\nwhen the kid moved'.toUpperCase(),),
+                  Spacer(),
+                  DropdownButton(items: _buildDistanceDropdownItems(), onChanged: (value) {
+
+                  }, value: '3',)
+                ],
+              ),
+              SizedBox(height: 20.0,),
               Row(
                 children: [
                   !_searchBarIsShow
@@ -120,14 +173,11 @@ class _LocationTrackingScreenState extends State<LocationTrackingScreen> {
 }
 
 class FilterPopupButton extends StatefulWidget {
-
-
   @override
   _FilterPopupButtonState createState() => _FilterPopupButtonState();
 }
 
 class _FilterPopupButtonState extends State<FilterPopupButton> {
-
   bool _filterDaysActive = true;
 
   @override
@@ -140,9 +190,7 @@ class _FilterPopupButtonState extends State<FilterPopupButton> {
         Icons.filter_alt_rounded,
         color: AppColor.mainColor,
       ),
-      onSelected: (value) {
-
-      },
+      onSelected: (value) {},
       initialValue: 1,
       itemBuilder: (context) {
         return [
@@ -154,10 +202,9 @@ class _FilterPopupButtonState extends State<FilterPopupButton> {
           )),
           PopupMenuItem(
               child: RadioListTile(
-                title: Text('Weeks'),
-                value: 2,
-              )),
-
+            title: Text('Weeks'),
+            value: 2,
+          )),
         ];
       },
     );
