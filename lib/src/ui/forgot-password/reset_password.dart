@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
+import 'package:kid_management/src/ui/login.dart';
 import 'package:kid_management/src/ui/master_page.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -41,7 +42,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MasterPage(),
+                    builder: (context) => LoginPage(),
                   ));
             } else {
               Fluttertoast.showToast(
@@ -86,7 +87,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MasterPage(),
+                    builder: (context) => LoginPage(),
                   ));
             } else {
               Fluttertoast.showToast(
@@ -131,7 +132,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MasterPage(),
+                      builder: (context) => LoginPage(),
                     ));
               }
             : null,
@@ -194,7 +195,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Container(
       child: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(

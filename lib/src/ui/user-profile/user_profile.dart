@@ -19,6 +19,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _textEditingController;
+  bool _editName = false;
   @override
   void initState(){
     super.initState();
@@ -87,22 +88,56 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(bottom: 30.0),
-      child: TextField(
-        controller: _textEditingController,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-        decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    style: BorderStyle.solid,
-                    width: 2.0,
-                    color: AppColor.mainColor)),
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    style: BorderStyle.solid,
-                    width: 2.0,
-                    color: AppColor.mainColor))),
-      ),
+      child: Stack(
+        children: [
+          TextField(
+            controller: _textEditingController,
+            readOnly: !_editName,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+            decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid,
+                        width: 2.0,
+                        color: AppColor.mainColor)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid,
+                        width: 2.0,
+                        color: AppColor.mainColor))),
+          ),
+          Positioned(
+            top: 25,
+            right: 0,
+            child:
+            !_editName ? IconButton(
+                icon: Icon(
+                  Icons.edit,
+                  size: 30,
+                  color: AppColor.mainColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _editName = true;
+                  });
+                })
+            : IconButton(
+                icon: Icon(
+                  Icons.check,
+                  size: 30,
+                  color: AppColor.mainColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _editName = false;
+                  });
+                })
+          ),
+
+        ],
+      )
+
     );
   }
 

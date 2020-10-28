@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 
 import 'src/ui/kid_app.dart';
@@ -37,7 +38,7 @@ class _SplashState extends State<SplashScreen> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 5000));
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 2000));
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
     animation.addListener((){
       setState((){
@@ -47,10 +48,10 @@ class _SplashState extends State<SplashScreen> with SingleTickerProviderStateMix
     animation.addStatusListener((status){
       if(status == AnimationStatus.completed){
         print("Completed!");
-        animationController.reverse();
-      } else if(status == AnimationStatus.dismissed) {
         this.dispose();
         Navigator.of(context).pushReplacementNamed('/HomeScreen');
+      } else if(status == AnimationStatus.dismissed) {
+        animationController.reverse();
       }
     });
     animationController.forward();
@@ -72,7 +73,23 @@ class AnimatedLogo extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return Transform.scale(
       scale: _sizeAnimation.evaluate(animation),
-      child: FlutterLogo(),
+      child: KidLogo(),
+    );
+  }
+}
+class KidLogo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final IconThemeData iconTheme = IconTheme.of(context);
+    final double iconSize = iconTheme.size;
+    return AnimatedContainer(
+      child: SvgPicture.asset(
+              'assets/images/welcome_screen/kidspace_logo_white.svg'
+      ),
+      width: iconSize,
+      height: iconSize,
+      duration: Duration(milliseconds: 750),
+      curve: Curves.fastOutSlowIn,
     );
   }
 }
