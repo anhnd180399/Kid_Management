@@ -84,6 +84,7 @@ flutter:
     - assets/images/device-control/
     - assets/images/app-blocking/
     - assets/images/report/
+    - assets/images/splash_screen/
     - assets/images/
 
   fonts:
