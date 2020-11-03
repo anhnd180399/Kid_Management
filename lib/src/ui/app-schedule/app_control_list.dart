@@ -24,7 +24,7 @@ class _AppControlListState extends State<AppControlList> {
     super.initState();
   }
 
-  Widget _appListItem(MyApp app) {
+  Widget _appListItem(ApplicationSystem app) {
     return Column(
       children: [
         Row(

@@ -113,7 +113,7 @@ class _AppBlockingState extends State<AppBlocking> {
 }
 
 class AppBlockListItem extends StatefulWidget {
-  MyApp app;
+  ApplicationSystem app;
 
   AppBlockListItem({this.app});
 

@@ -12,21 +12,25 @@ import 'package:kid_management/src/models/suggested_item_model.dart';
 
 class FakeData {
   static List<NotificationModel> notifications;
-  static List<MyApp> listApplication;
+  static List<ApplicationSystem> listApplication;
   static AppScheduleModel appScheduleHomeWork;
 
-  static void init() {
+  static void init(List<ApplicationSystem> value) {
     print('intializing data...');
     notifications = getNotifications();
-    FakeData.allAppsAsync().then((value) => {listApplication = value});
+    listApplication = value;
   }
 
   static setApplicationStatus(bool isBlock) {}
-  static List<MyApp> getListNonBlockingApplication() {
+  static List<ApplicationSystem> getListNonBlockingApplication() {
     return listApplication.where((element) => !element.isBlock).toList();
   }
 
-  static List<MyApp> getListAllApplication() {
+  static openApp(ApplicationSystem app) {
+    DeviceApps.openApp(app.application.packageName);
+  }
+
+  static List<ApplicationSystem> getListAllApplication() {
     return listApplication;
   }
 
@@ -81,7 +85,7 @@ class FakeData {
     return periods;
   }
 
-  static List<MyApp> appListFirst() {
+  static List<ApplicationSystem> appListFirst() {
     var skipCount = (getListNonBlockingApplication().length / 4).round();
     int index = 0;
     return getListNonBlockingApplication()
@@ -90,7 +94,7 @@ class FakeData {
         .toList();
   }
 
-  static List<MyApp> appListSecond() {
+  static List<ApplicationSystem> appListSecond() {
     var skipCount = (getListNonBlockingApplication().length / 4).round();
     int index = 1;
     return getListNonBlockingApplication()
@@ -99,7 +103,7 @@ class FakeData {
         .toList();
   }
 
-  static List<MyApp> appListThird() {
+  static List<ApplicationSystem> appListThird() {
     var skipCount = (getListNonBlockingApplication().length / 4).round();
     int index = 2;
     return getListNonBlockingApplication()
@@ -108,7 +112,7 @@ class FakeData {
         .toList();
   }
 
-  static List<MyApp> appListFourth() {
+  static List<ApplicationSystem> appListFourth() {
     var skipCount = (getListNonBlockingApplication().length / 4).round();
     int index = 3;
     return getListNonBlockingApplication()
@@ -117,12 +121,14 @@ class FakeData {
         .toList();
   }
 
-  static Future<List<MyApp>> allAppsAsync() async {
+  static Future<List<ApplicationSystem>> allAppsAsync() async {
     // return appListOne() + appListTwo() + appListThree();
-    List<MyApp> listMyApp = new List<MyApp>();
+    List<ApplicationSystem> listMyApp = new List<ApplicationSystem>();
     var listApp = await getAllApps();
     for (var item in listApp) {
-      listMyApp.add(MyApp.toApplication(item));
+      if (item.appName != "Kid Space") {
+        listMyApp.add(ApplicationSystem.toApplication(item));
+      }
     }
     return listMyApp;
   }

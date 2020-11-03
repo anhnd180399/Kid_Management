@@ -11,13 +11,12 @@ class KidApp extends StatefulWidget {
   _WelcomeState createState() => _WelcomeState();
 }
 
-class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin{
-
+class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    FakeData.init();
   }
+
   Widget _signInButton() {
     return InkWell(
         onTap: () {

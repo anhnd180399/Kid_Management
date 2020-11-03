@@ -11,8 +11,8 @@ import 'package:kid_management/src/ui/common-ui/back-button.dart';
 class EditTimePriod extends StatefulWidget {
   String startTime;
   String endTime;
-  List<MyApp> apps;
-  List<MyApp> selectedApps;
+  List<ApplicationSystem> apps;
+  List<ApplicationSystem> selectedApps;
   String tmpStartTime, tmpEndTime;
 
   EditTimePriod({this.startTime, this.endTime, this.apps, this.selectedApps});

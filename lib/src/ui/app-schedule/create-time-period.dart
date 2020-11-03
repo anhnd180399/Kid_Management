@@ -10,7 +10,7 @@ import 'package:kid_management/src/ui/common-ui/back-button.dart';
 class CreateTimePeriodScreen extends StatefulWidget {
   String appScheduleName;
   DateTime startTime, endTime;
-  List<MyApp> apps = FakeData.getListNonBlockingApplication();
+  List<ApplicationSystem> apps = FakeData.getListNonBlockingApplication();
   List<bool> appChecks = [];
 
   CreateTimePeriodScreen({this.appScheduleName, this.startTime, this.endTime});

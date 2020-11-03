@@ -4,7 +4,7 @@ import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 
 class AppHistoryItem extends StatefulWidget {
-  MyApp app;
+  ApplicationSystem app;
   String time;
   String date;
 
