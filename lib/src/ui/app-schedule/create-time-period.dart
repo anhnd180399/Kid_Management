@@ -10,7 +10,7 @@ import 'package:kid_management/src/ui/common-ui/back-button.dart';
 class CreateTimePeriodScreen extends StatefulWidget {
   String appScheduleName;
   DateTime startTime, endTime;
-  List<MyApp> apps = FakeData.allApps();
+  List<MyApp> apps = FakeData.getListNonBlockingApplication();
   List<bool> appChecks = [];
 
   CreateTimePeriodScreen({this.appScheduleName, this.startTime, this.endTime});
@@ -20,6 +20,17 @@ class CreateTimePeriodScreen extends StatefulWidget {
 }
 
 class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget.apps = FakeData.getListNonBlockingApplication();
+    // FakeData.allAppsAsync().then((value) => {
+    //       setState(() {
+    //         widget.apps = value;
+    //       }),
+    //     });
+  }
+
   @override
   Widget build(BuildContext context) {
     for (int i = 0; i < widget.apps.length; i++) {
@@ -41,7 +52,7 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         width: size.width,
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               widget.appScheduleName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
@@ -60,35 +71,43 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
                 TimePickerButton(buttonText: 'TO'),
               ],
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.apps.length,
-              itemBuilder: (context, index) {
-                var app = widget.apps[index];
-                return Row(
-                  children: [
-                    SvgPicture.asset(
-                      app.icon,
-                      width: 30.0,
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(app.name),
-                    Spacer(),
-                    Checkbox(
-                      value: widget.appChecks[index],
-                      onChanged: (value) {
-                        setState(() {
-                          widget.appChecks[index] = value;
-                        });
-                      },
-                    )
-                  ],
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.apps.length,
+                itemBuilder: (context, index) {
+                  var app = widget.apps[index];
+                  return Row(
+                    children: [
+                      // SvgPicture.asset(
+                      //   Icon(app.iconv2),
+                      //   width: 30.0,
+                      // ),
+                      Image.memory(
+                        app.icon,
+                        height: 30.0,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(app.name),
+                      Spacer(),
+                      Checkbox(
+                        value: widget.appChecks[index],
+                        onChanged: (value) {
+                          setState(() {
+                            widget.appChecks[index] = value;
+                          });
+                        },
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
-            Spacer(),
+            SizedBox(
+              height: 10,
+            ),
             Container(
               margin: EdgeInsets.only(bottom: 20.0),
               width: double.infinity,

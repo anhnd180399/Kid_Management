@@ -31,9 +31,9 @@ class _AppControlListState extends State<AppControlList> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0),
-              child: SvgPicture.asset(
+              child: Image.memory(
                 app.icon,
-                width: 30.0,
+                height: 30.0,
               ),
               padding: EdgeInsets.all(5.0),
             ),
@@ -101,7 +101,7 @@ class _AppControlListState extends State<AppControlList> {
                               builder: (context) => EditTimePriod(
                                 startTime: period.startTime,
                                 endTime: period.endTime,
-                                apps: FakeData.allApps(),
+                                apps: FakeData.getListNonBlockingApplication(),
                                 selectedApps: period.apps,
                               ),
                             ));

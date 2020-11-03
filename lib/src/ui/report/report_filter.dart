@@ -68,12 +68,15 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by day',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
               value: filterByDay,
-              secondary: _currentFilterValue != 'day' ? Icon(Icons.keyboard_arrow_down) : null,
+              secondary: _currentFilterValue != 'day'
+                  ? Icon(Icons.keyboard_arrow_down)
+                  : null,
             ),
             Visibility(
               visible: _currentFilterValue == 'day',
@@ -132,17 +135,15 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
                       activeColor: AppColor.mainColorLight,
                       groupValue: _currentFilterDayValue,
                       onChanged: (value) {
-                        DatePicker.showDatePicker(
-                          context,
-                          onConfirm: (time) {
-                            setState(() {
-                              _currentFilterDayValue = value;
-                            });
-                          },
-                          onCancel: () {},
-                          minTime: DateTime.now().subtract(Duration(days: 365 * 3)),
-                          maxTime: DateTime.now()
-                        );
+                        DatePicker.showDatePicker(context, onConfirm: (time) {
+                          setState(() {
+                            _currentFilterDayValue = value;
+                          });
+                        },
+                            onCancel: () {},
+                            minTime: DateTime.now()
+                                .subtract(Duration(days: 365 * 3)),
+                            maxTime: DateTime.now());
                       },
                     ),
                   ],
@@ -157,12 +158,15 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by week',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
               value: filterByWeek,
-              secondary: _currentFilterValue != 'week' ? Icon(Icons.keyboard_arrow_down) : null,
+              secondary: _currentFilterValue != 'week'
+                  ? Icon(Icons.keyboard_arrow_down)
+                  : null,
             ),
             Visibility(
               visible: _currentFilterValue == 'week',
@@ -225,12 +229,15 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               },
               title: Text(
                 'Filter by month',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               groupValue: _currentFilterValue,
               activeColor: AppColor.mainColor,
               value: filterByMonth,
-              secondary: _currentFilterValue != 'month' ? Icon(Icons.keyboard_arrow_down) : null,
+              secondary: _currentFilterValue != 'month'
+                  ? Icon(Icons.keyboard_arrow_down)
+                  : null,
             ),
             Visibility(
               visible: _currentFilterValue == 'month',
@@ -276,17 +283,15 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
                       activeColor: AppColor.mainColorLight,
                       groupValue: _currentFilterMonthValue,
                       onChanged: (value) {
-                        DatePicker.showDatePicker(
-                            context,
-                            onConfirm: (time) {
-                              setState(() {
-                                _currentFilterMonthValue = value;
-                              });
-                            },
+                        DatePicker.showDatePicker(context, onConfirm: (time) {
+                          setState(() {
+                            _currentFilterMonthValue = value;
+                          });
+                        },
                             onCancel: () {},
-                            minTime: DateTime.now().subtract(Duration(days: 365 * 3)),
-                            maxTime: DateTime.now()
-                        );
+                            minTime: DateTime.now()
+                                .subtract(Duration(days: 365 * 3)),
+                            maxTime: DateTime.now());
                       },
                     )
                   ],
@@ -307,7 +312,6 @@ class _ReportFilterScreenState extends State<ReportFilterScreen> {
               color: AppColor.mainColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
-              height: 50.0,
             ),
             SizedBox(
               height: 20.0,

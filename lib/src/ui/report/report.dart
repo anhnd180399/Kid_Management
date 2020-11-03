@@ -14,7 +14,7 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  var _apps = FakeData.allApps();
+  var _apps = FakeData.getListAllApplication();
   Color _buttonColor = Color(0xffF65656);
   Map<String, double> _chartData = {'USING APP': 80, 'BROWSING WEB': 20};
 
@@ -141,9 +141,9 @@ class _ReportScreenState extends State<ReportScreen> {
                   SizedBox(
                     width: 20.0,
                   ),
-                  SvgPicture.asset(
+                  Image.memory(
                     _apps[0].icon,
-                    width: 30.0,
+                    height: 30.0,
                   ),
                   SizedBox(
                     width: 20.0,
@@ -197,9 +197,9 @@ class _ReportScreenState extends State<ReportScreen> {
                   SizedBox(
                     width: 20.0,
                   ),
-                  SvgPicture.asset(
+                  Image.memory(
                     _apps[1].icon,
-                    width: 30.0,
+                    height: 30.0,
                   ),
                   SizedBox(
                     width: 20.0,

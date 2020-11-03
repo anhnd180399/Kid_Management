@@ -79,7 +79,8 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
                 setState(() {
                   _selectedIndex = value;
                   _pageController.animateToPage(_selectedIndex,
-                      duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut);
                 });
               },
               currentIndex: _selectedIndex,

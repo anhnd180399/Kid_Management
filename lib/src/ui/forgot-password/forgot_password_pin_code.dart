@@ -35,7 +35,7 @@ class _ForgotPasswordPinCodeState extends State<ForgotPasswordPinCode> {
               child: Center(
                   child: SvgPicture.asset(
                 'assets/images/welcome_screen/kidspace_logo_filled.svg',
-                    width: 100.0,
+                width: 100.0,
               )),
             ),
             Text(
@@ -97,7 +97,6 @@ class _ForgotPasswordPinCodeState extends State<ForgotPasswordPinCode> {
                       !value.contains('-') &&
                       !value.contains(',');
                 },
-                cursorColor: AppColor.mainColor,
                 textStyle:
                     TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 keyboardType: TextInputType.number,

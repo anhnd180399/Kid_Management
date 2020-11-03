@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -252,9 +254,7 @@ class _ChangeTimeDialogState extends State<ChangeTimeDialog> {
               style: TextStyle(color: AppColor.mainColor),
             )),
         FlatButton(
-            onPressed: () {
-
-            },
+            onPressed: () {},
             child: Text(
               'YES',
               style: TextStyle(color: AppColor.mainColor),
@@ -266,7 +266,7 @@ class _ChangeTimeDialogState extends State<ChangeTimeDialog> {
 
 class CustomChekboxListItem extends StatefulWidget {
   String title;
-  String icon;
+  Uint8List icon;
   bool isSelected;
 
   CustomChekboxListItem({this.title, this.icon, this.isSelected});
@@ -286,9 +286,9 @@ class _CustomChekboxListItemState extends State<CustomChekboxListItem> {
         });
       },
       title: Text(widget.title),
-      secondary: SvgPicture.asset(
+      secondary: Image.memory(
         widget.icon,
-        width: 30.0,
+        height: 30.0,
       ),
     );
   }

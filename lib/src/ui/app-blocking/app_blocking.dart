@@ -13,7 +13,7 @@ class AppBlocking extends StatefulWidget {
 }
 
 class _AppBlockingState extends State<AppBlocking> {
-  var _apps = FakeData.allApps();
+  var _apps = FakeData.getListAllApplication();
   bool _blockingModeIsOn = true;
 
   @override
@@ -131,9 +131,9 @@ class _AppBlockListItemState extends State<AppBlockListItem> {
       child: Row(
         children: [
           // icon of app
-          SvgPicture.asset(
+          Image.memory(
             widget.app.icon,
-            width: 40.0,
+            height: 30.0,
           ),
           Spacer(),
           // app name
@@ -148,12 +148,12 @@ class _AppBlockListItemState extends State<AppBlockListItem> {
                 borderRadius: BorderRadius.circular(50.0)),
             child: IconButton(
                 icon: Icon(
-                  _isBlocked ? Icons.lock : Icons.lock_open,
+                  widget.app.isBlock ? Icons.lock : Icons.lock_open,
                   color: AppColor.mainColor,
                 ),
                 onPressed: () {
                   setState(() {
-                    _isBlocked = !_isBlocked;
+                    widget.app.isBlock = !widget.app.isBlock;
                   });
                 }),
           )

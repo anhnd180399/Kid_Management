@@ -1,3 +1,4 @@
+import 'package:device_apps/device_apps.dart';
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
@@ -10,14 +11,24 @@ import 'package:kid_management/src/models/suggested_item_model.dart';
 // class to generate fake data for whole app
 
 class FakeData {
-
   static List<NotificationModel> notifications;
+  static List<MyApp> listApplication;
+  static AppScheduleModel appScheduleHomeWork;
 
-  static void init(){
+  static void init() {
     print('intializing data...');
     notifications = getNotifications();
+    FakeData.allAppsAsync().then((value) => {listApplication = value});
   }
 
+  static setApplicationStatus(bool isBlock) {}
+  static List<MyApp> getListNonBlockingApplication() {
+    return listApplication.where((element) => !element.isBlock).toList();
+  }
+
+  static List<MyApp> getListAllApplication() {
+    return listApplication;
+  }
 
   static List<AppScheduleModel> appSchedules() {
     List<AppScheduleModel> schedules = [];
@@ -26,7 +37,7 @@ class FakeData {
         appTimePeriods: appTimePeriods(),
         id: 1,
         name: 'HOME WORK',
-        dayOfWeeks: {2, 3}));
+        dayOfWeeks: {3, 7}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: appTimePeriods(),
@@ -45,70 +56,99 @@ class FakeData {
 
   static List<AppTimePeriod> appTimePeriods() {
     List<AppTimePeriod> periods = [
-      AppTimePeriod(id: 1, startTime: '7:00 AM', endTime: '9:00 AM', apps: appListOne()),
-      AppTimePeriod(id: 2, startTime: '6:00 PM', endTime: '9:00 PM', apps: appListTwo()),
-      AppTimePeriod(id: 3, startTime: '1:00 PM', endTime: '4:00 PM', apps: appListThree())
+      AppTimePeriod(
+          id: 1,
+          startTime: '7:00 AM',
+          endTime: '10:00 AM',
+          apps: appListFirst()),
+      AppTimePeriod(
+          id: 2,
+          startTime: '10:00 PM',
+          endTime: '12:00 PM',
+          apps: appListSecond()),
+      AppTimePeriod(
+          id: 3,
+          startTime: '12:00 PM',
+          endTime: '16:00 PM',
+          apps: appListThird()),
+      AppTimePeriod(
+          id: 4,
+          startTime: '16:00 PM',
+          endTime: '21:00 PM',
+          apps: appListFourth())
     ];
 
     return periods;
   }
 
-  static List<MyApp> appListOne(){
+  static List<MyApp> appListFirst() {
+    var skipCount = (getListNonBlockingApplication().length / 4).round();
+    int index = 0;
+    return getListNonBlockingApplication()
+        .skip(skipCount * index)
+        .take(skipCount)
+        .toList();
+  }
+
+  static List<MyApp> appListSecond() {
+    var skipCount = (getListNonBlockingApplication().length / 4).round();
+    int index = 1;
+    return getListNonBlockingApplication()
+        .skip(skipCount * index)
+        .take(skipCount)
+        .toList();
+  }
+
+  static List<MyApp> appListThird() {
+    var skipCount = (getListNonBlockingApplication().length / 4).round();
+    int index = 2;
+    return getListNonBlockingApplication()
+        .skip(skipCount * index)
+        .take(skipCount)
+        .toList();
+  }
+
+  static List<MyApp> appListFourth() {
+    var skipCount = (getListNonBlockingApplication().length / 4).round();
+    int index = 3;
+    return getListNonBlockingApplication()
+        .skip(skipCount * index)
+        .take(skipCount)
+        .toList();
+  }
+
+  static Future<List<MyApp>> allAppsAsync() async {
+    // return appListOne() + appListTwo() + appListThree();
+    List<MyApp> listMyApp = new List<MyApp>();
+    var listApp = await getAllApps();
+    for (var item in listApp) {
+      listMyApp.add(MyApp.toApplication(item));
+    }
+    return listMyApp;
+  }
+
+  static Future<List<Application>> getAllApps() async {
+    return await DeviceApps.getInstalledApplications(
+        onlyAppsWithLaunchIntent: true,
+        includeAppIcons: true,
+        includeSystemApps: true);
+  }
+
+  static List<LocationHistory> recentLocationHistories() {
     return [
-      MyApp(
-          name: 'Dog Care', icon: 'assets/images/app-icons/cocker-spaniel.svg'),
-      MyApp(
-          name: 'Game Center', icon: 'assets/images/app-icons/game-controller.svg'),
-      MyApp(name: 'Grapes', icon: 'assets/images/app-icons/grapes.svg')
+      LocationHistory(id: 1, date: '21/10/2020', addressHistories: [
+        AddressHistory(address: '107 Lê Văn Việt, Q9, TP.HCM', time: '8:20 AM'),
+        AddressHistory(address: 'Phú Hữu, Q9, TP.HCM', time: '9:20 AM')
+      ]),
+      LocationHistory(id: 2, date: '20/10/2020', addressHistories: [
+        AddressHistory(address: 'Vũng Tàu, Vietnam', time: '10:00 AM'),
+        AddressHistory(
+            address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
+      ])
     ];
   }
 
-  static List<MyApp> appListTwo(){
-    return [
-      MyApp(
-          name: 'Global Health', icon: 'assets/images/app-icons/healthcare.svg'),
-      MyApp(
-          name: 'Corona Mask', icon: 'assets/images/app-icons/mask.svg'),
-      MyApp(name: 'Water Fill', icon: 'assets/images/app-icons/mollusc.svg')
-    ];
-  }
-
-  static List<MyApp> appListThree(){
-    return [
-      MyApp(
-          name: 'Moneymate', icon: 'assets/images/app-icons/money-bag.svg'),
-      MyApp(
-          name: 'Tree Chrismas', icon: 'assets/images/app-icons/tree.svg'),
-      MyApp(name: 'Turtle Ocean', icon: 'assets/images/app-icons/turtle.svg')
-    ];
-  }
-
-  static List<MyApp> allApps(){
-    return appListOne() + appListTwo() + appListThree();
-  }
-
-  static List<LocationHistory> recentLocationHistories(){
-    return [
-      LocationHistory(
-        id: 1,
-        date: '21/10/2020',
-        addressHistories: [
-          AddressHistory(address: '107 Lê Văn Việt, Q9, TP.HCM', time: '8:20 AM'),
-          AddressHistory(address: 'Phú Hữu, Q9, TP.HCM', time: '9:20 AM')
-        ]
-      ),
-      LocationHistory(
-          id: 2,
-          date: '20/10/2020',
-          addressHistories: [
-            AddressHistory(address: 'Vũng Tàu, Vietnam', time: '10:00 AM'),
-            AddressHistory(address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
-          ]
-      )
-    ];
-  }
-
-  static List<NotificationModel> getNotifications(){
+  static List<NotificationModel> getNotifications() {
     return [
       NotificationModel(
           msg: 'Your kid has used Garena app!',
@@ -123,24 +163,21 @@ class FakeData {
           time: '15mins ago',
           isRead: false),
       NotificationModel(
-          msg: 'Your kid browsed garena.vn!',
-          time: '20mins ago',
-          isRead: false)
+          msg: 'Your kid browsed garena.vn!', time: '20mins ago', isRead: false)
     ];
   }
 
-  static List<BlacklistItemModel> blacklistItems(){
+  static List<BlacklistItemModel> blacklistItems() {
     return [
       BlacklistItemModel(url: 'google.com'),
       BlacklistItemModel(url: 'facebook.com'),
       BlacklistItemModel(url: 'youtube.com'),
       BlacklistItemModel(url: 'garena.vn'),
       BlacklistItemModel(url: 'y8.vn')
-
     ];
   }
 
-  static List<SuggestedItemModel> suggestedItems(){
+  static List<SuggestedItemModel> suggestedItems() {
     return [
       SuggestedItemModel(url: 'duolingo.com'),
       SuggestedItemModel(url: 'wiki.com'),

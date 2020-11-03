@@ -33,8 +33,7 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
         } else {
           List<Application> apps = snapshot.data;
           if (apps.length > 0) {
-            return Container(
-              height: 400.0,
+            return Expanded(
               child: Scrollbar(
                 child: ListView.builder(
                   physics: ClampingScrollPhysics(),
@@ -43,16 +42,18 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
                   itemBuilder: (context, index) {
                     Application app = apps[index];
 
-                    return Column(
-                      children: [
-                        CustomCheckboxListTile(
-                          app: app,
-                          isSelected: false,
-                        ),
-                        Divider(
-                          color: AppColor.grayLight,
-                        )
-                      ],
+                    return Container(
+                      child: Column(
+                        children: [
+                          CustomCheckboxListTile(
+                            app: app,
+                            isSelected: false,
+                          ),
+                          Divider(
+                            color: AppColor.grayLight,
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),

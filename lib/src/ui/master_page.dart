@@ -8,7 +8,6 @@ import 'package:kid_management/src/ui/notification/notification.dart';
 import 'package:kid_management/src/ui/user-profile/user_profile.dart';
 
 class MasterPage extends StatefulWidget {
-
   @override
   _MasterPageState createState() => _MasterPageState();
 }
@@ -21,15 +20,17 @@ class _MasterPageState extends State<MasterPage> {
   // default selected index: 1, that mean default screen is HomePage()
   int _selectedIndex = 1;
   @override
-  void initState(){
+  void initState() {
     super.initState();
     auth = FirebaseAuth.instance;
-    user = new UserInformation(
-        auth.currentUser.displayName,
-        auth.currentUser.email,
-        auth.currentUser.phoneNumber);
+    user = new UserInformation(auth.currentUser.displayName,
+        auth.currentUser.email, auth.currentUser.phoneNumber);
     // List of all main screens to navigate
-    _pages = [UserProfileScreen(user: user), Home2(user: user), NotificationScreen()];
+    _pages = [
+      UserProfileScreen(user: user),
+      Home2(user: user),
+      NotificationScreen()
+    ];
   }
 
   @override
@@ -86,7 +87,7 @@ class _MasterPageState extends State<MasterPage> {
                             FakeData.notifications.length.toString(),
                             textAlign: TextAlign.center,
                             style:
-                            TextStyle(color: Colors.white, fontSize: 10.0),
+                                TextStyle(color: Colors.white, fontSize: 10.0),
                           ),
                           constraints: BoxConstraints(
                               minWidth: 20.0, maxHeight: 20.0, maxWidth: 25.0),

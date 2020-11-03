@@ -4,7 +4,6 @@ import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 
 class AppHistoryItem extends StatefulWidget {
-
   MyApp app;
   String time;
   String date;
@@ -22,16 +21,14 @@ class _AppHistoryItemState extends State<AppHistoryItem> {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       margin: EdgeInsets.only(top: 5.0),
       decoration: BoxDecoration(
-        color: AppColor.grayLight,
-        borderRadius: BorderRadius.circular(10.0)
-      ),
+          color: AppColor.grayLight, borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: [
           Row(
             children: [
-              SvgPicture.asset(
+              Image.memory(
                 widget.app.icon,
-                width: 30.0,
+                height: 30.0,
               ),
               SizedBox(
                 width: 10.0,
@@ -42,17 +39,23 @@ class _AppHistoryItemState extends State<AppHistoryItem> {
                   scrollDirection: Axis.horizontal,
                 ),
               ),
-              SizedBox(width: 20.0,),
+              SizedBox(
+                width: 20.0,
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(widget.time, style: TextStyle(color: AppColor.grayDark, fontSize: 12.0),),
+              Text(
+                widget.time,
+                style: TextStyle(color: AppColor.grayDark, fontSize: 12.0),
+              ),
               SizedBox(
                 width: 10.0,
               ),
-              Text(widget.date, style: TextStyle(color: AppColor.grayDark, fontSize: 12.0)),
+              Text(widget.date,
+                  style: TextStyle(color: AppColor.grayDark, fontSize: 12.0)),
             ],
           ),
         ],

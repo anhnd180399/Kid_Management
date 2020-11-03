@@ -112,7 +112,9 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateTimePeriodScreen(appScheduleName: widget.schedule.name,),
+                        builder: (context) => CreateTimePeriodScreen(
+                          appScheduleName: widget.schedule.name,
+                        ),
                       ));
                 },
               ),
