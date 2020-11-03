@@ -126,7 +126,8 @@ class FakeData {
     List<ApplicationSystem> listMyApp = new List<ApplicationSystem>();
     var listApp = await getAllApps();
     for (var item in listApp) {
-      if (item.appName != "Kid Space") {
+      if (item.appName != "Kid Space" &&
+          item.packageName != "com.android.settings") {
         listMyApp.add(ApplicationSystem.toApplication(item));
       }
     }

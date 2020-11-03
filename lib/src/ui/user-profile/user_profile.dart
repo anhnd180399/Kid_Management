@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/models/user_information.dart';
 import 'package:kid_management/src/resources/colors.dart';
+import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/login.dart';
 import 'package:kid_management/src/ui/master_page.dart';
 
@@ -22,11 +23,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   bool _blacklistNotifyOn = false;
   bool _notificationNoneDropDown = false;
   bool _protectedNoneDropDown = false;
+
+  FocusNode _focusNode;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _textEditingController.dispose();
+    _focusNode.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
     _textEditingController =
         new TextEditingController(text: widget.user.fullName);
+    _focusNode = FocusNode();
   }
 
   Widget _signOutButton() {
@@ -72,19 +85,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Icon(
                 Icons.vibration,
                 color: AppColor.mainColor,
-                size: 30,
+                size: 25,
+              ),
+              SizedBox(
+                width: 5.0,
               ),
               Text('VIBRATION',
                   style:
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 80.0)),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
+              Spacer(),
               IconButton(
                 icon: Icon(
-                  !_notificationNoneDropDown ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
-                  size: 40,
+                  !_notificationNoneDropDown
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_right,
+                  size: 30,
                   color: AppColor.mainColor,
                 ),
-                onPressed: (){
+                onPressed: () {
                   setState(() {
                     _notificationNoneDropDown = !_notificationNoneDropDown;
                   });
@@ -93,66 +111,74 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ],
           ),
           Visibility(
-            visible: !_notificationNoneDropDown,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0)),
-                    Text('VIBRATE WHEN KID TRY USING blocked APPS',
-                        style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0)),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 20.0)),
-                    Checkbox(
-                      value: _blacklistNotifyOn,
-                      onChanged: (value) {
-                        setState(() {
-                          _blacklistNotifyOn = value;
-                        });
-                      },
-                      activeColor: AppColor.mainColor,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0)),
-                    Text('VIBRATE WHEN KID TRY browsing BLACKLIST sites',
-                        style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0)),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
-                    Checkbox(
-                      value: _blacklistNotifyOn,
-                      onChanged: (value) {
-                        setState(() {
-                          _blacklistNotifyOn = value;
-                        });
-                      },
-                      activeColor: AppColor.mainColor,
-                    )
-                  ],
-                ),
-              ],
-            )
-          ),
+              visible: !_notificationNoneDropDown,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 10.0)),
+                      Text('VIBRATE WHEN KID TRY USING blocked APPS',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 10.0)),
+                      Spacer(),
+                      Checkbox(
+                        value: _blacklistNotifyOn,
+                        onChanged: (value) {
+                          setState(() {
+                            _blacklistNotifyOn = value;
+                          });
+                        },
+                        activeColor: AppColor.mainColor,
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 10.0)),
+                      Text('VIBRATE WHEN KID TRY browsing BLACKLIST sites',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 10.0)),
+                      Spacer(),
+                      Checkbox(
+                        value: _blacklistNotifyOn,
+                        onChanged: (value) {
+                          setState(() {
+                            _blacklistNotifyOn = value;
+                          });
+                        },
+                        activeColor: AppColor.mainColor,
+                      )
+                    ],
+                  ),
+                ],
+              )),
           Row(
             children: [
               Icon(
-                Icons.wifi_protected_setup,
+                Icons.security,
                 color: AppColor.mainColor,
-                size: 30,
+                size: 25,
+              ),
+              SizedBox(
+                width: 5.0,
               ),
               Text('ACCESS PROTECTION',
                   style:
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 43.0)),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
+              Spacer(),
               IconButton(
                 icon: Icon(
-                  !_protectedNoneDropDown ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
-                  size: 40,
+                  !_protectedNoneDropDown
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_right,
+                  size: 30,
                   color: AppColor.mainColor,
                 ),
-                onPressed: (){
+                onPressed: () {
                   setState(() {
                     _protectedNoneDropDown = !_protectedNoneDropDown;
                   });
@@ -166,11 +192,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               children: [
                 Row(
                   children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0)),
                     Text('PREVENT FROM UNISTALLING KIDSPACE',
-                        style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0)),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10.0)),
+                    Spacer(),
                     Checkbox(
                       value: _blacklistNotifyOn,
                       onChanged: (value) {
@@ -184,11 +211,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 Row(
                   children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0)),
                     Text('ALLOW SHUTTING DOWN DEVICE',
-                        style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0)),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 46.0)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10.0)),
+                    Spacer(),
                     Checkbox(
                       value: _blacklistNotifyOn,
                       onChanged: (value) {
@@ -202,11 +230,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 Row(
                   children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0)),
                     Text('BLOCK SETTINGS APP',
-                        style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0)),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 74.0)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10.0)),
+                    Spacer(),
                     Checkbox(
                       value: _blacklistNotifyOn,
                       onChanged: (value) {
@@ -232,11 +261,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         Icon(
           Icons.notifications,
           color: AppColor.mainColor,
-          size: 30,
+          size: 25,
+        ),
+        SizedBox(
+          width: 5.0,
         ),
         Text('NOTIFICATION',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 60.0)),
+        Spacer(),
         Switch(
           value: _blacklistNotifyOn,
           onChanged: (value) {
@@ -255,17 +287,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         onTap: () {},
         child: Row(children: [
           Icon(
-            Icons.accessible,
+            Icons.vpn_key,
             color: AppColor.mainColor,
-            size: 30,
+            size: 25,
+          ),
+          SizedBox(
+            width: 5.0,
           ),
           Text('CHANGE PASSWORD',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.0)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          ),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
+          Spacer(),
           Icon(
-            Icons.accessible,
+            Icons.keyboard_arrow_right,
             color: AppColor.mainColor,
             size: 30,
           )
@@ -281,6 +314,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Stack(
               children: [
                 TextField(
+                    focusNode: _focusNode,
                     controller: _textEditingController,
                     readOnly: !_editName,
                     textAlign: TextAlign.center,
@@ -307,6 +341,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             onPressed: () {
                               setState(() {
                                 _editName = true;
+                                _focusNode.requestFocus();
                               });
                             })
                         : IconButton(
@@ -318,6 +353,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             onPressed: () {
                               setState(() {
                                 _editName = false;
+                                _focusNode.unfocus();
                               });
                             }))
               ],
@@ -336,20 +372,80 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 20.0),
-                  child: SvgPicture.asset(
-                    'assets/images/welcome_screen/kidspace_logo_filled.svg',
-                    width: 80.0,
-                  ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              child: SvgPicture.asset(
+                'assets/images/welcome_screen/kidspace_logo_filled.svg',
+                width: 80.0,
+              ),
+            ),
+            _fullNameTextField(),
+            _changePassword(),
+            SizedBox(height: 10),
+            _notificationAllert(),
+            _settings(),
+            InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actions: [
+                        FlatButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChildrenScreen(),
+                                  ));
+                            },
+                            child: Text(
+                              'yes'.toUpperCase(),
+                              style: TextStyle(color: AppColor.mainColor),
+                            )),
+                        FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                            child: Text('no'.toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.redAccent,
+                                )))
+                      ],
+                      title: Center(
+                        child: Text(
+                            'Are you sure to switch to the children mode?'),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 20.0),
+                height: 100.0,
+                decoration: BoxDecoration(
+                    color: Colors.yellow[800],
+                    borderRadius: BorderRadius.circular(5.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'Switch to children mode',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SvgPicture.asset(
+                      'assets/images/kid-screen/happy.svg',
+                      width: 50,
+                    )
+                  ],
                 ),
-                    _fullNameTextField(),
-                    _changePassword(),
-                    SizedBox(height: 10),
-                    _notificationAllert(),
-                    _settings(),
-                    _signOutButton()
-              ]),
+              ),
+            ),
+            _signOutButton()
+          ]),
         ),
       ),
     );
