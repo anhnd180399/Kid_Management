@@ -23,18 +23,22 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          child: _pages[_currentPageIndex],
+        child: WillPopScope(
+          onWillPop: () {},
+          child: Container(
+            child: _pages[_currentPageIndex],
+          ),
         ),
       ),
       // Bottom nav bar
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: AppColor.mainColor, width: 2.0),
+          color: AppColor.mainColor.withOpacity(0.15),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
-            )),
+            ),
+            ),
         padding: EdgeInsets.symmetric(vertical: 20.0),
         child: SafeArea(
           child: Row(
