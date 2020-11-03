@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -54,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => KidApp(),
+              builder: (context) => ChildrenScreen(),
             ));
       }
     });
