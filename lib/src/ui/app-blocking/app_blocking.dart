@@ -153,7 +153,9 @@ class _AppBlockListItemState extends State<AppBlockListItem> {
                 ),
                 onPressed: () {
                   setState(() {
-                    widget.app.isBlock = !widget.app.isBlock;
+                    FakeData.setApplicationStatus(
+                        widget.app, !widget.app.isBlock);
+                    // widget.app.isBlock = !widget.app.isBlock;
                   });
                 }),
           )

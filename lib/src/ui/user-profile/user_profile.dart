@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/user_information.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
@@ -48,6 +49,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       child: RaisedButton(
         onPressed: () {
           auth.signOut();
+          // set logout status
+          FakeData.isLogin = false;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         },
@@ -139,10 +142,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Padding(
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10.0)),
-                      Text('VIBRATE WHEN KID TRY browsing BLACKLIST sites',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 10.0)),
-                      Spacer(),
+                      Flexible(
+                        child: Text(
+                            'VIBRATE WHEN KID TRY browsing BLACKLIST sites',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 10.0)),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
                       Checkbox(
                         value: _blacklistNotifyOn,
                         onChanged: (value) {

@@ -20,7 +20,7 @@ class _TimePickerButtonState extends State<TimePickerButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150.0,
+      width: 100.0,
       child: RaisedButton(
         elevation: 3,
         color: widget.time == null ? Colors.white : AppColor.mainColor,

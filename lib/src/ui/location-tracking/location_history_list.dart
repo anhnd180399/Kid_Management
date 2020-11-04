@@ -27,12 +27,14 @@ class _LocationHistoryListState extends State<LocationHistoryList> {
               ),
             ],
           ),
-          Column(
-              children: widget.locationHistories
-                  .map((locationHistory) => LocationHistoryItem(
-                        locationHistory: locationHistory,
-                      ))
-                  .toList())
+          SingleChildScrollView(
+            child: Column(
+                children: widget.locationHistories
+                    .map((locationHistory) => LocationHistoryItem(
+                          locationHistory: locationHistory,
+                        ))
+                    .toList()),
+          )
         ],
       ),
     );

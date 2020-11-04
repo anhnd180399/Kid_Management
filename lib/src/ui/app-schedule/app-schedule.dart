@@ -9,8 +9,6 @@ import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step01.da
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class AppSchedule extends StatefulWidget {
-  List<AppScheduleModel> appSchedules = [];
-
   @override
   _AppScheduleState createState() => _AppScheduleState();
 }
@@ -66,9 +64,7 @@ class _AppScheduleState extends State<AppSchedule> {
                   schedule: appSchedule,
                 ),
               )).then((value) {
-                setState(() {
-
-                });
+            setState(() {});
           });
         },
         child: Padding(
@@ -113,7 +109,6 @@ class _AppScheduleState extends State<AppSchedule> {
   @override
   Widget build(BuildContext context) {
     // generate fake data
-    widget.appSchedules = FakeData.appSchedules();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -146,14 +141,14 @@ class _AppScheduleState extends State<AppSchedule> {
           ),
           SizedBox(height: 20.0),
           Container(
-            child: widget.appSchedules.length > 0
+            child: FakeData.listSchedule.length > 0
                 ? Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        var schedule = widget.appSchedules[index];
+                        var schedule = FakeData.listSchedule[index];
                         return _appSchedule(schedule);
                       },
-                      itemCount: widget.appSchedules.length,
+                      itemCount: FakeData.listSchedule.length,
                     ),
                   )
                 : _emptySchedule(),

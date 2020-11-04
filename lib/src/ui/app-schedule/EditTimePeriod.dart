@@ -4,18 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 
 class EditTimePriod extends StatefulWidget {
   String startTime;
   String endTime;
   List<ApplicationSystem> apps;
   List<ApplicationSystem> selectedApps;
+  AppScheduleModel appScheduleModel;
   String tmpStartTime, tmpEndTime;
 
-  EditTimePriod({this.startTime, this.endTime, this.apps, this.selectedApps});
+  EditTimePriod(
+      {this.startTime,
+      this.endTime,
+      this.apps,
+      this.selectedApps,
+      this.appScheduleModel});
 
   @override
   _EditTimePriodState createState() => _EditTimePriodState();
@@ -127,6 +136,8 @@ class _EditTimePriodState extends State<EditTimePriod> {
                     isSelected: _isAppSelected(app.name),
                     title: app.name,
                     icon: app.icon,
+                    applicationSystem: app,
+                    appScheduleModel: widget.appScheduleModel,
                   );
                 },
               ),
@@ -268,8 +279,15 @@ class CustomChekboxListItem extends StatefulWidget {
   String title;
   Uint8List icon;
   bool isSelected;
+  ApplicationSystem applicationSystem;
+  AppScheduleModel appScheduleModel;
 
-  CustomChekboxListItem({this.title, this.icon, this.isSelected});
+  CustomChekboxListItem(
+      {this.title,
+      this.icon,
+      this.isSelected,
+      this.applicationSystem,
+      this.appScheduleModel});
 
   @override
   _CustomChekboxListItemState createState() => _CustomChekboxListItemState();
@@ -283,6 +301,8 @@ class _CustomChekboxListItemState extends State<CustomChekboxListItem> {
       onChanged: (value) {
         setState(() {
           widget.isSelected = value;
+          FakeData.setToSchedule(
+              widget.appScheduleModel, widget.applicationSystem);
         });
       },
       title: Text(widget.title),

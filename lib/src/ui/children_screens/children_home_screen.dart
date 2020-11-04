@@ -62,7 +62,13 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
                 childAspectRatio: 1,
                 crossAxisSpacing: 2,
                 mainAxisSpacing: 2,
-                children: FakeData.getListNonBlockingApplication().map((app) {
+                children: FakeData.getScheduleById(1)
+                    .appTimePeriods[0]
+                    .apps
+                    .map((app) {
+                  // if (!app.isBlock){
+
+                  // }
                   return AppGridItem(
                     app: app,
                   );

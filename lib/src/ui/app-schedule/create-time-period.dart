@@ -60,16 +60,18 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
             SizedBox(
               height: 30.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TimePickerButton(buttonText: 'FROM'),
-                Container(
-                  child: Icon(Icons.arrow_forward_ios_outlined),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0),
-                ),
-                TimePickerButton(buttonText: 'TO'),
-              ],
+            SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TimePickerButton(buttonText: 'FROM'),
+                  Container(
+                    child: Icon(Icons.arrow_forward_ios_outlined),
+                    margin: EdgeInsets.symmetric(horizontal: 10.0),
+                  ),
+                  TimePickerButton(buttonText: 'TO'),
+                ],
+              ),
             ),
             Expanded(
               child: ListView.builder(

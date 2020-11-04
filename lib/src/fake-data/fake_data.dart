@@ -13,17 +13,53 @@ import 'package:kid_management/src/models/suggested_item_model.dart';
 class FakeData {
   static List<NotificationModel> notifications;
   static List<ApplicationSystem> listApplication;
-  static AppScheduleModel appScheduleHomeWork;
+  static List<AppScheduleModel> listSchedule;
+  static bool isLogin = false;
 
   static void init(List<ApplicationSystem> value) {
     print('intializing data...');
-    notifications = getNotifications();
     listApplication = value;
+    notifications = getNotifications();
+    listSchedule = appSchedules();
+    if (listApplication == null)
+      listApplication = new List<ApplicationSystem>();
   }
 
-  static setApplicationStatus(bool isBlock) {}
+  static setToSchedule(
+      AppScheduleModel appScheduleModel, ApplicationSystem applicationSystem) {
+    var schedule =
+        listSchedule.firstWhere((element) => element.id == appScheduleModel.id);
+    if (schedule != null) {
+      appScheduleModel.appTimePeriods[0].apps.add(applicationSystem);
+    }
+  }
+
+  static setApplicationStatus(
+      ApplicationSystem applicationSystem, bool isBlock) {
+    var app = listApplication.firstWhere((element) =>
+        element.application.apkFilePath ==
+        applicationSystem.application.apkFilePath);
+    app.isBlock = isBlock;
+    if (isBlock) {
+      listSchedule.forEach((element) {
+        element.appTimePeriods.forEach((elementApp) {
+          elementApp.apps.removeWhere((element) =>
+              element.application.apkFilePath ==
+              applicationSystem.application.apkFilePath);
+        });
+      });
+    }
+  }
+
   static List<ApplicationSystem> getListNonBlockingApplication() {
-    return listApplication.where((element) => !element.isBlock).toList();
+    var listData =
+        listApplication.where((element) => !element.isBlock).toList();
+    return listData;
+  }
+
+  static AppScheduleModel getScheduleById(int scheduleId) {
+    var app = listSchedule?.singleWhere((element) => element.id == scheduleId);
+    return app;
   }
 
   static openApp(ApplicationSystem app) {
@@ -41,7 +77,7 @@ class FakeData {
         appTimePeriods: appTimePeriods(),
         id: 1,
         name: 'HOME WORK',
-        dayOfWeeks: {3, 7}));
+        dayOfWeeks: {3, 4, 7}));
     schedules.add(AppScheduleModel(
         active: false,
         appTimePeriods: appTimePeriods(),
@@ -50,8 +86,8 @@ class FakeData {
         dayOfWeeks: {2, 8}));
     schedules.add(AppScheduleModel(
         active: false,
-        appTimePeriods: null,
-        id: 2,
+        appTimePeriods: appTimePeriods(),
+        id: 3,
         name: 'WORKING',
         dayOfWeeks: {3, 5}));
 
@@ -121,7 +157,7 @@ class FakeData {
         .toList();
   }
 
-  static Future<List<ApplicationSystem>> allAppsAsync() async {
+  static Future<void> initData() async {
     // return appListOne() + appListTwo() + appListThree();
     List<ApplicationSystem> listMyApp = new List<ApplicationSystem>();
     var listApp = await getAllApps();
@@ -131,7 +167,7 @@ class FakeData {
         listMyApp.add(ApplicationSystem.toApplication(item));
       }
     }
-    return listMyApp;
+    init(listMyApp);
   }
 
   static Future<List<Application>> getAllApps() async {
@@ -149,8 +185,7 @@ class FakeData {
       ]),
       LocationHistory(id: 2, date: '20/10/2020', addressHistories: [
         AddressHistory(address: 'Vũng Tàu, Vietnam', time: '10:00 AM'),
-        AddressHistory(
-            address: 'Chợ Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
+        AddressHistory(address: 'Xóm Lưới, Vũng Tàu, Vietnam', time: '11:00 AM')
       ])
     ];
   }

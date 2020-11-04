@@ -11,8 +11,7 @@ import 'src/ui/kid_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var listData = await FakeData.allAppsAsync();
-  FakeData.init(listData);
+  FakeData.initData();
   await Firebase.initializeApp();
   runApp(MyApp());
 }

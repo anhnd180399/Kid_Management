@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/master_page.dart';
 import 'package:kid_management/src/ui/sign_up.dart';
 
 import 'login.dart';
@@ -20,8 +21,13 @@ class _WelcomeState extends State<KidApp> with SingleTickerProviderStateMixin {
   Widget _signInButton() {
     return InkWell(
         onTap: () {
-          Navigator.push(this.context,
-              MaterialPageRoute(builder: (context) => LoginPage()));
+          if (FakeData.isLogin) {
+            Navigator.push(this.context,
+                MaterialPageRoute(builder: (context) => MasterPage()));
+          } else {
+            Navigator.push(this.context,
+                MaterialPageRoute(builder: (context) => LoginPage()));
+          }
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15),

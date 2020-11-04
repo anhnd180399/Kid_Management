@@ -103,6 +103,7 @@ class _AppControlListState extends State<AppControlList> {
                                 endTime: period.endTime,
                                 apps: FakeData.getListNonBlockingApplication(),
                                 selectedApps: period.apps,
+                                appScheduleModel: widget.appScheduleModel,
                               ),
                             ));
                       },

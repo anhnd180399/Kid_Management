@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     // controller to control all animations
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
 
     _backgroundAnim = Tween<double>(begin: 0, end: widget.height).animate(
         CurvedAnimation(

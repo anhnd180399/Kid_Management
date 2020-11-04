@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
@@ -20,6 +21,10 @@ class _LoginPageState extends State<LoginPage> {
   final String _password_field = "Password";
   FirebaseAuth auth = FirebaseAuth.instance;
   String _email, _password;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> signIn() async {
     final _formState = _formKey.currentState;
@@ -28,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential _userCredential = await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
+        // set login status
+        FakeData.isLogin = true;
         Navigator.push(this.context,
             MaterialPageRoute(builder: (context) => MasterPage()));
       } catch (e) {
