@@ -30,9 +30,12 @@ class _AppGridItemState extends State<AppGridItem> {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              widget.app.name,
-              style: TextStyle(fontSize: 12.0),
+            Flexible(
+              child: Text(
+                widget.app.name,
+                style: TextStyle(fontSize: 12.0),
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),

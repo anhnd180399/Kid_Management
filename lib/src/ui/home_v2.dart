@@ -19,8 +19,14 @@ class _Home2State extends State<Home2> {
   List<Feature> features = [
     Feature(label: 'Apps Control', icon: 'app.svg', route: AppManagement()),
     Feature(label: 'Web Filter', icon: 'web.svg', route: WebFilterScreen()),
-    Feature(label: 'Device Control', icon: 'screen.svg', route: DeviceControlScreen()),
-    Feature(label: 'Location', icon: 'location.svg', route: LocationTrackingScreen()),
+    Feature(
+        label: 'Device Control',
+        icon: 'screen.svg',
+        route: DeviceControlScreen()),
+    Feature(
+        label: 'Location',
+        icon: 'location.svg',
+        route: LocationTrackingScreen()),
     Feature(label: 'Report', icon: 'report.svg', route: ReportScreen()),
   ];
 
@@ -28,21 +34,19 @@ class _Home2State extends State<Home2> {
     String baseUrl = 'assets/images/main_dashboard/';
     return InkWell(
       onTap: () {
-        if (feature.route != null) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => feature.route));
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: Text('This feature will be coming soon'),
-              title: Text(
-                "Woops! We're sorry for this inconvenient",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          );
-        }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => feature.route));
+        // showDialog(
+        //   context: context,
+        //   builder: (context) => AlertDialog(
+        //     content: Text('This feature will be coming soon'),
+        //     title: Text(
+        //       "Woops! We're sorry for this inconvenient",
+        //       style: TextStyle(fontWeight: FontWeight.bold),
+        //     ),
+        //   ),
+        // )
+        ;
       },
       child: Card(
         elevation: 0,
