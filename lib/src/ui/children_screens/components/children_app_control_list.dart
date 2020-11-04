@@ -51,7 +51,7 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
   Widget build(BuildContext context) {
     var periods = widget.appScheduleModel.appTimePeriods;
     for (int i = 0; i < periods.length; i++) {
-      _timePeriodsCollapse.add(false);
+      _timePeriodsCollapse.add(true);
     }
     print(_timePeriodsCollapse.length);
     return Expanded(
