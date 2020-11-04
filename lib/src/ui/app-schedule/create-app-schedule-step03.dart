@@ -1,13 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
+import 'package:kid_management/src/models/app_time_period.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateAppScheduleStep03 extends StatefulWidget {
+  AppScheduleModel appScheduleModel;
+
+  CreateAppScheduleStep03({this.appScheduleModel});
+
   @override
   _CreateAppScheduleStep03State createState() =>
       _CreateAppScheduleStep03State();
@@ -81,7 +90,7 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
               ),
               TimePeriodPicker(),
               Spacer(),
-              // the 'NEXT' button
+              // the 'DONE' button
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 margin: EdgeInsets.only(bottom: 20.0),
@@ -93,7 +102,28 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
                       borderRadius: BorderRadius.circular(25.0)),
                   elevation: 2.0,
                   onPressed: () {
-                    Navigator.pop(context, 'success');
+                    if (FakeData.tmpStartTime.isNotEmpty &&
+                        FakeData.tmpEndTime.isNotEmpty) {
+                      if (widget.appScheduleModel.appTimePeriods == null) {
+                        widget.appScheduleModel.appTimePeriods = [];
+                      }
+                      var newAppTimePeriod = AppTimePeriod(
+                          apps: FakeData.tempAppList,
+                          id: Random.secure().nextInt(5000),
+                          startTime: FakeData.tmpStartTime,
+                          endTime: FakeData.tmpEndTime);
+                      widget.appScheduleModel.appTimePeriods
+                          .add(newAppTimePeriod);
+
+                      FakeData.listSchedule.add(widget.appScheduleModel);
+                      
+                      // Clear and reset all temp data
+                      FakeData.tempAppList = [];
+                      FakeData.tmpStartTime = '';
+                      FakeData.tmpEndTime = '';
+
+                      Navigator.pop(context, 'success');
+                    }
                   },
                   color: AppColor.mainColor,
                   child: Text(
@@ -140,6 +170,8 @@ class _TimePeriodPickerState extends State<TimePeriodPicker> {
                 String time12Hours =
                     DateFormat('hh:mm a').format(widget.fromTime);
                 widget.fromButtonText = time12Hours;
+                // store time string to tmp variable
+                FakeData.tmpStartTime = time12Hours;
               });
             },
           );
@@ -180,6 +212,7 @@ class _TimePeriodPickerState extends State<TimePeriodPicker> {
                     String time12Hours =
                         DateFormat('hh:mm a').format(widget.toTime);
                     widget.toButtonText = time12Hours;
+                    FakeData.tmpEndTime = time12Hours;
                   });
                 } else {
                   Fluttertoast.showToast(
