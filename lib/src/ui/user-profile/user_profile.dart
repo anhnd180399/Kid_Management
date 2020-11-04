@@ -142,15 +142,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Padding(
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10.0)),
-                      Flexible(
-                        child: Text(
-                            'VIBRATE WHEN KID TRY browsing BLACKLIST sites',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 10.0)),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
+                      Text('VIBRATE WHEN KID TRY browsing BLACKLIST sites',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 10.0)),
+                      Spacer(),
                       Checkbox(
                         value: _blacklistNotifyOn,
                         onChanged: (value) {
