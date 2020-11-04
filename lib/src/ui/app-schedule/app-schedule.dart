@@ -77,7 +77,7 @@ class _AppScheduleState extends State<AppSchedule> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    appSchedule.name,
+                    appSchedule.name.toUpperCase(),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -89,7 +89,7 @@ class _AppScheduleState extends State<AppSchedule> {
                   Text(
                     daysOfWeek,
                     style: TextStyle(color: AppColor.grayDark, fontSize: 14.0),
-                  )
+                  ),
                 ],
               ),
               Visibility(
@@ -154,12 +154,18 @@ class _AppScheduleState extends State<AppSchedule> {
                 : _emptySchedule(),
           )
         ]),
+        // button to add new app schedule
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CreateAppScheduleStep01()));
+                    builder: (context) => CreateAppScheduleStep01(
+                          appScheduleModel:
+                              AppScheduleModel(appTimePeriods: [], dayOfWeeks: Set<int>(), active: false),
+                        ))).then((value) {
+              setState(() {});
+            });
           },
           child: Icon(Icons.add),
           backgroundColor: AppColor.mainColor,
