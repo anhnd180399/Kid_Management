@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class DeleteSchedulePage extends StatefulWidget {
+  // passing schedule id to delete
+  int scheduleId;
+
+  DeleteSchedulePage({this.scheduleId});
+
   @override
   _DeleteSchedulePageState createState() => _DeleteSchedulePageState();
 }
@@ -44,7 +50,12 @@ class _DeleteSchedulePageState extends State<DeleteSchedulePage> {
                     child: SizedBox(
                       height: 50.0,
                       child: RaisedButton(
-                        onPressed: () {},
+                        // confirm and delete the schedule
+                        onPressed: () {
+                          FakeData.listSchedule
+                              .removeWhere((s) => s.id == widget.scheduleId);
+                          Navigator.pop(context, 'schedule_deleted');
+                        },
                         color: AppColor.mainColor,
                         child: Text(
                           'YES',
@@ -72,7 +83,9 @@ class _DeleteSchedulePageState extends State<DeleteSchedulePage> {
                 ],
               ),
             ),
-            SizedBox(height: 100.0,)
+            SizedBox(
+              height: 100.0,
+            )
           ],
         ));
   }
