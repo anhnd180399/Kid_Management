@@ -5,8 +5,11 @@ import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/components/app_grid_item.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChildrenHomeScreen extends StatefulWidget {
+  final WebSocketChannel channel;
+  ChildrenHomeScreen({this.channel});
   @override
   _ChildrenHomeScreenState createState() => _ChildrenHomeScreenState();
 }
@@ -72,6 +75,15 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
                 })?.toList(),
               ),
             ),
+          ),
+          StreamBuilder(
+            stream: widget.channel.stream,
+            builder: (context, snapshot) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
+              );
+            },
           )
         ],
       ),

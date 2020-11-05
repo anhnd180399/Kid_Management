@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/UserSocket.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/time-picker-button.dart';
@@ -20,15 +22,31 @@ class CreateTimePeriodScreen extends StatefulWidget {
 }
 
 class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
+  List<UserSocket> _chatUsers;
+  bool _connectedToSocket;
+  String _errorConnectMessage;
   @override
   void initState() {
     super.initState();
     widget.apps = FakeData.getListNonBlockingApplication();
-    // FakeData.allAppsAsync().then((value) => {
-    //       setState(() {
-    //         widget.apps = value;
-    //       }),
-    //     });
+    _chatUsers = Global.getUsersFor(Global.loggedInUser);
+    _connectedToSocket = false;
+    _errorConnectMessage = 'Connecting...';
+    _connectSocket();
+  }
+
+  _connectSocket() {
+    Future.delayed(Duration(seconds: 2), () async {
+      print(
+          "Connecting Logged In User parent: ${Global.loggedInUser.isParent}, ID: ${Global.loggedInUser.id}");
+      Global.initSocket();
+      await Global.socketUtils.initSocket(Global.loggedInUser);
+      Global.socketUtils.connectToSocket();
+      Global.socketUtils.setConnectListener(onConnect);
+      Global.socketUtils.setOnDisconnectListener(onDisconnect);
+      Global.socketUtils.setOnErrorListener(onError);
+      Global.socketUtils.setOnConnectionErrorListener(onConnectError);
+    });
   }
 
   @override
@@ -131,5 +149,44 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
         ),
       ),
     );
+  }
+
+  onConnect(data) {
+    print('Connected $data');
+    setState(() {
+      _connectedToSocket = true;
+    });
+  }
+
+  onConnectError(data) {
+    print('onConnectError $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Failed to Connect';
+    });
+  }
+
+  onConnectTimeout(data) {
+    print('onConnectTimeout $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Connection timedout';
+    });
+  }
+
+  onError(data) {
+    print('onError $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Connection Failed';
+    });
+  }
+
+  onDisconnect(data) {
+    print('onDisconnect $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Disconnected';
+    });
   }
 }

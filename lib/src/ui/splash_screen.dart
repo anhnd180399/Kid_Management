@@ -4,6 +4,7 @@ import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:web_socket_channel/io.dart';
 
 class SplashScreen extends StatefulWidget {
   double height;
@@ -55,7 +56,9 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ChildrenScreen(),
+              builder: (context) => ChildrenScreen(
+                channel: IOWebSocketChannel.connect('ws://echo.websocket.org'),
+              ),
             ));
       }
     });

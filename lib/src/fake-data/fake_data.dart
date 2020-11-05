@@ -1,4 +1,5 @@
 import 'package:device_apps/device_apps.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
@@ -227,5 +228,32 @@ class FakeData {
       SuggestedItemModel(url: 'vnexpress.vn'),
       SuggestedItemModel(url: 'coursera.com')
     ];
+  }
+
+  _connectToSocket() {
+    print('Connect to socket from ....');
+    Global.initSocket();
+    Global.socketUtils.connectToSocket();
+    Global.socketUtils.setConnectListener(onConnect);
+    Global.socketUtils.setOnConnectionErrorListener(onConnectionError);
+    Global.socketUtils.setOnConnectionErrorTimeOutListener(onConnectionTimeout);
+    Global.socketUtils.setOnDisconnectListener(onDisconnect);
+    Global.socketUtils.setOnErrorListener(onError);
+  }
+
+  onConnect() {
+    //
+  }
+  onConnectionError() {
+    //
+  }
+  onConnectionTimeout() {
+    //
+  }
+  onDisconnect() {
+    //
+  }
+  onError() {
+    //
   }
 }

@@ -4,8 +4,11 @@ import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/children_app_schedule_screen.dart';
 import 'package:kid_management/src/ui/children_screens/children_home_screen.dart';
 import 'package:kid_management/src/ui/children_screens/parents_mode_screen.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChildrenScreen extends StatefulWidget {
+  final WebSocketChannel channel;
+  ChildrenScreen({this.channel});
   @override
   _ChildrenScreenState createState() => _ChildrenScreenState();
 }
@@ -34,11 +37,11 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColor.mainColor.withOpacity(0.15),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            ),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
         padding: EdgeInsets.symmetric(vertical: 20.0),
         child: SafeArea(
           child: Row(
@@ -96,5 +99,11 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    widget.channel.sink.close();
+    super.dispose();
   }
 }
