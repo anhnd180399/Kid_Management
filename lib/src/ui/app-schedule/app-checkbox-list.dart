@@ -1,6 +1,8 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 
 class AppCheckboxList extends StatefulWidget {
@@ -9,7 +11,7 @@ class AppCheckboxList extends StatefulWidget {
 }
 
 class _AppCheckboxListState extends State<AppCheckboxList> {
-  bool showSystemApps = true;
+  bool showSystemApps = false;
   bool isSelected = false;
 
   Future<List<Application>> _getApps() async {
@@ -32,31 +34,30 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
           );
         } else {
           List<Application> apps = snapshot.data;
+          // filter KidSpace app
+          apps.removeWhere((app) => app.appName == 'Kid Space');
+          
           if (apps.length > 0) {
             return Expanded(
-              child: Scrollbar(
-                child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: apps.length,
-                  itemBuilder: (context, index) {
-                    Application app = apps[index];
+              child: ListView.builder(
+                itemCount: apps.length,
+                itemBuilder: (context, index) {
+                  Application app = apps[index];
 
-                    return Container(
-                      child: Column(
-                        children: [
-                          CustomCheckboxListTile(
-                            app: app,
-                            isSelected: false,
-                          ),
-                          Divider(
-                            color: AppColor.grayLight,
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                  return Container(
+                    child: Column(
+                      children: [
+                        CustomCheckboxListTile(
+                          app: app,
+                          isSelected: false,
+                        ),
+                        Divider(
+                          color: AppColor.grayLight,
+                        )
+                      ],
+                    ),
+                  );
+                },
               ),
             );
           } else {
@@ -91,6 +92,24 @@ class _CustomCheckboxListTileState extends State<CustomCheckboxListTile> {
         onChanged: (value) {
           setState(() {
             this.widget.isSelected = value;
+            // if app is selected then add it to temp list
+            if (this.widget.isSelected) {
+              var apps = FakeData.listApplication;
+              apps.forEach((app) {
+                if (app.application.packageName == widget.app.packageName &&
+                    app.application.appName == widget.app.appName) {
+                  var myApp = ApplicationSystem.toApplication(widget.app);
+
+                  FakeData.tempAppList.add(myApp);
+                }
+              });
+            } else {
+              // if app is unselected then remove it from temp list
+              FakeData.tempAppList.removeWhere((app) =>
+                  app.application.packageName == widget.app.packageName &&
+                  app.application.appName == widget.app.appName);
+            }
+            print(FakeData.tempAppList.length);
           });
         },
         title: Text(widget.app.appName),

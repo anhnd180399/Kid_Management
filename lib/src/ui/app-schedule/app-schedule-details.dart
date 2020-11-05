@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app_control_list.dart';
@@ -19,6 +20,18 @@ class AppScheduleDetails extends StatefulWidget {
 }
 
 class _AppScheduleDetailsState extends State<AppScheduleDetails> {
+// turn on a schedule and turn off all of others
+  void _turnOnSchedule(int scheduleId) {
+    var schedules = FakeData.listSchedule;
+    schedules.forEach((schedule) {
+      if (schedule.id == scheduleId) {
+        schedule.active = true;
+      } else {
+        schedule.active = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -43,8 +56,14 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DeleteSchedulePage(),
-                    ));
+                      builder: (context) => DeleteSchedulePage(
+                        scheduleId: widget.schedule.id,
+                      ),
+                    )).then((value) {
+                  if (value == 'schedule_deleted') {
+                    Navigator.pop(context);
+                  }
+                });
               })
         ],
       ),
@@ -62,6 +81,9 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                   String status = value == true ? 'ON' : 'OFF';
                   setState(() {
                     widget.schedule.active = value;
+                    if (value == true) {
+                      _turnOnSchedule(widget.schedule.id);
+                    }
                     Fluttertoast.showToast(
                         msg: 'Schedule is $status',
                         gravity: ToastGravity.CENTER,

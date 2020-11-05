@@ -17,19 +17,36 @@ class AppScheduleModel {
   // List<AppTimePeriod> get getAppTimePeriods => appTimePeriods;
 
   String toDayOfWeeksString() {
+    if (this.dayOfWeeks.isEmpty) {
+      return '';
+    }
+
     String result = '';
 
     for (int i = 0; i < this.dayOfWeeks.length; i++) {
       int d = this.dayOfWeeks.elementAt(i);
       String dayString = '';
-      switch(d) {
-        case 2 : dayString = 'Monday'; break;
-        case 3 : dayString = 'Tuesday'; break;
-        case 4 : dayString = 'Wednesday'; break;
-        case 5 : dayString = 'Thursday'; break;
-        case 6 : dayString = 'Friday'; break;
-        case 7 : dayString = 'Saturday'; break;
-        case 8 : dayString = 'Sunday';
+      switch (d) {
+        case 2:
+          dayString = 'Mon';
+          break;
+        case 3:
+          dayString = 'Tue';
+          break;
+        case 4:
+          dayString = 'Wed';
+          break;
+        case 5:
+          dayString = 'Thu';
+          break;
+        case 6:
+          dayString = 'Fri';
+          break;
+        case 7:
+          dayString = 'Sat';
+          break;
+        case 8:
+          dayString = 'Sun';
       }
       result += dayString + ', ';
     }

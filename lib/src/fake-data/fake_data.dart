@@ -16,6 +16,11 @@ class FakeData {
   static List<ApplicationSystem> listApplication;
   static List<AppScheduleModel> listSchedule;
   static bool isLogin = false;
+  // fake data for creating app schedule
+  // temp app list to used for schedule creating
+  static List<ApplicationSystem> tempAppList = [];
+  static String tmpStartTime = '';
+  static String tmpEndTime = '';
 
   static void init(List<ApplicationSystem> value) {
     print('intializing data...');
@@ -99,23 +104,23 @@ class FakeData {
     List<AppTimePeriod> periods = [
       AppTimePeriod(
           id: 1,
-          startTime: '7:00 AM',
+          startTime: '07:00 AM',
           endTime: '10:00 AM',
           apps: appListFirst()),
       AppTimePeriod(
           id: 2,
-          startTime: '10:00 PM',
-          endTime: '12:00 PM',
+          startTime: '10:00 AM',
+          endTime: '01:00 PM',
           apps: appListSecond()),
       AppTimePeriod(
           id: 3,
-          startTime: '12:00 PM',
-          endTime: '16:00 PM',
+          startTime: '02:00 PM',
+          endTime: '04:00 PM',
           apps: appListThird()),
       AppTimePeriod(
           id: 4,
-          startTime: '16:00 PM',
-          endTime: '21:00 PM',
+          startTime: '05:00 PM',
+          endTime: '09:00 PM',
           apps: appListFourth())
     ];
 

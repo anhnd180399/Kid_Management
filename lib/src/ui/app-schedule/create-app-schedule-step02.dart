@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/app-checkbox-list.dart';
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step03.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateAppScheduleStep02 extends StatefulWidget {
+  AppScheduleModel appScheduleModel;
+
+  CreateAppScheduleStep02({this.appScheduleModel});
+
   @override
   _CreateAppScheduleStep02State createState() =>
       _CreateAppScheduleStep02State();
@@ -37,29 +43,22 @@ class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: ListView(
+        child: Column(
           children: [
-            // current step text
-            Column(
-              children: [
-                Text(
-                  '2/3',
-                  style: TextStyle(color: AppColor.mainColor, fontSize: 20.0),
-                ),
-                SizedBox(
-                  height: 25.0,
-                ),
-                Text(HEAD_TITLE, style: TextStyle(fontSize: 18.0)),
-                SizedBox(
-                  height: 40.0,
-                )
-              ],
+            Text(
+              '2/3',
+              style: TextStyle(color: AppColor.mainColor, fontSize: 20.0),
             ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Text(HEAD_TITLE, style: TextStyle(fontSize: 18.0)),
+            SizedBox(
+              height: 40.0,
+            ),
+
             // the list of installed apps
             AppCheckboxList(),
-            SizedBox(
-              height: 50.0,
-            ),
             // The 'NEXT' button
             Container(
               margin: EdgeInsets.only(bottom: 20.0),
@@ -73,11 +72,13 @@ class _CreateAppScheduleStep02State extends State<CreateAppScheduleStep02> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateAppScheduleStep03(),
+                        builder: (context) => CreateAppScheduleStep03(
+                          appScheduleModel: widget.appScheduleModel,
+                        ),
                       )).then((value) {
-                     if(value == 'success'){
-                       Navigator.pop(context, 'success');
-                     }
+                    if (value == 'success') {
+                      Navigator.pop(context, 'success');
+                    }
                   });
                 },
                 color: AppColor.mainColor,

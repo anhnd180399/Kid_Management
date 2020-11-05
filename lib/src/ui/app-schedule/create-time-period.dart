@@ -72,7 +72,7 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
         child: Column(
           children: <Widget>[
             Text(
-              widget.appScheduleName,
+              widget.appScheduleName.toUpperCase(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
             ),
             SizedBox(

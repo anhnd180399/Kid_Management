@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/app-schedule/create-app-schedule-step02.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateAppScheduleStep01 extends StatefulWidget {
+  AppScheduleModel appScheduleModel;
+  CreateAppScheduleStep01({this.appScheduleModel});
+
   @override
   _CreateAppScheduleStep01State createState() =>
       _CreateAppScheduleStep01State();
@@ -78,6 +82,8 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
             // text field to input schedule's name
             TextField(
               onChanged: (value) {
+                widget.appScheduleModel.name = value;
+
                 setState(() {
                   if (value.length == 0) {
                     this.isButtonDisabled = true;
@@ -95,8 +101,14 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateAppScheduleStep02(),
-                      ));
+                        builder: (context) => CreateAppScheduleStep02(
+                          appScheduleModel: widget.appScheduleModel,
+                        ),
+                      )).then((value) {
+                    if (value == 'success') {
+                      Navigator.pop(context);
+                    }
+                  });
                 }
               },
               autofocus: true,
@@ -127,15 +139,19 @@ class _CreateAppScheduleStep01State extends State<CreateAppScheduleStep01> {
                 onPressed: this.isButtonDisabled
                     ? null
                     : () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateAppScheduleStep02(),
-                            )).then((value) {
-                          if (value == 'success') {
-                            Navigator.pop(context);
-                          }
-                        });
+                        if (widget.appScheduleModel.name.isNotEmpty) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateAppScheduleStep02(
+                                  appScheduleModel: widget.appScheduleModel,
+                                ),
+                              )).then((value) {
+                            if (value == 'success') {
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
                       },
                 color: AppColor.mainColor,
                 child: Text(
