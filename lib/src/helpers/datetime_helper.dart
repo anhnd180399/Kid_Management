@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DateTimeHelper {
   // convert 12-hours time format string to Datetime obj
   static DateTime toDateTime(String timeString) {
@@ -29,5 +31,14 @@ class DateTimeHelper {
       print(element);
     });
     return '${parts[0].padLeft(2, '0')}:${parts[1].padLeft(2, '0')}';
+  }
+
+  static int compareTwoDateInSeconds(DateTime dateOne, DateTime dateTwo) {
+    var diff = dateOne.difference(dateTwo);
+    return diff.inSeconds;
+  }
+
+  static String toTime12Hours(DateTime date) {
+    return DateFormat('hh:mm a').format(date);
   }
 }

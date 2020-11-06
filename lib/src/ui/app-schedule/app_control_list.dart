@@ -76,12 +76,14 @@ class _AppControlListState extends State<AppControlList> {
                         children: [
                           Text('${period.startTime} - ${period.endTime}',
                               style: TextStyle(color: AppColor.grayDark)),
-                          Icon(Icons.keyboard_arrow_down)
+                          Icon(!_timePeriodsCollapse[index]
+                              ? Icons.keyboard_arrow_down
+                              : Icons.keyboard_arrow_right)
                         ],
                       ),
                     ),
                     Spacer(),
-                    // add app button
+                    // button to edit app time period
                     InkWell(
                       child: Container(
                         decoration: BoxDecoration(
@@ -104,8 +106,11 @@ class _AppControlListState extends State<AppControlList> {
                                 apps: FakeData.getListNonBlockingApplication(),
                                 selectedApps: period.apps,
                                 appScheduleModel: widget.appScheduleModel,
+                                periodIndex: index,
                               ),
-                            ));
+                            )).then((value) {
+                          setState(() {});
+                        });
                       },
                     )
                   ],

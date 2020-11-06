@@ -34,6 +34,7 @@ class _TimePickerButtonState extends State<TimePickerButton> {
                 widget.time = time;
                 String time12Hours = DateFormat('hh:mm a').format(widget.time);
                 widget.buttonText = time12Hours;
+              
               });
             },
           );

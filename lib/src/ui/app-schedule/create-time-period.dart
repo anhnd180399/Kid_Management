@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/helpers/datetime_helper.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/time-picker-button.dart';
@@ -13,6 +15,8 @@ class CreateTimePeriodScreen extends StatefulWidget {
   List<ApplicationSystem> apps = FakeData.getListNonBlockingApplication();
   List<bool> appChecks = [];
 
+  List<ApplicationSystem> selectedApps = [];
+
   CreateTimePeriodScreen({this.appScheduleName, this.startTime, this.endTime});
 
   @override
@@ -20,14 +24,80 @@ class CreateTimePeriodScreen extends StatefulWidget {
 }
 
 class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
-  bool _connectedToSocket;
-  String _errorConnectMessage;
+  // bool _connectedToSocket;
+  // String _errorConnectMessage;
   @override
   void initState() {
     super.initState();
     widget.apps = FakeData.getListNonBlockingApplication();
-    _connectedToSocket = false;
-    _errorConnectMessage = 'Connecting...';
+    // _connectedToSocket = false;
+    // _errorConnectMessage = 'Connecting...';
+  }
+
+  Widget _buildStartTimePickerButton() {
+    return Container(
+      width: 100.0,
+      child: RaisedButton(
+        elevation: 3,
+        color: widget.startTime == null ? Colors.white : AppColor.mainColor,
+        onPressed: () {
+          DatePicker.showTime12hPicker(
+            context,
+            currentTime:
+                widget.startTime == null ? DateTime.now() : widget.startTime,
+            locale: LocaleType.en,
+            onConfirm: (time) {
+              setState(() {
+                widget.startTime = time;
+              });
+            },
+          );
+        },
+        child: Text(
+          widget.startTime == null ? 'FROM' : DateTimeHelper.toTime12Hours(widget.startTime),
+          style: TextStyle(
+              color:
+                  widget.startTime == null ? AppColor.grayDark : Colors.white),
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            side: BorderSide(
+                style: BorderStyle.solid, color: AppColor.mainColor, width: 2)),
+      ),
+    );
+  }
+
+  Widget _buildEndTimePickerButton() {
+    return Container(
+      width: 100.0,
+      child: RaisedButton(
+        elevation: 3,
+        color: widget.endTime == null ? Colors.white : AppColor.mainColor,
+        onPressed: () {
+          DatePicker.showTime12hPicker(
+            context,
+            currentTime:
+                widget.endTime == null ? DateTime.now() : widget.endTime,
+            locale: LocaleType.en,
+            onConfirm: (time) {
+              setState(() {
+                widget.endTime = time;
+              });
+            },
+          );
+        },
+        child: Text(
+          DateTimeHelper.toTime12Hours(widget.endTime),
+          style: TextStyle(
+              color:
+                  widget.endTime == null ? AppColor.grayDark : Colors.white),
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            side: BorderSide(
+                style: BorderStyle.solid, color: AppColor.mainColor, width: 2)),
+      ),
+    );
   }
 
   @override
@@ -115,7 +185,7 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
               height: 50.0,
               child: RaisedButton(
                 onPressed: () {
-                  FakeData.sendFirstSchedule();
+                  // FakeData.sendFirstSchedule();
                 },
                 child: Text(
                   'OK',

@@ -36,12 +36,35 @@ class FakeData {
       listApplicationForKid = new List<ApplicationSystem>();
   }
 
-  static setToSchedule(
-      AppScheduleModel appScheduleModel, ApplicationSystem applicationSystem) {
+// function to add an app to the list in time period of app schedule
+  static setToSchedule(AppScheduleModel appScheduleModel,
+      ApplicationSystem applicationSystem, int periodIndex, bool isRemoved) {
     var schedule =
         listSchedule.firstWhere((element) => element.id == appScheduleModel.id);
     if (schedule != null) {
-      appScheduleModel.appTimePeriods[0].apps.add(applicationSystem);
+      var currentApps = schedule.appTimePeriods[periodIndex].apps;
+
+      bool appExist = false;
+      currentApps.forEach((app) {
+        if (app.application.appName == applicationSystem.application.appName) {
+          appExist = true;
+        }
+      });
+
+// adding an app to time period
+      if (!isRemoved) {
+        if (!appExist) {
+          appScheduleModel.appTimePeriods[periodIndex].apps
+              .add(applicationSystem);
+        }
+      } else {
+        if (appExist) {
+          appScheduleModel.appTimePeriods[periodIndex].apps.removeWhere(
+              (element) =>
+                  element.application.appName ==
+                  applicationSystem.application.appName);
+        }
+      }
     }
   }
 

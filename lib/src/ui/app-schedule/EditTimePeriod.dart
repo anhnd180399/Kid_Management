@@ -18,13 +18,15 @@ class EditTimePriod extends StatefulWidget {
   List<ApplicationSystem> selectedApps;
   AppScheduleModel appScheduleModel;
   String tmpStartTime, tmpEndTime;
+  int periodIndex;
 
   EditTimePriod(
       {this.startTime,
       this.endTime,
       this.apps,
       this.selectedApps,
-      this.appScheduleModel});
+      this.appScheduleModel,
+      this.periodIndex});
 
   @override
   _EditTimePriodState createState() => _EditTimePriodState();
@@ -138,6 +140,7 @@ class _EditTimePriodState extends State<EditTimePriod> {
                     icon: app.icon,
                     applicationSystem: app,
                     appScheduleModel: widget.appScheduleModel,
+                    periodIndex: widget.periodIndex,
                   );
                 },
               ),
@@ -202,7 +205,6 @@ class _ChangeTimeDialogState extends State<ChangeTimeDialog> {
                   context,
                   currentTime: DateTime.parse(dateTimeString),
                   onConfirm: (time) {
-                    print('ahihi');
                     setState(() {
                       widget.startTime = DateFormat('hh:mm a').format(time);
                     });
@@ -281,13 +283,15 @@ class CustomChekboxListItem extends StatefulWidget {
   bool isSelected;
   ApplicationSystem applicationSystem;
   AppScheduleModel appScheduleModel;
+  int periodIndex;
 
   CustomChekboxListItem(
       {this.title,
       this.icon,
       this.isSelected,
       this.applicationSystem,
-      this.appScheduleModel});
+      this.appScheduleModel,
+      this.periodIndex});
 
   @override
   _CustomChekboxListItemState createState() => _CustomChekboxListItemState();
@@ -301,8 +305,8 @@ class _CustomChekboxListItemState extends State<CustomChekboxListItem> {
       onChanged: (value) {
         setState(() {
           widget.isSelected = value;
-          FakeData.setToSchedule(
-              widget.appScheduleModel, widget.applicationSystem);
+          FakeData.setToSchedule(widget.appScheduleModel,
+              widget.applicationSystem, widget.periodIndex, !value);
         });
       },
       title: Text(widget.title),

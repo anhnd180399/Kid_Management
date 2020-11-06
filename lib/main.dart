@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/ui/app-schedule/app-schedule.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/splash_screen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcomeAnimation(),
+      // home: WelcomeAnimation(),
+      home: AppSchedule(),
       theme: ThemeData(fontFamily: 'Open_Sans'),
       routes: <String, WidgetBuilder>{
         '/HomeScreen': (BuildContext context) => new KidPage()
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
 class WelcomeAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SystemPage();
+    // return SystemPage();
+    return SplashScreen();
   }
 }
