@@ -118,6 +118,7 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
           ],
         ),
       ),
+      // button to add new time period to the schedule
       floatingActionButton: Stack(
         children: [
           Positioned(
@@ -136,8 +137,11 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                       MaterialPageRoute(
                         builder: (context) => CreateTimePeriodScreen(
                           appScheduleName: widget.schedule.name,
+                          appScheduleId: widget.schedule.id,
                         ),
-                      ));
+                      )).then((value) {
+                    setState(() {});
+                  });
                 },
               ),
             ),

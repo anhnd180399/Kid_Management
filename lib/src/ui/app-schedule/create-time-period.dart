@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/helpers/datetime_helper.dart';
+import 'package:kid_management/src/models/app_time_period.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-schedule/time-picker-button.dart';
@@ -11,13 +15,15 @@ import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateTimePeriodScreen extends StatefulWidget {
   String appScheduleName;
+  int appScheduleId;
   DateTime startTime, endTime;
   List<ApplicationSystem> apps = FakeData.getListNonBlockingApplication();
   List<bool> appChecks = [];
 
   List<ApplicationSystem> selectedApps = [];
 
-  CreateTimePeriodScreen({this.appScheduleName, this.startTime, this.endTime});
+  CreateTimePeriodScreen(
+      {this.appScheduleId, this.appScheduleName, this.startTime, this.endTime});
 
   @override
   _CreateTimePeriodScreenState createState() => _CreateTimePeriodScreenState();
@@ -32,6 +38,14 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
     widget.apps = FakeData.getListNonBlockingApplication();
     // _connectedToSocket = false;
     // _errorConnectMessage = 'Connecting...';
+  }
+
+  bool _appExist(String appName) {
+    return widget.selectedApps.firstWhere(
+          (app) => app.application.appName == appName,
+          orElse: () => null,
+        ) !=
+        null;
   }
 
   Widget _buildStartTimePickerButton() {
@@ -54,7 +68,9 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
           );
         },
         child: Text(
-          widget.startTime == null ? 'FROM' : DateTimeHelper.toTime12Hours(widget.startTime),
+          widget.startTime == null
+              ? 'FROM'
+              : DateTimeHelper.toTime12Hours(widget.startTime),
           style: TextStyle(
               color:
                   widget.startTime == null ? AppColor.grayDark : Colors.white),
@@ -74,23 +90,39 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
         elevation: 3,
         color: widget.endTime == null ? Colors.white : AppColor.mainColor,
         onPressed: () {
-          DatePicker.showTime12hPicker(
-            context,
-            currentTime:
-                widget.endTime == null ? DateTime.now() : widget.endTime,
-            locale: LocaleType.en,
-            onConfirm: (time) {
-              setState(() {
-                widget.endTime = time;
-              });
-            },
-          );
+          if (widget.startTime != null) {
+            DatePicker.showTime12hPicker(
+              context,
+              currentTime:
+                  widget.endTime == null ? DateTime.now() : widget.endTime,
+              locale: LocaleType.en,
+              onConfirm: (time) {
+                var dateCompare = DateTimeHelper.compareTwoDateInSeconds(
+                    time, widget.startTime);
+                // that mean we will update end time if selected end time is greater than given start time
+                if (dateCompare > 0) {
+                  setState(() {
+                    widget.endTime = time;
+                  });
+                } else {
+                  Fluttertoast.showToast(
+                      msg: 'End time must be greater than start time!',
+                      gravity: ToastGravity.CENTER);
+                }
+              },
+            );
+          } else {
+            Fluttertoast.showToast(
+                msg: 'You forgot choosing start time!',
+                gravity: ToastGravity.CENTER);
+          }
         },
         child: Text(
-          DateTimeHelper.toTime12Hours(widget.endTime),
+          widget.endTime == null
+              ? 'TO'
+              : DateTimeHelper.toTime12Hours(widget.endTime),
           style: TextStyle(
-              color:
-                  widget.endTime == null ? AppColor.grayDark : Colors.white),
+              color: widget.endTime == null ? AppColor.grayDark : Colors.white),
         ),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
@@ -133,12 +165,12 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  TimePickerButton(buttonText: 'FROM'),
+                  _buildStartTimePickerButton(),
                   Container(
                     child: Icon(Icons.arrow_forward_ios_outlined),
                     margin: EdgeInsets.symmetric(horizontal: 10.0),
                   ),
-                  TimePickerButton(buttonText: 'TO'),
+                  _buildEndTimePickerButton(),
                 ],
               ),
             ),
@@ -168,6 +200,17 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
                         onChanged: (value) {
                           setState(() {
                             widget.appChecks[index] = value;
+                            bool appIsExisted =
+                                _appExist(app.application.appName);
+                            if (!appIsExisted && value == true) {
+                              print('selected app list added');
+                              widget.selectedApps.add(app);
+                            }
+
+                            if (appIsExisted && value == false) {
+                              print('selected app list removed');
+                              widget.selectedApps.remove(app);
+                            }
                           });
                         },
                       )
@@ -179,6 +222,7 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
             SizedBox(
               height: 10,
             ),
+            // button to confirm creating time period step
             Container(
               margin: EdgeInsets.only(bottom: 20.0),
               width: double.infinity,
@@ -186,6 +230,31 @@ class _CreateTimePeriodScreenState extends State<CreateTimePeriodScreen> {
               child: RaisedButton(
                 onPressed: () {
                   // FakeData.sendFirstSchedule();
+                  if (widget.startTime != null &&
+                      widget.endTime != null &&
+                      widget.selectedApps.length > 0) {
+                    var schedule = FakeData.listSchedule.firstWhere(
+                        (schedule) => schedule.id == widget.appScheduleId,
+                        orElse: null);
+
+                    // adding new time period
+                    if (schedule != null) {
+                      var newTimePeriod = AppTimePeriod(
+                          apps: widget.selectedApps,
+                          id: Random.secure().nextInt(5000),
+                          startTime:
+                              DateTimeHelper.toTime12Hours(widget.startTime),
+                          endTime:
+                              DateTimeHelper.toTime12Hours(widget.endTime));
+                      schedule.appTimePeriods.add(newTimePeriod);
+
+                      Navigator.pop(context);
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: 'Make sure you fill all data!',
+                        gravity: ToastGravity.CENTER);
+                  }
                 },
                 child: Text(
                   'OK',
