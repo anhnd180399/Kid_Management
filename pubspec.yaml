@@ -24,7 +24,8 @@ dependencies:
   
   flutter:
     sdk: flutter
-  firebase_core: "0.5.0+1"
+  firebase_core: "^0.5.1"
+  firebase_database: "^4.2.0"
   firebase_auth: "^0.18.1+2"
 
   # library to render SVG image
@@ -51,8 +52,6 @@ dependencies:
   # open a link in browser of device
   url_launcher: ^5.7.8
   flutter_appavailability: ^0.0.21
-  web_socket_channel: ^1.1.0
-  flutter_socket_io: ^0.6.0
   adhara_socket_io: ^0.4.2+1
 
   # The following adds the Cupertino Icons font to your application.

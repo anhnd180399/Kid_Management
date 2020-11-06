@@ -43,7 +43,8 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _entryField(String title, String initvalue,
+      {bool isPassword = false}) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 onSaved: (input) {
                   _email_field == title ? _email = input : _password = input;
                 },
+                initialValue: initvalue,
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
                 obscureText: isPassword,
@@ -215,8 +217,8 @@ class _LoginPageState extends State<LoginPage> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          _entryField(_email_field),
-          _entryField(_password_field, isPassword: true),
+          _entryField(_email_field, "hungz1@gmail.com"),
+          _entryField(_password_field, "123456Aa", isPassword: true),
         ],
       ),
     );

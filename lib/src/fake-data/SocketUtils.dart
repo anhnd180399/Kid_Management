@@ -8,7 +8,7 @@ class SocketUtils {
   //
   static String _serverIP = 'http://';
   static String ipAddress = '192.168.1.180';
-  // Platform.isIOS ? 'http://118.68.185.131' : 'http://10.0.2.2';
+  static String localIp = Platform.isIOS ? 'localhost' : '10.0.2.2';
   static const int SERVER_PORT = 8080;
   static String _connectUrl = '$_serverIP$ipAddress:$SERVER_PORT';
 
