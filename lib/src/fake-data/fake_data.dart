@@ -1,7 +1,7 @@
 import 'package:device_apps/device_apps.dart';
-import 'package:kid_management/src/fake-data/Global.dart';
 import 'package:kid_management/src/fake-data/SocketUtils.dart';
 import 'package:kid_management/src/fake-data/char_message_model.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';

@@ -7,7 +7,6 @@ import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/children_app_schedule_screen.dart';
 import 'package:kid_management/src/ui/children_screens/children_home_screen.dart';
 import 'package:kid_management/src/ui/children_screens/parents_mode_screen.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChildrenScreen extends StatefulWidget {
   @override

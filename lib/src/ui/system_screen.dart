@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kid_management/src/fake-data/Global.dart';
 import 'package:kid_management/src/fake-data/SocketUtils.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 import 'package:kid_management/src/ui/common-ui/back-button.dart';

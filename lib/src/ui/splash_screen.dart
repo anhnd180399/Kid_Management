@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kid_management/src/fake-data/Global.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
