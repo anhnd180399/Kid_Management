@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
@@ -18,6 +19,7 @@ class ChildrenHomeScreen extends StatefulWidget {
 class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
   List<SocketMessageModel> _chatMessages;
   static List<ApplicationSystem> _listApplicaionSystem;
+  final databaseReference = FirebaseDatabase.instance.reference();
   UserSocket _chatUser = Global.initKidUsers();
   ScrollController _chatLVController;
   static refreshData() {
@@ -37,6 +39,19 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
     _checkOnline();
     setState(
         () => FakeData.listApplicationForKid = FakeData.listApplicationForKid);
+
+    // firebase
+    databaseReference.child('apps').onValue.listen((event) {
+      var snapshot = event.snapshot;
+      var listDisplayApplications = snapshot.value['list_app'] as List;
+      var listAppName = new List<String>();
+      listDisplayApplications.forEach((element) {
+        listAppName.add(element);
+      });
+      setState(() {
+        _listApplicaionSystem = FakeData.convertToListApp(listAppName);
+      });
+    });
   }
 
   _checkOnline() async {
@@ -87,7 +102,7 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
                 childAspectRatio: 1,
                 crossAxisSpacing: 2,
                 mainAxisSpacing: 2,
-                children: FakeData.listApplicationForKid.map((app) {
+                children: _listApplicaionSystem.map((app) {
                   return AppGridItem(
                     app: app,
                   );

@@ -6,7 +6,6 @@ import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:web_socket_channel/io.dart';
 
 class SplashScreen extends StatefulWidget {
   double height;
@@ -36,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen>
     _parentUser = Global.initParentUser();
     _connectedToSocket = false;
     _errorConnectMessage = 'Connecting...';
-    _connectKidSocket();
-    _connectParentSocket();
+    // _connectKidSocket();
+    // _connectParentSocket();
     // controller to control all animations
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 2));

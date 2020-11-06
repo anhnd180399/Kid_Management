@@ -10,6 +10,7 @@ import 'package:kid_management/src/models/location_history.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/models/notification_model.dart';
 import 'package:kid_management/src/models/suggested_item_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 // class to generate fake data for whole app
 
@@ -260,15 +261,17 @@ class FakeData {
     var listApp = listSchedule.first.appTimePeriods[0].apps
         .map((e) => e.application.appName)
         .toList();
-    SocketMessageModel chatMessageModel = SocketMessageModel(
-      id: 0,
-      to: Global.kidUser.id,
-      from: Global.parentUser.id,
-      toUserOnlineStatus: false,
-      message: listApp,
-      chatType: SocketUtils.SINGLE_CHAT,
-    );
-    Global.socketUtilParent.sendSingleMessage(chatMessageModel, Global.kidUser);
+    final databaseReference = FirebaseDatabase.instance.reference();
+    databaseReference.child("apps").child("list_app").remove();
+    int count = 0;
+    for (var appName in listApp) {
+      databaseReference
+          .child("apps")
+          .child("list_app")
+          .child(count.toString())
+          .set(appName);
+      count++;
+    }
   }
 
   static onChatMessageReceived(data) {
@@ -313,6 +316,9 @@ class FakeData {
         .setOnChatMessageReceivedListener(onChatMessageReceived);
     Global.socketUtilKid.setOnMessageBackFromServer(onMessageBackFromServer);
   }
+
+  // firebase realtime
+
 }
 
 enum UserOnlineStatus { connecting, online, not_online }

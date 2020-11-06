@@ -37,6 +37,8 @@ class MyApp extends StatelessWidget {
 class WelcomeAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SystemPage();
+    return SplashScreen(
+      height: MediaQuery.of(context).size.height,
+    );
   }
 }
