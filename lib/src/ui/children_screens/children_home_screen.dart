@@ -1,32 +1,54 @@
-import 'package:device_apps/device_apps.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/UserSocket.dart';
+import 'package:kid_management/src/fake-data/char_message_model.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/components/app_grid_item.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChildrenHomeScreen extends StatefulWidget {
-  final WebSocketChannel channel;
-  ChildrenHomeScreen({this.channel});
   @override
   _ChildrenHomeScreenState createState() => _ChildrenHomeScreenState();
 }
 
 class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
-// Fake app data
-  // List<MyApp> _apps = FakeData.listApplication;
+  List<SocketMessageModel> _chatMessages;
+  static List<ApplicationSystem> _listApplicaionSystem;
+  UserSocket _chatUser = Global.initKidUsers();
+  ScrollController _chatLVController;
+  static refreshData() {
+    setState() {
+      _listApplicaionSystem = FakeData.listApplicationForKid;
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _chatLVController = ScrollController(initialScrollOffset: 0.0);
+    _listApplicaionSystem = new List<ApplicationSystem>();
+    _chatUser = Global.kidUser;
+    _chatMessages = List();
+    FakeData.initSocketListeners();
+    _checkOnline();
+    setState(
+        () => FakeData.listApplicationForKid = FakeData.listApplicationForKid);
+  }
+
+  _checkOnline() async {
+    SocketMessageModel chatMessageModel = SocketMessageModel(
+      to: Global.kidUser.id,
+      from: Global.parentUser.id,
+    );
+    Global.socketUtilKid.checkOnline(chatMessageModel);
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Column(
@@ -65,10 +87,7 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
                 childAspectRatio: 1,
                 crossAxisSpacing: 2,
                 mainAxisSpacing: 2,
-                children: FakeData.getScheduleById(1)
-                    ?.appTimePeriods[0]
-                    ?.apps
-                    .map((app) {
+                children: FakeData.listApplicationForKid.map((app) {
                   return AppGridItem(
                     app: app,
                   );
@@ -76,17 +95,15 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
               ),
             ),
           ),
-          StreamBuilder(
-            stream: widget.channel.stream,
-            builder: (context, snapshot) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24.0),
-                child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
-              );
-            },
-          )
         ],
       ),
     );
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 }

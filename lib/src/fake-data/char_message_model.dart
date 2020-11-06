@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-ChatMessageModel chatMessageModelFromJson(String str) =>
-    ChatMessageModel.fromJson(json.decode(str));
+SocketMessageModel chatMessageModelFromJson(String str) =>
+    SocketMessageModel.fromJson(json.decode(str));
 
-String chatMessageModelToJson(ChatMessageModel data) =>
+String chatMessageModelToJson(SocketMessageModel data) =>
     json.encode(data.toJson());
 
-class ChatMessageModel {
-  int chatId;
+class SocketMessageModel {
+  int id;
   int to;
   int from;
   List<String> message;
   String chatType;
   bool toUserOnlineStatus;
 
-  ChatMessageModel({
-    this.chatId,
+  SocketMessageModel({
+    this.id,
     this.to,
     this.from,
     this.message,
@@ -23,9 +23,9 @@ class ChatMessageModel {
     this.toUserOnlineStatus,
   });
 
-  factory ChatMessageModel.fromJson(Map<String, dynamic> json) =>
-      ChatMessageModel(
-        chatId: json["chat_id"],
+  factory SocketMessageModel.fromJson(Map<String, dynamic> json) =>
+      SocketMessageModel(
+        id: json["id"],
         to: json["to"],
         from: json["from"],
         message: List<String>.from(json["message"].map((x) => x)),
@@ -34,7 +34,7 @@ class ChatMessageModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "chat_id": chatId,
+        "id": id,
         "to": to,
         "from": from,
         "message": List<dynamic>.from(message.map((x) => x)),

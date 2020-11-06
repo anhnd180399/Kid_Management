@@ -6,6 +6,7 @@ import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/splash_screen.dart';
+import 'package:kid_management/src/ui/system_screen.dart';
 
 import 'src/ui/kid_app.dart';
 
@@ -36,8 +37,6 @@ class MyApp extends StatelessWidget {
 class WelcomeAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SplashScreen(
-      height: MediaQuery.of(context).size.height,
-    );
+    return SystemPage();
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/UserSocket.dart';
+import 'package:kid_management/src/fake-data/char_message_model.dart';
+import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/children_app_schedule_screen.dart';
 import 'package:kid_management/src/ui/children_screens/children_home_screen.dart';
@@ -7,8 +10,6 @@ import 'package:kid_management/src/ui/children_screens/parents_mode_screen.dart'
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChildrenScreen extends StatefulWidget {
-  final WebSocketChannel channel;
-  ChildrenScreen({this.channel});
   @override
   _ChildrenScreenState createState() => _ChildrenScreenState();
 }
@@ -20,6 +21,17 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
     ChildrenAppScheduleScreen(),
     ParentsModeScreen()
   ];
+  bool _connectedToSocket;
+  String _errorConnectMessage;
+  UserSocket _kidUser;
+  UserSocket _parentUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // init childrent user
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +115,6 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
 
   @override
   void dispose() {
-    widget.channel.sink.close();
     super.dispose();
   }
 }

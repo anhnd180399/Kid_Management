@@ -6,10 +6,11 @@ import 'package:kid_management/src/fake-data/char_message_model.dart';
 
 class SocketUtils {
   //
-  static String _serverIP = 'http://192.168.1.180';
+  static String _serverIP = 'http://';
+  static String ipAddress = '192.168.1.180';
   // Platform.isIOS ? 'http://118.68.185.131' : 'http://10.0.2.2';
   static const int SERVER_PORT = 8080;
-  static String _connectUrl = '$_serverIP:$SERVER_PORT';
+  static String _connectUrl = '$_serverIP$ipAddress:$SERVER_PORT';
 
   // Events
   static const String ON_MESSAGE_RECEIVED = 'receive_message';
@@ -28,13 +29,14 @@ class SocketUtils {
   static const String SINGLE_CHAT = 'single_chat';
 
   UserSocket _fromUser;
-
+  bool _isParent;
   SocketIO _socket;
   SocketIOManager _manager;
 
   initSocket(UserSocket fromUser) async {
     print('Connecting user: ${fromUser.isParent.toString()}');
     this._fromUser = fromUser;
+    this._isParent = fromUser.isParent;
     await _init();
   }
 
@@ -46,6 +48,7 @@ class SocketUtils {
   _socketOptions() {
     final Map<String, String> userMap = {
       'from': _fromUser.id.toString(),
+      'parent': _isParent.toString()
     };
     return SocketOptions(
       _connectUrl,
@@ -55,8 +58,8 @@ class SocketUtils {
     );
   }
 
-  sendSingleChatMessage(
-      ChatMessageModel chatMessageModel, UserSocket toChatUser) {
+  sendSingleMessage(
+      SocketMessageModel chatMessageModel, UserSocket toChatUser) {
     print(
         'Sending Message to: ${toChatUser.isParent.toString()}, ID: ${toChatUser.id}');
     if (null == _socket) {
@@ -72,7 +75,7 @@ class SocketUtils {
     });
   }
 
-  checkOnline(ChatMessageModel chatMessageModel) {
+  checkOnline(SocketMessageModel chatMessageModel) {
     print('Checking Online: ${chatMessageModel.to}');
     if (null == _socket) {
       print("Socket is Null, Cannot send message");

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/Global.dart';
+import 'package:kid_management/src/fake-data/UserSocket.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
@@ -22,14 +24,20 @@ class _SplashScreenState extends State<SplashScreen>
   Animation<double> _logoAnim;
   Animation<double> _appNameAnim;
   Animation<double> _progressBarAnim;
-
+  bool _connectedToSocket;
+  String _errorConnectMessage;
   Color _mainColor = Color(0xff3ab081);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _kidUser = Global.initKidUsers();
+    _parentUser = Global.initParentUser();
+    _connectedToSocket = false;
+    _errorConnectMessage = 'Connecting...';
+    _connectKidSocket();
+    _connectParentSocket();
     // controller to control all animations
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
@@ -56,14 +64,80 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ChildrenScreen(
-                channel: IOWebSocketChannel.connect('ws://echo.websocket.org'),
-              ),
+              builder: (context) => ChildrenScreen(),
             ));
       }
     });
 
     _animationController.forward();
+  }
+
+  UserSocket _kidUser;
+  UserSocket _parentUser;
+
+  _connectKidSocket() {
+    Future.delayed(Duration(seconds: 2), () async {
+      print("Connecting to socket server");
+      Global.initKidSocket();
+      await Global.socketUtilKid.initSocket(_kidUser);
+      Global.socketUtilKid.connectToSocket();
+      Global.socketUtilKid.setConnectListener(onConnect);
+      Global.socketUtilKid.setOnDisconnectListener(onDisconnect);
+      Global.socketUtilKid.setOnErrorListener(onError);
+      Global.socketUtilKid.setOnConnectionErrorListener(onConnectError);
+    });
+  }
+
+  _connectParentSocket() {
+    Future.delayed(Duration(seconds: 2), () async {
+      print("Connecting to socket server");
+      Global.initParentSocket();
+      await Global.socketUtilParent.initSocket(_parentUser);
+      Global.socketUtilParent.connectToSocket();
+      Global.socketUtilParent.setConnectListener(onConnect);
+      Global.socketUtilParent.setOnDisconnectListener(onDisconnect);
+      Global.socketUtilParent.setOnErrorListener(onError);
+      Global.socketUtilParent.setOnConnectionErrorListener(onConnectError);
+    });
+  }
+
+  onConnect(data) {
+    print('Connected $data');
+    setState(() {
+      _connectedToSocket = true;
+    });
+  }
+
+  onConnectError(data) {
+    print('onConnectError $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Failed to Connect';
+    });
+  }
+
+  onConnectTimeout(data) {
+    print('onConnectTimeout $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Connection timedout';
+    });
+  }
+
+  onError(data) {
+    print('onError $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Connection Failed';
+    });
+  }
+
+  onDisconnect(data) {
+    print('onDisconnect $data');
+    setState(() {
+      _connectedToSocket = false;
+      _errorConnectMessage = 'Disconnected';
+    });
   }
 
   @override

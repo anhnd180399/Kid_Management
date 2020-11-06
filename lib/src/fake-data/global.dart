@@ -1,34 +1,39 @@
+import 'package:kid_management/src/fake-data/SocketUtils.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
-import 'package:kid_management/src/fake-data/socket_utils.dart';
 
 class Global {
   // Socket
-  static SocketUtils socketUtils;
-  static List<UserSocket> dummyUsers;
-
+  static SocketUtils socketUtilParent;
+  static SocketUtils socketUtilKid;
+  static int kidId = 0;
+  static int parentId = 0;
   // Logged In User
-  static UserSocket loggedInUser;
+  static UserSocket parentUser;
 
   // Single Chat - To Chat User
-  static UserSocket toChatUser;
+  static UserSocket kidUser;
 
-  static initSocket() {
-    if (null == socketUtils) {
-      socketUtils = SocketUtils();
+  static initParentSocket() {
+    if (null == socketUtilParent) {
+      socketUtilParent = SocketUtils();
     }
   }
 
-  static void initDummyUsers() {
-    UserSocket userA = new UserSocket(id: 1000, isParent: true);
-    UserSocket userB = new UserSocket(id: 1001, isParent: false);
-    dummyUsers = List<UserSocket>();
-    dummyUsers.add(userA);
-    dummyUsers.add(userB);
+  static initKidSocket() {
+    if (null == socketUtilKid) {
+      socketUtilKid = SocketUtils();
+    }
   }
 
-  static List<UserSocket> getUsersFor(UserSocket user) {
-    List<UserSocket> filteredUsers =
-        dummyUsers.where((u) => (!(u.id == user.id))).toList();
-    return filteredUsers;
+  static UserSocket initParentUser() {
+    parentUser =
+        new UserSocket(id: parentId, email: "parent@gmail.com", isParent: true);
+    return parentUser;
+  }
+
+  static UserSocket initKidUsers() {
+    kidUser = new UserSocket(
+        id: kidId, email: 'forkid@kidspace.com', isParent: false);
+    return kidUser;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:device_apps/device_apps.dart';
-import 'package:kid_management/src/fake-data/global.dart';
+import 'package:kid_management/src/fake-data/Global.dart';
+import 'package:kid_management/src/fake-data/SocketUtils.dart';
+import 'package:kid_management/src/fake-data/char_message_model.dart';
 import 'package:kid_management/src/models/address_history.dart';
 import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
@@ -21,6 +23,7 @@ class FakeData {
   static List<ApplicationSystem> tempAppList = [];
   static String tmpStartTime = '';
   static String tmpEndTime = '';
+  static List<ApplicationSystem> listApplicationForKid;
 
   static void init(List<ApplicationSystem> value) {
     print('intializing data...');
@@ -29,6 +32,8 @@ class FakeData {
     listSchedule = appSchedules();
     if (listApplication == null)
       listApplication = new List<ApplicationSystem>();
+    if (listApplicationForKid == null)
+      listApplicationForKid = new List<ApplicationSystem>();
   }
 
   static setToSchedule(
@@ -235,30 +240,79 @@ class FakeData {
     ];
   }
 
-  _connectToSocket() {
-    print('Connect to socket from ....');
-    Global.initSocket();
-    Global.socketUtils.connectToSocket();
-    Global.socketUtils.setConnectListener(onConnect);
-    Global.socketUtils.setOnConnectionErrorListener(onConnectionError);
-    Global.socketUtils.setOnConnectionErrorTimeOutListener(onConnectionTimeout);
-    Global.socketUtils.setOnDisconnectListener(onDisconnect);
-    Global.socketUtils.setOnErrorListener(onError);
+  static List<ApplicationSystem> convertToListApp(List<String> listAppName) {
+    var listResult = new List<ApplicationSystem>();
+    for (var appName in listAppName) {
+      try {
+        var application =
+            listApplication.firstWhere((element) => element.name == appName);
+        if (application != null) {
+          listResult.add(application);
+        }
+      } catch (e) {
+        print('Warning convert: ' + e.toString());
+      }
+    }
+    return listResult;
   }
 
-  onConnect() {
-    //
+  static sendFirstSchedule() async {
+    var listApp = listSchedule.first.appTimePeriods[0].apps
+        .map((e) => e.application.appName)
+        .toList();
+    SocketMessageModel chatMessageModel = SocketMessageModel(
+      id: 0,
+      to: Global.kidUser.id,
+      from: Global.parentUser.id,
+      toUserOnlineStatus: false,
+      message: listApp,
+      chatType: SocketUtils.SINGLE_CHAT,
+    );
+    Global.socketUtilParent.sendSingleMessage(chatMessageModel, Global.kidUser);
   }
-  onConnectionError() {
-    //
+
+  static onChatMessageReceived(data) {
+    print('onChatMessageReceived $data');
+    if (null == data || data.toString().isEmpty) {
+      return;
+    }
+    SocketMessageModel socketMessageModel = SocketMessageModel.fromJson(data);
+    bool online = socketMessageModel.toUserOnlineStatus;
+    processMessage(socketMessageModel);
   }
-  onConnectionTimeout() {
-    //
+
+  static onMessageBackFromServer(data) {
+    SocketMessageModel socketMessageModel = SocketMessageModel.fromJson(data);
+    bool online = socketMessageModel.toUserOnlineStatus;
+    print('onMessageBackFromServer $data');
+    if (!online) {
+      print('User not connected');
+    }
   }
-  onDisconnect() {
-    //
+
+  static onUserConnectionStatus(data) {
+    SocketMessageModel chatMessageModel = SocketMessageModel.fromJson(data);
+    bool online = chatMessageModel.toUserOnlineStatus;
   }
-  onError() {
-    //
+
+  static processMessage(SocketMessageModel socketMessageModel) {
+    _reloadListApplication(0, socketMessageModel, false);
+  }
+
+  static _reloadListApplication(
+      id, SocketMessageModel socketMessageModel, fromMe) async {
+    print('Adding Message to UI ${socketMessageModel.message}');
+    listApplicationForKid =
+        FakeData.convertToListApp(socketMessageModel.message);
+  }
+
+  static initSocketListeners() async {
+    Global.socketUtilKid
+        .setOnUserConnectionStatusListener(onUserConnectionStatus);
+    Global.socketUtilKid
+        .setOnChatMessageReceivedListener(onChatMessageReceived);
+    Global.socketUtilKid.setOnMessageBackFromServer(onMessageBackFromServer);
   }
 }
+
+enum UserOnlineStatus { connecting, online, not_online }
