@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: WelcomeAnimation(),
-      home: AppSchedule(),
+      home: WelcomeAnimation(),
       theme: ThemeData(fontFamily: 'Open_Sans'),
       routes: <String, WidgetBuilder>{
         '/HomeScreen': (BuildContext context) => new KidPage()

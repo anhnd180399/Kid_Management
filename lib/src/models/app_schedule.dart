@@ -4,8 +4,8 @@ class AppScheduleModel {
   int id;
   String name;
   bool active;
-  List<AppTimePeriod> appTimePeriods;
-  Set<int> dayOfWeeks;
+  List<AppTimePeriod> appTimePeriods = new List<AppTimePeriod>();
+  Set<int> dayOfWeeks = new Set<int>();
 
   AppScheduleModel(
       {this.id, this.name, this.active, this.appTimePeriods, this.dayOfWeeks});

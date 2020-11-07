@@ -10,6 +10,7 @@ import 'package:kid_management/src/fake-data/global.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/children_screens/components/app_grid_item.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class ChildrenHomeScreen extends StatefulWidget {
   @override
@@ -17,11 +18,8 @@ class ChildrenHomeScreen extends StatefulWidget {
 }
 
 class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
-  List<SocketMessageModel> _chatMessages;
   static List<ApplicationSystem> _listApplicaionSystem;
   final databaseReference = FirebaseDatabase.instance.reference();
-  UserSocket _chatUser = Global.initKidUsers();
-  ScrollController _chatLVController;
   static refreshData() {
     setState() {
       _listApplicaionSystem = FakeData.listApplicationForKid;
@@ -31,35 +29,49 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
   @override
   void initState() {
     super.initState();
-    _chatLVController = ScrollController(initialScrollOffset: 0.0);
     _listApplicaionSystem = new List<ApplicationSystem>();
-    _chatUser = Global.kidUser;
-    _chatMessages = List();
-    FakeData.initSocketListeners();
-    _checkOnline();
-    setState(
-        () => FakeData.listApplicationForKid = FakeData.listApplicationForKid);
-
     // firebase
-    databaseReference.child('apps').onValue.listen((event) {
-      var snapshot = event.snapshot;
-      var listDisplayApplications = snapshot.value['list_app'] as List;
-      var listAppName = new List<String>();
-      listDisplayApplications.forEach((element) {
-        listAppName.add(element);
+    try {
+      databaseReference.child(FakeData.parentName).onValue.listen((event) {
+        var snapshot = event.snapshot;
+        var listDisplayApplications =
+            snapshot.value[CONSTANT.ROOT_APPS] as List;
+        var listAppName = new List<String>();
+        listDisplayApplications.forEach((element) {
+          listAppName.add(element);
+        });
+        setState(() {
+          _listApplicaionSystem = FakeData.convertToListApp(listAppName);
+        });
       });
-      setState(() {
-        _listApplicaionSystem = FakeData.convertToListApp(listAppName);
-      });
-    });
+    } catch (e) {
+      _showErrorDialog(e.message);
+    }
   }
 
-  _checkOnline() async {
-    SocketMessageModel chatMessageModel = SocketMessageModel(
-      to: Global.kidUser.id,
-      from: Global.parentUser.id,
-    );
-    Global.socketUtilKid.checkOnline(chatMessageModel);
+  Future<void> _showErrorDialog(String msg) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(msg),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -69,7 +81,10 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SvgPicture.asset('assets/images/kid-screen/kid_home_logo.svg'),
+          SvgPicture.asset(
+            'assets/images/kid-screen/kid_home_logo.svg',
+            width: 80.0,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Text(

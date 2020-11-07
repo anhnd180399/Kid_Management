@@ -29,3 +29,21 @@ const String URL_IMG_BG_APP_SCHEDULE_STEP01 =
     "assets/images/app-schedule/bg-create-schedule-1.svg";
 const String URL_IMG_BG_APP_SCHEDULE_STEP03 =
     "assets/images/app-schedule/bg-create-schedule-3.svg";
+
+// firebase
+// root -> apps (list)
+const String ROOT_APPS = "apps";
+//root -> schedules (list)
+const String ROOT_SCHEDULES = "schedules";
+// #schedules -> item of schedule
+const String ROOT_SCHEDULE_ID = "id";
+const String ROOT_SCHEDULE_NAME = "name";
+const String ROOT_SCHEDULE_DATE_OF_WEEK = "dateOfWeeks"; // (list)
+const String ROOT_SCHEDULE_ACTIVE = "active";
+// root -> schedules -> period (list)
+const String ROOT_SCHEDULES_PERIODS = "periods";
+// #period -> item of period
+const String ROOT_SCHEDULES_PERIODS_APPS = "apps"; // (list)
+const String ROOT_SCHEDULES_PERIODS_END_TIME = "endTime";
+const String ROOT_SCHEDULES_PERIODS_START_TIME = "startTime";
+const String ROOT_SCHEDULES_PERIODS_ID = "id";

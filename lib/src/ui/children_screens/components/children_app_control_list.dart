@@ -35,7 +35,8 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
     return Column(
       children: [
         Row(
-          children: [
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
             Container(
               margin: EdgeInsets.symmetric(vertical: 10.0),
               child: Image.memory(
@@ -47,7 +48,11 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
             SizedBox(
               width: 20.0,
             ),
-            Text(app.name)
+            Flexible(child: Text(app.name, textAlign: TextAlign.left)),
+            Spacer(),
+            Text('Remain: 3:00',
+                style: TextStyle(color: AppColor.mainColor),
+                textAlign: TextAlign.right),
           ],
         ),
       ],
@@ -58,7 +63,9 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
   Widget build(BuildContext context) {
     var periods = widget.appScheduleModel.appTimePeriods;
     for (int i = 0; i < periods.length; i++) {
-      _timePeriodsCollapse.add(true);
+      setState(() {
+        _timePeriodsCollapse.add(false);
+      });
     }
 
     return Expanded(
@@ -76,9 +83,7 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
 
           if (remainingTimeInMinutes > 0) {
             _timer = Timer.periodic(Duration(seconds: 60), (timer) {
-              setState(() {
-                
-              });
+              setState(() {});
             });
           }
 
@@ -138,8 +143,8 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
                       Spacer(),
                       Icon(
                         _timePeriodsCollapse[index]
-                            ? Icons.keyboard_arrow_right
-                            : Icons.keyboard_arrow_down,
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_right,
                         size: 24.0,
                       )
                     ],
@@ -154,7 +159,7 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
                               .map((app) => _appListItem(app))
                               .toList(),
                         ),
-                  visible: !_timePeriodsCollapse[index],
+                  visible: _timePeriodsCollapse[index],
                 )
               ],
             ),

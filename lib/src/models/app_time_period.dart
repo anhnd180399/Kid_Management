@@ -4,7 +4,7 @@ class AppTimePeriod {
   int id;
   String startTime;
   String endTime;
-  List<ApplicationSystem> apps;
+  List<ApplicationSystem> apps = new List<ApplicationSystem>();
 
   AppTimePeriod({this.id, this.startTime, this.endTime, this.apps});
 }

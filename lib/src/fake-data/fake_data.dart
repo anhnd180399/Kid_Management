@@ -11,6 +11,7 @@ import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/models/notification_model.dart';
 import 'package:kid_management/src/models/suggested_item_model.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 // class to generate fake data for whole app
 
@@ -18,6 +19,7 @@ class FakeData {
   static List<NotificationModel> notifications;
   static List<ApplicationSystem> listApplication;
   static List<AppScheduleModel> listSchedule;
+  static String parentName = 'hungz1';
   static bool isLogin = false;
   // fake data for creating app schedule
   // temp app list to used for schedule creating
@@ -67,6 +69,8 @@ class FakeData {
         }
       }
     }
+    sendApplySchedule();
+    sendApplicationsInTime();
   }
 
   static setApplicationStatus(
@@ -84,6 +88,8 @@ class FakeData {
         });
       });
     }
+    sendApplySchedule();
+    sendApplicationsInTime();
   }
 
   static List<ApplicationSystem> getListNonBlockingApplication() {
@@ -280,68 +286,140 @@ class FakeData {
     return listResult;
   }
 
-  static sendFirstSchedule() async {
-    var listApp = listSchedule.first.appTimePeriods[0].apps
-        .map((e) => e.application.appName)
-        .toList();
-    final databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child("apps").child("list_app").remove();
-    int count = 0;
-    for (var appName in listApp) {
-      databaseReference
-          .child("apps")
-          .child("list_app")
-          .child(count.toString())
-          .set(appName);
-      count++;
+  static AppScheduleModel convertToSchedule(dynamic value) {
+    var appSchedule = new AppScheduleModel();
+    try {
+      appSchedule.active = value[CONSTANT.ROOT_SCHEDULE_ACTIVE];
+      appSchedule.id = value[CONSTANT.ROOT_SCHEDULE_ID];
+      appSchedule.name = value[CONSTANT.ROOT_SCHEDULE_NAME];
+      var period = value[CONSTANT.ROOT_SCHEDULES_PERIODS] as List;
+      var listPeriods = new List<AppTimePeriod>();
+      // get list periods
+      period.forEach((element) {
+        var appTimePeriod = new AppTimePeriod();
+        appTimePeriod.endTime =
+            element[CONSTANT.ROOT_SCHEDULES_PERIODS_END_TIME];
+        appTimePeriod.startTime =
+            element[CONSTANT.ROOT_SCHEDULES_PERIODS_START_TIME];
+        appTimePeriod.id = element[CONSTANT.ROOT_SCHEDULES_PERIODS_ID];
+        // get list application
+        var listDisplayApplications =
+            element[CONSTANT.ROOT_SCHEDULES_PERIODS_APPS] as List;
+        var listAppName = new List<String>();
+        listDisplayApplications.forEach((element) {
+          listAppName.add(element);
+        });
+        appTimePeriod.apps = FakeData.convertToListApp(listAppName);
+        listPeriods.add(appTimePeriod);
+      });
+      // add to periods
+      appSchedule.appTimePeriods = listPeriods;
+      var dateOfWeek = value[CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK] as List;
+      var listDateOfWeek = new List<int>();
+      // get list periods
+      dateOfWeek.forEach((element) {
+        listDateOfWeek.add(element);
+      });
+      // add to periods
+      appSchedule.dayOfWeeks = listDateOfWeek.toSet();
+    } catch (e) {
+      return null;
     }
+    return appSchedule;
   }
-
-  static onChatMessageReceived(data) {
-    print('onChatMessageReceived $data');
-    if (null == data || data.toString().isEmpty) {
-      return;
-    }
-    SocketMessageModel socketMessageModel = SocketMessageModel.fromJson(data);
-    bool online = socketMessageModel.toUserOnlineStatus;
-    processMessage(socketMessageModel);
-  }
-
-  static onMessageBackFromServer(data) {
-    SocketMessageModel socketMessageModel = SocketMessageModel.fromJson(data);
-    bool online = socketMessageModel.toUserOnlineStatus;
-    print('onMessageBackFromServer $data');
-    if (!online) {
-      print('User not connected');
-    }
-  }
-
-  static onUserConnectionStatus(data) {
-    SocketMessageModel chatMessageModel = SocketMessageModel.fromJson(data);
-    bool online = chatMessageModel.toUserOnlineStatus;
-  }
-
-  static processMessage(SocketMessageModel socketMessageModel) {
-    _reloadListApplication(0, socketMessageModel, false);
-  }
-
-  static _reloadListApplication(
-      id, SocketMessageModel socketMessageModel, fromMe) async {
-    print('Adding Message to UI ${socketMessageModel.message}');
-    listApplicationForKid =
-        FakeData.convertToListApp(socketMessageModel.message);
-  }
-
-  static initSocketListeners() async {
-    Global.socketUtilKid
-        .setOnUserConnectionStatusListener(onUserConnectionStatus);
-    Global.socketUtilKid
-        .setOnChatMessageReceivedListener(onChatMessageReceived);
-    Global.socketUtilKid.setOnMessageBackFromServer(onMessageBackFromServer);
-  }
-
   // firebase realtime
 
-}
+  static sendApplicationsInTime() async {
+    try {
+      AppScheduleModel schedule =
+          listSchedule.firstWhere((element) => element.active);
+      var listApp = schedule.appTimePeriods[0].apps;
+      final databaseReference = FirebaseDatabase.instance.reference();
+      if (listApp.length == 0) {
+        databaseReference.child(parentName).set(CONSTANT.ROOT_APPS);
+      } else {
+        for (var j = 0; j < listApp.length; j++) {
+          var app = listApp[j];
+          databaseReference
+              .child(parentName)
+              .child(CONSTANT.ROOT_APPS)
+              .child(j.toString())
+              .set(app.application.appName);
+        }
+      }
+    } catch (e) {
+      print('Error: ' + e.toString());
+    }
+  }
 
-enum UserOnlineStatus { connecting, online, not_online }
+  static sendApplySchedule() async {
+    try {
+      AppScheduleModel schedule =
+          listSchedule.firstWhere((element) => element.active);
+      int index = 0;
+      final databaseReference = FirebaseDatabase.instance.reference();
+      var databaseSchedule = databaseReference
+          .child(parentName)
+          .child(CONSTANT.ROOT_SCHEDULES)
+          .child(index.toString());
+      if (schedule != null) {
+        // remove all in schedule
+        databaseSchedule.remove();
+        // add active
+        databaseSchedule
+            .child(CONSTANT.ROOT_SCHEDULE_ACTIVE)
+            .set(schedule.active);
+        // add id
+        databaseSchedule.child(CONSTANT.ROOT_SCHEDULE_ID).set(schedule.id);
+        // add name
+        databaseSchedule.child(CONSTANT.ROOT_SCHEDULE_NAME).set(schedule.name);
+        // add dayOfWeeks
+        if (schedule.dayOfWeeks.length == 0) {
+          databaseSchedule.set(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK);
+        } else {
+          for (var i = 0; i < schedule.dayOfWeeks.toList().length; i++) {
+            databaseSchedule
+                .child(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK)
+                .child(i.toString())
+                .set(schedule.dayOfWeeks.toList()[i]);
+          }
+        }
+        // add perios
+        if (schedule.appTimePeriods.length == 0) {
+          databaseSchedule.set(CONSTANT.ROOT_SCHEDULES_PERIODS);
+        } else {
+          for (var i = 0; i < schedule.appTimePeriods.length; i++) {
+            var appTimePeriod = schedule.appTimePeriods[i];
+            var period = databaseSchedule
+                .child(CONSTANT.ROOT_SCHEDULES_PERIODS)
+                .child(i.toString());
+            // add data
+            period
+                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_ID)
+                .set(appTimePeriod.id);
+            period
+                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_END_TIME)
+                .set(appTimePeriod.endTime);
+            period
+                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_START_TIME)
+                .set(appTimePeriod.startTime);
+            // add apps
+            if (appTimePeriod.apps.length == 0) {
+              period.set(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS);
+            } else {
+              for (var j = 0; j < appTimePeriod.apps.toList().length; j++) {
+                var app = appTimePeriod.apps[j];
+                period
+                    .child(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS)
+                    .child(j.toString())
+                    .set(app.application.appName);
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      print("Error: " + e.toString());
+    }
+  }
+}

@@ -4,13 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kid_management/src/fake-data/UserSocket.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/helpers/datetime_helper.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
 import 'package:kid_management/src/models/my_app.dart';
 import 'package:kid_management/src/resources/colors.dart';
-import 'package:kid_management/src/ui/app-schedule/time-picker-button.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateTimePeriodScreen extends StatefulWidget {
