@@ -153,7 +153,9 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
                 ),
                 Visibility(
                   child: period.apps.length == 0
-                      ? null
+                      ? Center(
+                          child: Text("There's no time period"),
+                        )
                       : Column(
                           children: period.apps
                               .map((app) => _appListItem(app))

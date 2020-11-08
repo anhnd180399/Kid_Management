@@ -119,7 +119,9 @@ class _AppControlListState extends State<AppControlList> {
               ),
               Visibility(
                 child: period.apps.length == 0
-                    ? null
+                    ? Center(
+                        child: Text("There's no app currently in schedule"),
+                      )
                     : Column(
                         children: period.apps
                             .map((app) => _appListItem(app))
