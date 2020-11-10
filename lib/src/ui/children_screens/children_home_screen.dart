@@ -100,9 +100,6 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
                 _listOfAppsByCategory.add(appsByCategory);
               });
 
-              _currentAppCategory =
-                  _listOfAppsByCategory[0][0].application.category;
-              currentCategoryName = _toAppCategoryString(_currentAppCategory);
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                 child: Column(
