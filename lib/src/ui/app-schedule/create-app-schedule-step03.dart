@@ -10,6 +10,7 @@ import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/models/app_time_period.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/app-schedule/app-checkbox-list.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
 
 class CreateAppScheduleStep03 extends StatefulWidget {
@@ -23,11 +24,9 @@ class CreateAppScheduleStep03 extends StatefulWidget {
 }
 
 class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
-  bool isButtonDisabled = false;
   final String BUTTON_TEXT = 'DONE';
   final String APPBAR_TITLE = 'CREATE SCHEDULE';
-  final String HEAD_TITLE = 'I WANT MY KID TO USE APPS';
-  final String SUB_TITLE = "Now, let's limit a period of time for usage";
+  final String HEAD_TITLE = 'CHOOSE APPS YOU WANT TO SETUP';
 
   @override
   Widget build(BuildContext context) {
@@ -49,60 +48,35 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Positioned(
-            bottom: 100.0,
-            right: 10.0,
-            // background svg
-            child: Opacity(
-              opacity: 0.3,
-              child: SvgPicture.asset(
-                CONSTANT.URL_IMG_BG_APP_SCHEDULE_STEP03,
-                width: 120.0,
-              ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            Text(
+              '3/3',
+              style: TextStyle(color: AppColor.mainColor, fontSize: 20.0),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // current step text
-              Text(
-                '3/3',
-                style: TextStyle(color: AppColor.mainColor, fontSize: 20.0),
-              ),
-              SizedBox(
-                height: 25.0,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Text(HEAD_TITLE,
-                  style:
-                      TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600)),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(SUB_TITLE,
-                  style: TextStyle(fontSize: 16.0, color: AppColor.grayDark)),
-              SizedBox(
-                height: 20.0,
-              ),
-              TimePeriodPicker(),
-              Spacer(),
-              // the 'DONE' button
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                margin: EdgeInsets.only(bottom: 20.0),
-                width: double.infinity,
-                height: 50.0,
-                child: RaisedButton(
-                  disabledColor: AppColor.mainColor.withOpacity(0.5),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0)),
-                  elevation: 2.0,
-                  onPressed: () {
-                    if (FakeData.tmpStartTime.isNotEmpty &&
+            SizedBox(
+              height: 25.0,
+            ),
+            Text(HEAD_TITLE, style: TextStyle(fontSize: 18.0)),
+            SizedBox(
+              height: 40.0,
+            ),
+
+            // the list of installed apps
+            AppCheckboxList(),
+            // The 'DONE' button
+            Container(
+              margin: EdgeInsets.only(bottom: 20.0),
+              width: double.infinity,
+              height: 50.0,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
+                elevation: 2.0,
+                onPressed: () {
+                  if (FakeData.tmpStartTime.isNotEmpty &&
                         FakeData.tmpEndTime.isNotEmpty) {
                       if (widget.appScheduleModel.appTimePeriods == null) {
                         widget.appScheduleModel.appTimePeriods = [];
@@ -124,17 +98,17 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
 
                       Navigator.pop(context, 'success');
                     }
-                  },
-                  color: AppColor.mainColor,
-                  child: Text(
-                    'DONE',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  ),
+                  
+                },
+                color: AppColor.mainColor,
+                child: Text(
+                  BUTTON_TEXT,
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-              )
-            ],
-          ),
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
