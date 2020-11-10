@@ -29,6 +29,9 @@ class _ChildrenAppScheduleScreenState extends State<ChildrenAppScheduleScreen> {
         var schedule = listSchedule[0];
         setState(() {
           _appSchedule = FakeData.convertToSchedule(schedule);
+          if (_appSchedule == null) {
+            _appSchedule = new AppScheduleModel();
+          }
         });
       });
     } catch (e) {

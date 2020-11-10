@@ -104,6 +104,31 @@ class _AppBlockingState extends State<AppBlocking> {
                   );
                 },
               )),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              margin: EdgeInsets.only(bottom: 30.0),
+              width: double.infinity,
+              height: 50.0,
+              child: RaisedButton(
+                onPressed: () {
+                  if (!FakeData.isChildMode) {
+                    FakeData.sendApplySchedule();
+                  }
+                  Navigator.pop(context);
+                },
+                color: AppColor.mainColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
             )
           ],
         ),
@@ -158,7 +183,7 @@ class _AppBlockListItemState extends State<AppBlockListItem> {
                     // widget.app.isBlock = !widget.app.isBlock;
                   });
                 }),
-          )
+          ),
         ],
       ),
     );

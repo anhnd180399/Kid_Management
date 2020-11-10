@@ -81,97 +81,155 @@ class _ChildrenHomeScreenState extends State<ChildrenHomeScreen> {
         stream: bloc.schedule,
         builder: (context, AsyncSnapshot<AppScheduleModel> snapshot) {
           if (snapshot.hasData) {
-            _apps = new List<ApplicationSystem>();
-            _appCategories = new Set<ApplicationCategory>();
-            _listOfAppsByCategory = new List<List<ApplicationSystem>>();
-            _apps = snapshot.data.appTimePeriods[0].apps;
-            // initialize app categories
-            _apps.forEach((app) {
-              _appCategories.add(app.application.category);
-            });
+            var schedule = snapshot.data;
+            if (schedule != null) {
+              _apps = new List<ApplicationSystem>();
+              _appCategories = new Set<ApplicationCategory>();
+              _listOfAppsByCategory = new List<List<ApplicationSystem>>();
+              _apps = snapshot.data.appTimePeriods[0].apps;
+              // initialize app categories
+              _apps.forEach((app) {
+                _appCategories.add(app.application.category);
+              });
 
-            // split app list to sub lists by app category
-            _appCategories.forEach((category) {
-              var appsByCategory = _apps
-                  .where((a) => a.application.category == category)
-                  .toList();
-              _listOfAppsByCategory.add(appsByCategory);
-            });
+              // split app list to sub lists by app category
+              _appCategories.forEach((category) {
+                var appsByCategory = _apps
+                    .where((a) => a.application.category == category)
+                    .toList();
+                _listOfAppsByCategory.add(appsByCategory);
+              });
 
-            _currentAppCategory =
-                _listOfAppsByCategory[0][0].application.category;
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/kid-screen/kid_home_logo.svg',
-                    width: 80.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
-                      'hello! i am kidspace'.toUpperCase(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        letterSpacing: 3.0,
+              _currentAppCategory =
+                  _listOfAppsByCategory[0][0].application.category;
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/kid-screen/kid_home_logo.svg',
+                      width: 80.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text(
+                        'hello! i am kidspace'.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          letterSpacing: 3.0,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
+                    ),
+                    Text(
+                      'Play around with your phone',
+                      style:
+                          TextStyle(color: AppColor.grayDark, fontSize: 16.0),
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                  Text(
-                    'Play around with your phone',
-                    style: TextStyle(color: AppColor.grayDark, fontSize: 16.0),
-                    textAlign: TextAlign.center,
-                  ),
 
-                  // Grid view to show all apps
-                  Expanded(
-                      child: PageView.builder(
-                    onPageChanged: (value) {
-                      setState(() {
-                        _currentAppPageViewIndex = value;
-                        _currentAppCategory =
-                            _listOfAppsByCategory[_currentAppPageViewIndex][0]
-                                .application
-                                .category;
-                        currentCategoryName =
-                            _toAppCategoryString(_currentAppCategory);
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      var apps = _listOfAppsByCategory[index];
-                      var appCategory = apps[0].application.category;
-                      // page view display list of apps filtered by category
-                      return AppByCategoryPageView(
-                        apps: apps,
-                        appCategory: appCategory,
-                      );
-                    },
-                    itemCount: _listOfAppsByCategory.length,
-                  )),
-                  Padding(
+                    // Grid view to show all apps
+                    Expanded(
+                        child: PageView.builder(
+                      onPageChanged: (value) {
+                        setState(() {
+                          _currentAppPageViewIndex = value;
+                          _currentAppCategory =
+                              _listOfAppsByCategory[_currentAppPageViewIndex][0]
+                                  .application
+                                  .category;
+                          currentCategoryName =
+                              _toAppCategoryString(_currentAppCategory);
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        var apps = _listOfAppsByCategory[index];
+                        var appCategory = apps[0].application.category;
+                        // page view display list of apps filtered by category
+                        return AppByCategoryPageView(
+                          apps: apps,
+                          appCategory: appCategory,
+                        );
+                      },
+                      itemCount: _listOfAppsByCategory.length,
+                    )),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(_listOfAppsByCategory.length,
+                              (index) {
+                            return DotIndicator(
+                              isActive: _currentAppPageViewIndex == index,
+                            );
+                          }),
+                        )),
+                    // text to display name of app category
+                    Text(
+                      currentCategoryName.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/kid-screen/kid_home_logo.svg',
+                      width: 80.0,
+                    ),
+                    Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(_listOfAppsByCategory.length,
-                            (index) {
-                          return DotIndicator(
-                            isActive: _currentAppPageViewIndex == index,
-                          );
-                        }),
-                      )),
-                  // text to display name of app category
-                  Text(
-                    currentCategoryName.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            );
+                      child: Text(
+                        'hello! i am kidspace'.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          letterSpacing: 3.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      'Play around with your phone',
+                      style:
+                          TextStyle(color: AppColor.grayDark, fontSize: 16.0),
+                      textAlign: TextAlign.center,
+                    ),
+
+                    // Grid view to show all apps
+                    Expanded(
+                        child: PageView.builder(
+                      itemBuilder: (context, index) {},
+                    )),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(_listOfAppsByCategory.length,
+                              (index) {
+                            return DotIndicator(
+                              isActive: _currentAppPageViewIndex == index,
+                            );
+                          }),
+                        )),
+                    // text to display name of app category
+                    Text(
+                      'NO APPs',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              );
+            }
           }
           return CircularProgressIndicator();
         });

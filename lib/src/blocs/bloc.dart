@@ -15,18 +15,26 @@ class Bloc {
   Bloc();
   final databaseReference = FirebaseDatabase.instance.reference();
   void listenFirebaseChange() {
+    bool hasData = false;
     try {
       databaseReference.child(FakeData.parentName).onValue.listen((event) {
         if (FakeData.isChildMode) {
           var snapshot = event.snapshot;
           var listSchedule = snapshot.value[CONSTANT.ROOT_SCHEDULES] as List;
-          var schedule = listSchedule[0];
-          var scheduleData = FakeData.convertToSchedule(schedule);
-          refreshSchedule(scheduleData);
+          listSchedule.forEach((schedule) {
+            var scheduleData = FakeData.convertToSchedule(schedule);
+            if (scheduleData.active) {
+              hasData = true;
+              refreshSchedule(scheduleData);
+            }
+          });
         }
       });
     } catch (e) {
       print('Error when read firebase: ' + e.message);
+    }
+    if (!hasData) {
+      refreshSchedule(null);
     }
   }
 

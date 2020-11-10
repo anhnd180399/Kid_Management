@@ -33,7 +33,9 @@ class _AppManagementState extends State<AppManagement> {
           var listScheduleRaw = new List<AppScheduleModel>();
           for (var schedule in listSchedule) {
             var schedules = FakeData.convertToSchedule(schedule);
-            listScheduleRaw.add(schedules);
+            if (schedule != null) {
+              listScheduleRaw.add(schedules);
+            }
           }
           FakeData.listSchedule = listScheduleRaw;
         }

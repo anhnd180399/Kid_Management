@@ -14,9 +14,8 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
   bool showSystemApps = false;
   bool isSelected = false;
 
-  Future<List<Application>> _getApps() async {
-    var apps = await DeviceApps.getInstalledApplications(
-        includeAppIcons: true, includeSystemApps: showSystemApps);
+  Future<List<ApplicationSystem>> _getApps() async {
+    var apps = await FakeData.getListNonBlockingApplication();
     return apps;
   }
 
@@ -33,16 +32,16 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
             ),
           );
         } else {
-          List<Application> apps = snapshot.data;
+          List<ApplicationSystem> apps = snapshot.data;
           // filter KidSpace app
-          apps.removeWhere((app) => app.appName == 'Kid Space');
-          
+          apps.removeWhere((app) => app.application.appName == 'Kid Space');
+
           if (apps.length > 0) {
             return Expanded(
               child: ListView.builder(
                 itemCount: apps.length,
                 itemBuilder: (context, index) {
-                  Application app = apps[index];
+                  ApplicationSystem app = apps[index];
 
                   return Container(
                     child: Column(
@@ -75,7 +74,7 @@ class _AppCheckboxListState extends State<AppCheckboxList> {
 }
 
 class CustomCheckboxListTile extends StatefulWidget {
-  ApplicationWithIcon app;
+  ApplicationSystem app;
   bool isSelected;
 
   CustomCheckboxListTile({this.app, this.isSelected});
@@ -96,28 +95,28 @@ class _CustomCheckboxListTileState extends State<CustomCheckboxListTile> {
             if (this.widget.isSelected) {
               var apps = FakeData.listApplication;
               apps.forEach((app) {
-                if (app.application.packageName == widget.app.packageName &&
-                    app.application.appName == widget.app.appName) {
-                  var myApp = ApplicationSystem.toApplication(widget.app);
-
-                  FakeData.tempAppList.add(myApp);
+                if (app.application.packageName ==
+                        widget.app.application.packageName &&
+                    app.application.appName == widget.app.application.appName) {
+                  FakeData.tempAppList.add(widget.app);
                 }
               });
             } else {
               // if app is unselected then remove it from temp list
               FakeData.tempAppList.removeWhere((app) =>
-                  app.application.packageName == widget.app.packageName &&
-                  app.application.appName == widget.app.appName);
+                  app.application.packageName ==
+                      widget.app.application.packageName &&
+                  app.application.appName == widget.app.application.appName);
             }
             print(FakeData.tempAppList.length);
           });
         },
-        title: Text(widget.app.appName),
+        title: Text(widget.app.application.appName),
         value: this.widget.isSelected,
         // app icon
-        secondary: widget.app is ApplicationWithIcon
+        secondary: widget.app.application is ApplicationWithIcon
             ? CircleAvatar(
-                backgroundImage: MemoryImage(widget.app.icon),
+                backgroundImage: MemoryImage(widget.app.application.icon),
                 backgroundColor: Colors.white,
               )
             : null);

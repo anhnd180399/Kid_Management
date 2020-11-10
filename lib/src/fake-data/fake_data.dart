@@ -359,73 +359,78 @@ class FakeData {
   }
 
   static sendApplySchedule() async {
-    try {
-      AppScheduleModel schedule =
-          listSchedule.firstWhere((element) => element.active);
-      int index = 0;
-      final databaseReference = FirebaseDatabase.instance.reference();
-      var databaseSchedule = databaseReference
-          .child(parentName)
-          .child(CONSTANT.ROOT_SCHEDULES)
-          .child(index.toString());
-      if (schedule != null) {
-        // remove all in schedule
-        databaseSchedule.remove();
-        // add active
-        databaseSchedule
-            .child(CONSTANT.ROOT_SCHEDULE_ACTIVE)
-            .set(schedule.active);
-        // add id
-        databaseSchedule.child(CONSTANT.ROOT_SCHEDULE_ID).set(schedule.id);
-        // add name
-        databaseSchedule.child(CONSTANT.ROOT_SCHEDULE_NAME).set(schedule.name);
-        // add dayOfWeeks
-        if (schedule.dayOfWeeks.length == 0) {
-          databaseSchedule.set(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK);
-        } else {
-          for (var i = 0; i < schedule.dayOfWeeks.toList().length; i++) {
-            databaseSchedule
-                .child(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK)
-                .child(i.toString())
-                .set(schedule.dayOfWeeks.toList()[i]);
+    // AppScheduleModel schedule =
+    //     listSchedule.firstWhere((element) => element.active);
+    final databaseReference = FirebaseDatabase.instance.reference();
+    int index = 0;
+    for (var schedule in listSchedule) {
+      try {
+        var databaseSchedule = databaseReference
+            .child(parentName)
+            .child(CONSTANT.ROOT_SCHEDULES)
+            .child(index.toString());
+        if (schedule != null) {
+          // remove all in schedule
+          databaseSchedule.remove();
+          // add active
+          databaseSchedule
+              .child(CONSTANT.ROOT_SCHEDULE_ACTIVE)
+              .set(schedule.active);
+          // add id
+          databaseSchedule.child(CONSTANT.ROOT_SCHEDULE_ID).set(schedule.id);
+          // add name
+          databaseSchedule
+              .child(CONSTANT.ROOT_SCHEDULE_NAME)
+              .set(schedule.name);
+          // add dayOfWeeks
+          if (schedule.dayOfWeeks.length == 0) {
+            databaseSchedule.set(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK);
+          } else {
+            for (var i = 0; i < schedule.dayOfWeeks.toList().length; i++) {
+              databaseSchedule
+                  .child(CONSTANT.ROOT_SCHEDULE_DATE_OF_WEEK)
+                  .child(i.toString())
+                  .set(schedule.dayOfWeeks.toList()[i]);
+            }
           }
-        }
-        // add perios
-        if (schedule.appTimePeriods.length == 0) {
-          databaseSchedule.set(CONSTANT.ROOT_SCHEDULES_PERIODS);
-        } else {
-          for (var i = 0; i < schedule.appTimePeriods.length; i++) {
-            var appTimePeriod = schedule.appTimePeriods[i];
-            var period = databaseSchedule
-                .child(CONSTANT.ROOT_SCHEDULES_PERIODS)
-                .child(i.toString());
-            // add data
-            period
-                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_ID)
-                .set(appTimePeriod.id);
-            period
-                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_END_TIME)
-                .set(appTimePeriod.endTime);
-            period
-                .child(CONSTANT.ROOT_SCHEDULES_PERIODS_START_TIME)
-                .set(appTimePeriod.startTime);
-            // add apps
-            if (appTimePeriod.apps.length == 0) {
-              period.set(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS);
-            } else {
-              for (var j = 0; j < appTimePeriod.apps.toList().length; j++) {
-                var app = appTimePeriod.apps[j];
-                period
-                    .child(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS)
-                    .child(j.toString())
-                    .set(app.application.appName);
+          // add perios
+          if (schedule.appTimePeriods.length == 0) {
+            databaseSchedule.set(CONSTANT.ROOT_SCHEDULES_PERIODS);
+          } else {
+            for (var i = 0; i < schedule.appTimePeriods.length; i++) {
+              var appTimePeriod = schedule.appTimePeriods[i];
+              var period = databaseSchedule
+                  .child(CONSTANT.ROOT_SCHEDULES_PERIODS)
+                  .child(i.toString());
+              // add data
+              period
+                  .child(CONSTANT.ROOT_SCHEDULES_PERIODS_ID)
+                  .set(appTimePeriod.id);
+              period
+                  .child(CONSTANT.ROOT_SCHEDULES_PERIODS_END_TIME)
+                  .set(appTimePeriod.endTime);
+              period
+                  .child(CONSTANT.ROOT_SCHEDULES_PERIODS_START_TIME)
+                  .set(appTimePeriod.startTime);
+              // add apps
+              if (appTimePeriod.apps.length == 0) {
+                period.set(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS);
+              } else {
+                for (var j = 0; j < appTimePeriod.apps.toList().length; j++) {
+                  var app = appTimePeriod.apps[j];
+                  period
+                      .child(CONSTANT.ROOT_SCHEDULES_PERIODS_APPS)
+                      .child(j.toString())
+                      .set(app.application.appName);
+                }
               }
             }
           }
         }
+      } catch (e) {
+        print("Error: " + e.toString());
       }
-    } catch (e) {
-      print("Error: " + e.toString());
+      index++;
     }
   }
 }
