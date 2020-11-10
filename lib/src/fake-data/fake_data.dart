@@ -12,6 +12,7 @@ import 'package:kid_management/src/models/notification_model.dart';
 import 'package:kid_management/src/models/suggested_item_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
+import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 
 // class to generate fake data for whole app
 
@@ -21,6 +22,7 @@ class FakeData {
   static List<AppScheduleModel> listSchedule;
   static String parentName = 'hungz1';
   static bool isLogin = false;
+  static bool isChildMode = true;
   // fake data for creating app schedule
   // temp app list to used for schedule creating
   static List<ApplicationSystem> tempAppList = [];
@@ -69,8 +71,6 @@ class FakeData {
         }
       }
     }
-    sendApplySchedule();
-    sendApplicationsInTime();
   }
 
   static setApplicationStatus(
@@ -88,8 +88,6 @@ class FakeData {
         });
       });
     }
-    sendApplySchedule();
-    sendApplicationsInTime();
   }
 
   static List<ApplicationSystem> getListNonBlockingApplication() {
@@ -326,6 +324,14 @@ class FakeData {
       return null;
     }
     return appSchedule;
+  }
+
+  static List<ApplicationSystem> getApplicationInTime() {
+    var appSchedule = listSchedule.firstWhere((element) => element.active);
+    try {} catch (e) {
+      return null;
+    }
+    return appSchedule.appTimePeriods[0].apps;
   }
   // firebase realtime
 

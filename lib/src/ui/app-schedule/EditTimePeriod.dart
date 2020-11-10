@@ -153,6 +153,9 @@ class _EditTimePriodState extends State<EditTimePriod> {
               height: 50.0,
               child: RaisedButton(
                 onPressed: () {
+                  if (!FakeData.isChildMode) {
+                    FakeData.sendApplySchedule();
+                  }
                   Navigator.pop(context);
                 },
                 color: AppColor.mainColor,

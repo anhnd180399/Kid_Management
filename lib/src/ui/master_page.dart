@@ -31,6 +31,7 @@ class _MasterPageState extends State<MasterPage> {
       Home2(user: user),
       NotificationScreen()
     ];
+    FakeData.isChildMode = false;
   }
 
   @override

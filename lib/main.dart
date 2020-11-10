@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kid_management/src/blocs/provider.dart';
 import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/ui/app-schedule/app-schedule.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
@@ -24,14 +25,16 @@ class MyApp extends StatelessWidget {
     // Prevent the user from rotating device
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: WelcomeAnimation(),
-      home: WelcomeAnimation(),
-      theme: ThemeData(fontFamily: 'Open_Sans'),
-      routes: <String, WidgetBuilder>{
-        '/HomeScreen': (BuildContext context) => new KidPage()
-      },
+    return Provider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // home: WelcomeAnimation(),
+        home: WelcomeAnimation(),
+        theme: ThemeData(fontFamily: 'Open_Sans'),
+        routes: <String, WidgetBuilder>{
+          '/HomeScreen': (BuildContext context) => new KidPage()
+        },
+      ),
     );
   }
 }

@@ -1,10 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/resources/colors.dart';
 import 'package:kid_management/src/ui/app-blocking/app_blocking.dart';
 import 'package:kid_management/src/ui/app-schedule/app-schedule.dart';
 import 'package:kid_management/src/ui/common-ui/back-button.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class AppManagement extends StatefulWidget {
   @override
@@ -12,6 +16,33 @@ class AppManagement extends StatefulWidget {
 }
 
 class _AppManagementState extends State<AppManagement> {
+  final databaseReference = FirebaseDatabase.instance.reference();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // firebase
+    try {
+      databaseReference
+          .child(FakeData.parentName)
+          .once()
+          .then((DataSnapshot snapshot) {
+        var listSchedule = snapshot.value[CONSTANT.ROOT_SCHEDULES] as List;
+        if (listSchedule.length > 0) {
+          var listScheduleRaw = new List<AppScheduleModel>();
+          for (var schedule in listSchedule) {
+            var schedules = FakeData.convertToSchedule(schedule);
+            listScheduleRaw.add(schedules);
+          }
+          FakeData.listSchedule = listScheduleRaw;
+        }
+      });
+    } catch (e) {
+      print('Error: ' + e.message);
+    }
+  }
+
   Widget _appScheduleGradientButton(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     Gradient gradient = LinearGradient(

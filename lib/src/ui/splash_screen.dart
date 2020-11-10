@@ -1,11 +1,15 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kid_management/src/fake-data/UserSocket.dart';
+import 'package:kid_management/src/fake-data/fake_data.dart';
 import 'package:kid_management/src/fake-data/global.dart';
+import 'package:kid_management/src/models/app_schedule.dart';
 import 'package:kid_management/src/ui/kid-screens/kid_control.dart';
 import 'package:kid_management/src/ui/children_screens/children_screen.dart';
 import 'package:kid_management/src/ui/kid_app.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:kid_management/src/resources/constant.dart' as CONSTANT;
 
 class SplashScreen extends StatefulWidget {
   double height;
@@ -65,74 +69,30 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
   }
 
-  UserSocket _kidUser;
-  UserSocket _parentUser;
-
-  // _connectKidSocket() {
-  //   Future.delayed(Duration(seconds: 2), () async {
-  //     print("Connecting to socket server");
-  //     Global.initKidSocket();
-
-  //     await Global.socketUtilKid.initSocket(_kidUser);
-  //     Global.socketUtilKid.connectToSocket();
-  //     Global.socketUtilKid.setConnectListener(onConnect);
-  //     Global.socketUtilKid.setOnDisconnectListener(onDisconnect);
-  //     Global.socketUtilKid.setOnErrorListener(onError);
-  //     Global.socketUtilKid.setOnConnectionErrorListener(onConnectError);
-  //   });
-  // }
-
-  // _connectParentSocket() {
-  //   Future.delayed(Duration(seconds: 2), () async {
-  //     print("Connecting to socket server");
-  //     Global.initParentSocket();
-  //     await Global.socketUtilParent.initSocket(_parentUser);
-  //     Global.socketUtilParent.connectToSocket();
-  //     Global.socketUtilParent.setConnectListener(onConnect);
-  //     Global.socketUtilParent.setOnDisconnectListener(onDisconnect);
-  //     Global.socketUtilParent.setOnErrorListener(onError);
-  //     Global.socketUtilParent.setOnConnectionErrorListener(onConnectError);
-  //   });
-  // }
-
-  // onConnect(data) {
-  //   print('Connected $data');
-  //   setState(() {
-  //     _connectedToSocket = true;
-  //   });
-  // }
-
-  // onConnectError(data) {
-  //   print('onConnectError $data');
-  //   setState(() {
-  //     _connectedToSocket = false;
-  //     _errorConnectMessage = 'Failed to Connect';
-  //   });
-  // }
-
-  // onConnectTimeout(data) {
-  //   print('onConnectTimeout $data');
-  //   setState(() {
-  //     _connectedToSocket = false;
-  //     _errorConnectMessage = 'Connection timedout';
-  //   });
-  // }
-
-  // onError(data) {
-  //   print('onError $data');
-  //   setState(() {
-  //     _connectedToSocket = false;
-  //     _errorConnectMessage = 'Connection Failed';
-  //   });
-  // }
-
-  // onDisconnect(data) {
-  //   print('onDisconnect $data');
-  //   setState(() {
-  //     _connectedToSocket = false;
-  //     _errorConnectMessage = 'Disconnected';
-  //   });
-  // }
+  Future<void> _showErrorDialog(String msg) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(msg),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   void dispose() {

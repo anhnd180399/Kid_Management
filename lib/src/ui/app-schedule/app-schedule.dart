@@ -161,8 +161,10 @@ class _AppScheduleState extends State<AppSchedule> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CreateAppScheduleStep01(
-                          appScheduleModel:
-                              AppScheduleModel(appTimePeriods: [], dayOfWeeks: Set<int>(), active: false),
+                          appScheduleModel: AppScheduleModel(
+                              appTimePeriods: [],
+                              dayOfWeeks: Set<int>(),
+                              active: false),
                         ))).then((value) {
               setState(() {});
             });
