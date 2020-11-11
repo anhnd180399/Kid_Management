@@ -16,7 +16,7 @@ class ChildrenAppScheduleScreen extends StatefulWidget {
 
 class _ChildrenAppScheduleScreenState extends State<ChildrenAppScheduleScreen> {
   // fake data to demo
-  AppScheduleModel _appSchedule = FakeData.appSchedules()[0];
+  AppScheduleModel _appSchedule;
   final databaseReference = FirebaseDatabase.instance.reference();
   @override
   void initState() {
@@ -29,9 +29,6 @@ class _ChildrenAppScheduleScreenState extends State<ChildrenAppScheduleScreen> {
         var schedule = listSchedule[0];
         setState(() {
           _appSchedule = FakeData.convertToSchedule(schedule);
-          if (_appSchedule == null) {
-            _appSchedule = new AppScheduleModel();
-          }
         });
       });
     } catch (e) {

@@ -30,6 +30,7 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
         schedule.active = false;
       }
     });
+    FakeData.sendApplySchedule();
   }
 
   @override
@@ -83,6 +84,8 @@ class _AppScheduleDetailsState extends State<AppScheduleDetails> {
                     widget.schedule.active = value;
                     if (value == true) {
                       _turnOnSchedule(widget.schedule.id);
+                    } else {
+                      _turnOnSchedule(-1);
                     }
                     Fluttertoast.showToast(
                         msg: 'Schedule is $status',

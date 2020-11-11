@@ -187,7 +187,26 @@ class _ChildrenAppControlListState extends State<ChildrenAppControlList> {
           } else if (snapshot.hasError) {
             periods = new List<AppTimePeriod>();
           }
-          return CircularProgressIndicator();
+          return Expanded(
+            child: ListView.builder(
+              // shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(top: 10.0),
+                  padding: EdgeInsets.only(
+                      left: 20.0, right: 20.0, bottom: 30.0, top: 10.0),
+                  decoration: BoxDecoration(
+                      color: AppColor.grayLight,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [],
+                  ),
+                );
+              },
+              itemCount: 0,
+            ),
+          );
         });
   }
 

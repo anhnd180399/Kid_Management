@@ -21,13 +21,14 @@ class Bloc {
         if (FakeData.isChildMode) {
           var snapshot = event.snapshot;
           var listSchedule = snapshot.value[CONSTANT.ROOT_SCHEDULES] as List;
-          listSchedule.forEach((schedule) {
+          if ((listSchedule?.length ?? true) != 0) {
+            var schedule = listSchedule[0];
             var scheduleData = FakeData.convertToSchedule(schedule);
             if (scheduleData.active) {
               hasData = true;
               refreshSchedule(scheduleData);
             }
-          });
+          }
         }
       });
     } catch (e) {

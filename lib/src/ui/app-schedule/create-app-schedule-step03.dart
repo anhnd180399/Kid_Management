@@ -77,28 +77,27 @@ class _CreateAppScheduleStep03State extends State<CreateAppScheduleStep03> {
                 elevation: 2.0,
                 onPressed: () {
                   if (FakeData.tmpStartTime.isNotEmpty &&
-                        FakeData.tmpEndTime.isNotEmpty) {
-                      if (widget.appScheduleModel.appTimePeriods == null) {
-                        widget.appScheduleModel.appTimePeriods = [];
-                      }
-                      var newAppTimePeriod = AppTimePeriod(
-                          apps: FakeData.tempAppList,
-                          id: Random.secure().nextInt(5000),
-                          startTime: FakeData.tmpStartTime,
-                          endTime: FakeData.tmpEndTime);
-                      widget.appScheduleModel.appTimePeriods
-                          .add(newAppTimePeriod);
-
-                      FakeData.listSchedule.add(widget.appScheduleModel);
-                      
-                      // Clear and reset all temp data
-                      FakeData.tempAppList = [];
-                      FakeData.tmpStartTime = '';
-                      FakeData.tmpEndTime = '';
-
-                      Navigator.pop(context, 'success');
+                      FakeData.tmpEndTime.isNotEmpty) {
+                    if (widget.appScheduleModel.appTimePeriods == null) {
+                      widget.appScheduleModel.appTimePeriods = [];
                     }
-                  
+                    var newAppTimePeriod = AppTimePeriod(
+                        apps: FakeData.tempAppList,
+                        id: Random.secure().nextInt(5000),
+                        startTime: FakeData.tmpStartTime,
+                        endTime: FakeData.tmpEndTime);
+                    widget.appScheduleModel.appTimePeriods
+                        .add(newAppTimePeriod);
+
+                    FakeData.listSchedule.add(widget.appScheduleModel);
+                    FakeData.sendApplySchedule();
+                    // Clear and reset all temp data
+                    FakeData.tempAppList = [];
+                    FakeData.tmpStartTime = '';
+                    FakeData.tmpEndTime = '';
+
+                    Navigator.pop(context, 'success');
+                  }
                 },
                 color: AppColor.mainColor,
                 child: Text(
